@@ -11,6 +11,7 @@ public class Empresa {
 	private String bairro;
 	private String municipio;
 	private String uf;
+	
 	public LocalDate getData_termino_fiscalizacao() {
 		return data_termino_fiscalizacao;
 	}
