@@ -7,31 +7,62 @@ import java.io.File;
 
 public class Leitor {
 	
-	private String arquivoCSV = "arquivo.csv";
+	private String dirArquivoCSV;
     private BufferedReader br = null;
-    private String linha = "";
-    private String csvDivisor = ",";
+    private String linha;
+    private String csvDivisor;
+    
+    public Leitor(String dir, String divisor) {
+    	this.setArquivoCSV(dir);
+		this.setCsvDivisor(divisor);
+		this.setLinha("");
+    }
 
-	public void readCsvFile(String dir, String divisor) {
-		
+	public void readCsvFile() {
+		try {
+			System.out.println("Lendo o arquivo " + this.getdirArquivoCSV());
+	        br = new BufferedReader(new FileReader(dirArquivoCSV));
+	        while ((linha = br.readLine()) != null) {
+	            String[] celula = linha.split(csvDivisor);
+	            System.out.println("Posicao 1: " + celula[0]);
+	        }
+	    } 
+		catch (FileNotFoundException e) {
+			System.out.println("Arquivo não encontrado");
+	        //e.printStackTrace();
+	    } 
+		catch (IOException e) {
+			System.out.println("Erro inesperado: ");
+	        e.printStackTrace();
+	    } 
+		finally {
+	        if (br != null) {
+	            try {
+	            	System.out.println("Arquivo Fechado.");
+	                br.close(); //Fecha o arquivo
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 	}
 	
-	public static void currentDir() {
+	public static String currentApplicationDir() {
+		String currentDir = "";
 		try {
-			System.out.println("/  -> " + new File("/").getCanonicalPath());
-			System.out.println(".. -> " + new File("..").getCanonicalPath());
-			System.out.println(".  -> " + new File(".").getCanonicalPath());
+			currentDir = new File(".").getCanonicalPath();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return currentDir;
 	}
 
-	public String getArquivoCSV() {
-		return arquivoCSV;
+	public String getdirArquivoCSV() {
+		return dirArquivoCSV;
 	}
 
 	public void setArquivoCSV(String arquivoCSV) {
-		this.arquivoCSV = arquivoCSV;
+		this.dirArquivoCSV = arquivoCSV;
 	}
 
 	public String getLinha() {
