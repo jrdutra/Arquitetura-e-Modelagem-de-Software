@@ -2,7 +2,8 @@ package com.fsma.projetoempresa;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.File;
 
 public class Leitor {
@@ -21,10 +22,13 @@ public class Leitor {
 	public void readCsvFile() {
 		try {
 			System.out.println("Lendo o arquivo " + this.getdirArquivoCSV());
-	        br = new BufferedReader(new FileReader(dirArquivoCSV));
+	        br = new BufferedReader(new InputStreamReader(new FileInputStream(dirArquivoCSV), "UTF-8"));
 	        while ((linha = br.readLine()) != null) {
+	        	System.out.println("Linha ...");
 	            String[] celula = linha.split(csvDivisor);
-	            System.out.println("Posicao 1: " + celula[0]);
+	            for(int i = 0; i<9; i++) {
+		            System.out.println("[" + celula[i] + "]");	            	
+	            }
 	        }
 	    } 
 		catch (FileNotFoundException e) {
