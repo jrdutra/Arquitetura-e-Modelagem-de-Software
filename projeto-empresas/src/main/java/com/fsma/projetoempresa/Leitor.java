@@ -5,6 +5,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import antlr.collections.List;
@@ -63,11 +65,21 @@ public class Leitor {
 		try {
 			System.out.println("Lendo o arquivo " + this.getdirArquivoCSV());
 	        br = new BufferedReader(new InputStreamReader(new FileInputStream(dirArquivoCSV), "ISO-8859-1"));
+	        //=====================
+	        //TODO CODIGO RODA AQUI
+	        //=====================
+	        int num_linha = 0;
 	        while ((linha = br.readLine()) != null) {
 	        	this.empresa = new Empresa();
-	        	System.out.println("Linha ...");
 	            String[] celula = linha.split(csvDivisor);
-            	
+	        	if (num_linha!=0) { //ignora a primeira linha com os cabeçalhos
+	        		//Setando Objeto Empresa
+		            celula[1] = (String) celula[1].replace("/", "-") + "-01";
+		            //celula[1] = "2018-12-01";
+		        	System.out.println(celula[1]);
+	            	this.empresa.setData_termino_fiscalizacao(LocalDate.parse(celula[1]));
+	        	}
+	        	num_linha++;//passa para proxima linha
 	        }
 	    } 
 		catch (FileNotFoundException e) {
