@@ -198,7 +198,7 @@ public class Leitor {
     // ==============================================
 	public ArrayList<Empresa> trataTodasEmpresas(ArrayList<Empresa> lista_bruta_de_empresas){
 		this.lst_empresa = new ArrayList<Empresa>();
-		//ArrayList<Empresa> lst_empresa_aux = new ArrayList<Empresa>();
+		ArrayList<Empresa> lst_empresa_aux = new ArrayList<Empresa>();
 		//-----------------------------------------------------
 		// CORRE TODOS OS ELEMENTOS DA LISTA BRUTA
 		// 
@@ -206,7 +206,7 @@ public class Leitor {
 		//clona lista bruta para a this.lst_lista
 		System.out.println("Criando nova lista de empresas...\n");
 		for (Empresa item: lista_bruta_de_empresas) {
-			this.lst_empresa.add(item);
+			lst_empresa_aux.add(item);
 		}
 		//corre a lista auxiliar atualizando os elementos para o mais recente
 		System.out.println("Unificando Elementos Repetidos...\n");
@@ -225,17 +225,17 @@ public class Leitor {
 			}
 		}
 		System.out.println("Removendo Elementos Repetidos...\n");
-		int n = 0;
+		//int n = 0;
 		int k_value = 0;
-		int tam = this.lst_empresa.size() - 1;
+		int tam = lst_empresa_aux.size() - 1;
 		for(int i = 0 ; i < tam; i++) {	
 			
 			for(int j = i + 1; j < tam; )
 	        {
-	            if( this.lst_empresa.get(j).getCnpj().equals(this.lst_empresa.get(i).getCnpj()))
+	            if( lst_empresa_aux.get(j).getCnpj().equals(lst_empresa_aux.get(i).getCnpj()))
 	            {
 	                for(int k = j; k < tam; k++ ) {
-	                	this.lst_empresa.set(k, this.lst_empresa.get(k+1));
+	                	lst_empresa_aux.set(k, lst_empresa_aux.get(k+1));
 	                	k_value = k;
 	                }
 	                tam--;
@@ -248,8 +248,12 @@ public class Leitor {
 	        }
 		}
 		
-		System.out.println("k=" + k_value);
-		System.out.println("tam=" + tam);
+		System.out.println("Finalizando o arrayList de empresas...\n");
+		// pega as empresas em ordem
+		
+		for (int i = 0; i < (k_value + 1); i++) {
+			this.lst_empresa.add(lst_empresa_aux.get(i));
+		}
 		//this.lst_empresa.remove(j);
 		return this.lst_empresa;
 	}
