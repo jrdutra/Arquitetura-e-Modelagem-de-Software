@@ -8,6 +8,9 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.InputMismatchException; //utlizado na validacao do CNPJ
+
+import javassist.bytecode.Descriptor.Iterator;
+
 import java.io.File;
 
 public class Leitor {
@@ -28,7 +31,7 @@ public class Leitor {
    // ==============================================
    //                 VALIDA CNPJ
    // ==============================================
-   public static boolean validaCnpj(String CNPJ) {
+   public boolean validaCnpj(String CNPJ) {
 	    //Trada a string de entrada, removendo caracteres especiais
 		CNPJ = CNPJ.replace(".", "");
 		CNPJ = CNPJ.replace(".", "");
@@ -163,8 +166,11 @@ public class Leitor {
 	        		catch (Exception e) {
 	        			System.out.println("Erro na leitura da UF na linha " + num_linha);
 	        		}
+	        		//so faz o add se o cnpj for valido
+	        		if(this.validaCnpj(this.empresa.getCnpj())) {
+	        			this.lst_empresa.add(this.empresa); // faz o append da empresa so se o cnpj for valido
+	        		}
 	        	}
-	        	this.lst_empresa.add(this.empresa);
 	        	num_linha++;//passa para proxima linha
 	        }
 	    } 
@@ -179,7 +185,7 @@ public class Leitor {
 		finally {
 	        if (br != null) {
 	            try {
-	            	System.out.println("Arquivo Fechado.");
+	            	System.out.println("Arquivo lido com sucesso.\n------------------------");
 	                br.close(); //Fecha o arquivo
 	            } catch (IOException e) {
 	                e.printStackTrace();
@@ -192,9 +198,33 @@ public class Leitor {
 	// ==============================================
     // TRATA O ARRAYLIST DE EMPRESAS PARA O BANCO
     // ==============================================
-	public ArrayList<Empresa> getTodasEmpresas(ArrayList<Empresa> lista_empresas){
+	public ArrayList<Empresa> trataTodasEmpresas(ArrayList<Empresa> lista_bruta_de_empresas){
 		this.lst_empresa = new ArrayList<Empresa>();
-		
+		//ArrayList<Empresa> lst_empresa_aux = new ArrayList<Empresa>();
+		//-----------------------------------------------------
+		// CORRE TODOS OS ELEMENTOS DA LISTA BRUTA
+		// 
+		//-----------------------------------------------------
+		//clona lista bruta para a this.lst_lista
+		for (Empresa item: lista_bruta_de_empresas) {
+			this.lst_empresa.add(item);
+		}
+		//corre a lista auxiliar atualizando os elementos para o mais recente
+		for(int i = 0 ; i < this.lst_empresa.size(); i++) {	
+			//corre a lista até a posiçaõ i atual para ver se tem elementos repetidos
+			for(int j = 0 ; j < i; j++) {			
+				if(this.lst_empresa.get(j).getCnpj().equals(this.lst_empresa.get(i).getCnpj())) {
+					this.lst_empresa.get(j).setRazao_social(this.lst_empresa.get(i).getRazao_social());
+					this.lst_empresa.get(j).setBairro(this.lst_empresa.get(i).getBairro());
+					this.lst_empresa.get(j).setData_termino_fiscalizacao(this.lst_empresa.get(i).getData_termino_fiscalizacao());
+					this.lst_empresa.get(j).setLogradouro(this.lst_empresa.get(i).getLogradouro());
+					this.lst_empresa.get(j).setCep(this.lst_empresa.get(i).getCep());
+					this.lst_empresa.get(j).setMunicipio(this.lst_empresa.get(i).getMunicipio());
+					this.lst_empresa.get(j).setUf(this.lst_empresa.get(i).getUf());
+				}
+			}
+		}
+		System.out.println(this.lst_empresa);
 		return this.lst_empresa;
 	}
 	

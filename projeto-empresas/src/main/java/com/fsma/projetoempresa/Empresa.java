@@ -62,9 +62,7 @@ public class Empresa {
 	}
 	@Override
 	public String toString() {
-		return "Empresa [data_termino_fiscalizacao=" + data_termino_fiscalizacao + ", cnpj=" + cnpj + ", razao_social="
-				+ razao_social + ", logradouro=" + logradouro + ", cep=" + cep + ", bairro=" + bairro + ", municipio="
-				+ municipio + ", uf=" + uf + "]";
+		return razao_social + " " + bairro + "\n";
 	}
 	
 	
