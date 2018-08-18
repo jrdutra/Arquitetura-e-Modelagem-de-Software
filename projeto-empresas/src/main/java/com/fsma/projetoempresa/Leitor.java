@@ -111,67 +111,69 @@ public class Leitor {
 	        //================================
 	        int num_linha = 0;
 	        while ((linha = br.readLine()) != null) {
-	        	this.empresa = new Empresa();
-	            String[] celula = linha.split(csvDivisor);
-	        	if (num_linha!=0) { //ignora a primeira linha com os cabeçalhos
-	        		//Setando Objeto Empresa
-	        		try { //Lê e trata a data
-	        			celula[1] = celula[1].replace("/", "-") + "-01";//trata a data
-		            	this.empresa.setData_termino_fiscalizacao(LocalDate.parse(celula[1]));
-		            	//pega o ultimo dia válido do mês
-		            	this.empresa.setData_termino_fiscalizacao(LocalDate.parse(celula[1]).withDayOfMonth(LocalDate.parse(celula[1]).lengthOfMonth()));
-	        		}
-	        		catch (Exception e) {
-	        			System.out.println("Erro na leitura da data de termino de fiscalização na linha " + num_linha);
-	        		}
-	        		try { //Lê CNPJ
-	        			this.empresa.setCnpj(celula[2]);
-	        		}
-	        		catch (Exception e) {
-	        			System.out.println("Erro na leitura do CNPJ na linha " + num_linha);
-	        		}
-	        		try { //Lê Razap SOcial
-	        			this.empresa.setRazao_social(celula[3]);
-	        		}
-	        		catch (Exception e) {
-	        			System.out.println("Erro na leitura da Razao Social na linha " + num_linha);
-	        		}
-	        		try { //Lê Logradouro
-	        			this.empresa.setLogradouro(celula[4]);
-	        		}
-	        		catch (Exception e) {
-	        			System.out.println("Erro na leitura do Logradouro na linha " + num_linha);
-	        		}
-	        		try { //Lê CEP
-	        			this.empresa.setCep(celula[5]);
-	        		}
-	        		catch (Exception e) {
-	        			System.out.println("Erro na leitura do CEP na linha " + num_linha);
-	        		}
-	        		try { //Lê Bairro
-	        			this.empresa.setBairro(celula[6]);
-	        		}
-	        		catch (Exception e) {
-	        			System.out.println("Erro na leitura do Bairro na linha " + num_linha);
-	        		}
-	        		try { //Lê Municipio
-	        			this.empresa.setMunicipio(celula[7]);
-	        		}
-	        		catch (Exception e) {
-	        			System.out.println("Erro na leitura do Municipio na linha " + num_linha);
-	        		}
-	        		try { //Lê UF
-	        			this.empresa.setUf(celula[8]);
-	        		}
-	        		catch (Exception e) {
-	        			System.out.println("Erro na leitura da UF na linha " + num_linha);
-	        		}
-	        		//so faz o add se o cnpj for valido
-	        		if(this.validaCnpj(this.empresa.getCnpj())) {
-	        			this.lst_empresa.add(this.empresa); // faz o append da empresa so se o cnpj for valido
-	        		}
-	        	}
-	        	num_linha++;//passa para proxima linha
+	        	if(!linha.contains(";;;;;")) {// Trata se é o rodapé do arquivo.
+	        		this.empresa = new Empresa();
+		            String[] celula = linha.split(csvDivisor);
+		        	if (num_linha!=0) { //ignora a primeira linha com os cabeçalhos
+		        		//Setando Objeto Empresa
+		        		try { //Lê e trata a data
+		        			celula[1] = celula[1].replace("/", "-") + "-01";//trata a data
+			            	this.empresa.setData_termino_fiscalizacao(LocalDate.parse(celula[1]));
+			            	//pega o ultimo dia válido do mês
+			            	this.empresa.setData_termino_fiscalizacao(LocalDate.parse(celula[1]).withDayOfMonth(LocalDate.parse(celula[1]).lengthOfMonth()));
+		        		}
+		        		catch (Exception e) {
+		        			System.out.println("Erro na leitura da data de termino de fiscalização na linha " + num_linha);
+		        		}
+		        		try { //Lê CNPJ
+		        			this.empresa.setCnpj(celula[2]);
+		        		}
+		        		catch (Exception e) {
+		        			System.out.println("Erro na leitura do CNPJ na linha " + num_linha);
+		        		}
+		        		try { //Lê Razap SOcial
+		        			this.empresa.setRazao_social(celula[3]);
+		        		}
+		        		catch (Exception e) {
+		        			System.out.println("Erro na leitura da Razao Social na linha " + num_linha);
+		        		}
+		        		try { //Lê Logradouro
+		        			this.empresa.setLogradouro(celula[4]);
+		        		}
+		        		catch (Exception e) {
+		        			System.out.println("Erro na leitura do Logradouro na linha " + num_linha);
+		        		}
+		        		try { //Lê CEP
+		        			this.empresa.setCep(celula[5]);
+		        		}
+		        		catch (Exception e) {
+		        			System.out.println("Erro na leitura do CEP na linha " + num_linha);
+		        		}
+		        		try { //Lê Bairro
+		        			this.empresa.setBairro(celula[6]);
+		        		}
+		        		catch (Exception e) {
+		        			System.out.println("Erro na leitura do Bairro na linha " + num_linha);
+		        		}
+		        		try { //Lê Municipio
+		        			this.empresa.setMunicipio(celula[7]);
+		        		}
+		        		catch (Exception e) {
+		        			System.out.println("Erro na leitura do Municipio na linha " + num_linha);
+		        		}
+		        		try { //Lê UF
+		        			this.empresa.setUf(celula[8]);
+		        		}
+		        		catch (Exception e) {
+		        			System.out.println("Erro na leitura da UF na linha " + num_linha);
+		        		}
+		        		//so faz o add se o cnpj for valido
+		        		if(this.validaCnpj(this.empresa.getCnpj())) {
+		        			this.lst_empresa.add(this.empresa); // faz o append da empresa so se o cnpj for valido
+		        		}
+		        	}
+		        	num_linha++;//passa para proxima linha
+	        	} 	
 	        }
 	    } 
 		catch (FileNotFoundException e) {
