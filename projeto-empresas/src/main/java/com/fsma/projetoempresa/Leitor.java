@@ -225,16 +225,32 @@ public class Leitor {
 			}
 		}
 		System.out.println("Removendo Elementos Repetidos...\n");
-		for(int i = 0 ; i < this.lst_empresa.size(); i++) {	
-			//corre a lista até a posiçaõ i atual para ver se tem elementos repetidos
-			for(int j = 0 ; j < i; j++) {			
-				if(this.lst_empresa.get(j).getCnpj().equals(this.lst_empresa.get(i).getCnpj())) {
-					this.lst_empresa.remove(i);
-				}
-			}
+		int n = 0;
+		int k_value = 0;
+		int tam = this.lst_empresa.size() - 1;
+		for(int i = 0 ; i < tam; i++) {	
+			
+			for(int j = i + 1; j < tam; )
+	        {
+	            if( this.lst_empresa.get(j).getCnpj().equals(this.lst_empresa.get(i).getCnpj()))
+	            {
+	                for(int k = j; k < tam; k++ ) {
+	                	this.lst_empresa.set(k, this.lst_empresa.get(k+1));
+	                	k_value = k;
+	                }
+	                tam--;
+	            }
+	            else
+	            {
+	                j++;
+	            }
+			
+	        }
 		}
 		
-		System.out.println(this.lst_empresa);
+		System.out.println("k=" + k_value);
+		System.out.println("tam=" + tam);
+		//this.lst_empresa.remove(j);
 		return this.lst_empresa;
 	}
 	
