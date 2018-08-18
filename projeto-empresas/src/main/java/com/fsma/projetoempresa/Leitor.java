@@ -248,7 +248,7 @@ public class Leitor {
 	        }
 		}
 		
-		System.out.println("Finalizando o arrayList de empresas...\n");
+		System.out.println("Finalizando o ArrayList de Empresas...\n");
 		// pega as empresas em ordem
 		
 		for (int i = 0; i < (k_value + 1); i++) {
