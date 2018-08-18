@@ -25,8 +25,13 @@ public class Leitor {
 		this.setLinha("");
     }
     
-   public static boolean isCNPJ(String CNPJ) {
-	// considera-se erro CNPJ's formados por uma sequencia de numeros iguais
+   public static boolean validaCnpj(String CNPJ) {
+	    //Trada a string de entrada, removendo caracteres especiais
+		CNPJ = CNPJ.replace(".", "");
+		CNPJ = CNPJ.replace(".", "");
+		CNPJ = CNPJ.replace("/", "");
+		CNPJ = CNPJ.replace("-", "");
+	    // considera-se erro CNPJ's formados por uma sequencia de numeros iguais
 		if (CNPJ.equals("00000000000000") || CNPJ.equals("11111111111111") ||
 			CNPJ.equals("22222222222222") || CNPJ.equals("33333333333333") ||
 			CNPJ.equals("44444444444444") || CNPJ.equals("55555555555555") ||
@@ -44,9 +49,7 @@ public class Leitor {
 		      sm = 0;
 		      peso = 2;
 		      for (i=11; i>=0; i--) {
-				// converte o i-ésimo caractere do CNPJ em um número:
-				// por exemplo, transforma o caractere '0' no inteiro 0
-				// (48 eh a posição de '0' na tabela ASCII)
+				//da um split na string e converte cada caracter para inteiro para posteriores calculos
 		        num = (int)(CNPJ.charAt(i) - 48);
 		        sm = sm + (num * peso);
 		        peso = peso + 1;
@@ -87,23 +90,23 @@ public class Leitor {
 	    } catch (InputMismatchException erro) {
 	          return(false);
 	    }
-  }
+    }
 
 	public ArrayList<Empresa> getTodasEmpresas(){
 		lst_empresa = new ArrayList<Empresa>();
 		try {
 			System.out.println("Lendo o arquivo " + this.getdirArquivoCSV());
 	        br = new BufferedReader(new InputStreamReader(new FileInputStream(dirArquivoCSV), "ISO-8859-1"));
-	        //=====================
-	        //TODO CODIGO RODA AQUI
-	        //=====================
+	        //================================
+	        //TODO CODIGO DE LEITURA RODA AQUI
+	        //================================
 	        int num_linha = 0;
 	        while ((linha = br.readLine()) != null) {
 	        	this.empresa = new Empresa();
 	            String[] celula = linha.split(csvDivisor);
 	        	if (num_linha!=0) { //ignora a primeira linha com os cabeçalhos
 	        		//Setando Objeto Empresa
-	        		try { //Tratando data
+	        		try { //Lê e trata a data
 	        			celula[1] = celula[1].replace("/", "-") + "-01";//trata a data
 		            	this.empresa.setData_termino_fiscalizacao(LocalDate.parse(celula[1]));
 		            	//pega o ultimo dia válido do mês
@@ -112,24 +115,48 @@ public class Leitor {
 	        		catch (Exception e) {
 	        			System.out.println("Erro na leitura da data de termino de fiscalização na linha " + num_linha);
 	        		}
-	        		try { //Tratando CNPJ
-	        			celula[2] = celula[2].replace(".", "");
-	        			celula[2] = celula[2].replace(".", "");
-	        			celula[2] = celula[2].replace("/", "");
-	        			celula[2] = celula[2].replace("-", "");
+	        		try { //Lê CNPJ
 	        			this.empresa.setCnpj(celula[2]);
-	        			System.out.println(celula[2]);
 	        		}
 	        		catch (Exception e) {
 	        			System.out.println("Erro na leitura do CNPJ na linha " + num_linha);
 	        		}
-	            	this.empresa.setCnpj(celula[2]);
-	            	this.empresa.setRazao_social(celula[3]);
-	            	this.empresa.setLogradouro(celula[4]);;
-	            	this.empresa.setCep(celula[5]);
-	            	this.empresa.setBairro(celula[6]);
-	            	this.empresa.setMunicipio(celula[7]);
-	            	this.empresa.setUf(celula[8]);
+	        		try { //Lê Razap SOcial
+	        			this.empresa.setRazao_social(celula[3]);
+	        		}
+	        		catch (Exception e) {
+	        			System.out.println("Erro na leitura da Razao Social na linha " + num_linha);
+	        		}
+	        		try { //Lê Logradouro
+	        			this.empresa.setLogradouro(celula[4]);
+	        		}
+	        		catch (Exception e) {
+	        			System.out.println("Erro na leitura do Logradouro na linha " + num_linha);
+	        		}
+	        		try { //Lê CEP
+	        			this.empresa.setCep(celula[5]);
+	        		}
+	        		catch (Exception e) {
+	        			System.out.println("Erro na leitura do CEP na linha " + num_linha);
+	        		}
+	        		try { //Lê Bairro
+	        			this.empresa.setBairro(celula[6]);
+	        		}
+	        		catch (Exception e) {
+	        			System.out.println("Erro na leitura do Bairro na linha " + num_linha);
+	        		}
+	        		try { //Lê Municipio
+	        			this.empresa.setMunicipio(celula[7]);
+	        		}
+	        		catch (Exception e) {
+	        			System.out.println("Erro na leitura do Municipio na linha " + num_linha);
+	        		}
+	        		try { //Lê UF
+	        			this.empresa.setUf(celula[8]);
+	        		}
+	        		catch (Exception e) {
+	        			System.out.println("Erro na leitura da UF na linha " + num_linha);
+	        		}
 	        	}
 	        	this.lst_empresa.add(this.empresa);
 	        	num_linha++;//passa para proxima linha
