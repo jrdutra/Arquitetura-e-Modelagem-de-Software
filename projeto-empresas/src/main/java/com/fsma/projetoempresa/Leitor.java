@@ -25,6 +25,9 @@ public class Leitor {
 		this.setLinha("");
     }
     
+   // ==============================================
+   //                 VALIDA CNPJ
+   // ==============================================
    public static boolean validaCnpj(String CNPJ) {
 	    //Trada a string de entrada, removendo caracteres especiais
 		CNPJ = CNPJ.replace(".", "");
@@ -91,9 +94,12 @@ public class Leitor {
 	          return(false);
 	    }
     }
-
+   
+    // ==============================================
+    //          LÊ TODAS EMPRESAS DO ARQUIVO
+    // ==============================================
 	public ArrayList<Empresa> getTodasEmpresas(){
-		lst_empresa = new ArrayList<Empresa>();
+		this.lst_empresa = new ArrayList<Empresa>();
 		try {
 			System.out.println("Lendo o arquivo " + this.getdirArquivoCSV());
 	        br = new BufferedReader(new InputStreamReader(new FileInputStream(dirArquivoCSV), "ISO-8859-1"));
@@ -183,16 +189,15 @@ public class Leitor {
 		return this.lst_empresa;
 	}
 	
-	public String currentApplicationDir() {
-		String currentDir = "";
-		try {
-			currentDir = new File(".").getCanonicalPath();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return currentDir;
+	// ==============================================
+    // TRATA O ARRAYLIST DE EMPRESAS PARA O BANCO
+    // ==============================================
+	public ArrayList<Empresa> getTodasEmpresas(ArrayList<Empresa> lista_empresas){
+		this.lst_empresa = new ArrayList<Empresa>();
+		
+		return this.lst_empresa;
 	}
-
+	
 	public String getdirArquivoCSV() {
 		return dirArquivoCSV;
 	}
