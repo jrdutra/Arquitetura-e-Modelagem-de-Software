@@ -60,4 +60,11 @@ public class Empresa {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
+	@Override
+	public String toString() {
+		return "Empresa [data_termino_fiscalizacao=" + data_termino_fiscalizacao + ", cnpj=" + cnpj + ", razao_social="
+				+ razao_social + ", logradouro=" + logradouro + ", cep=" + cep + ", bairro=" + bairro + ", municipio="
+				+ municipio + ", uf=" + uf + "]";
+	}
+	
 }

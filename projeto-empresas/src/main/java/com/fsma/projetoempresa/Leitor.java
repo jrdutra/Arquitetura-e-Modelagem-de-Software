@@ -27,38 +27,6 @@ public class Leitor {
 		this.setCsvDivisor(divisor);
 		this.setLinha("");
     }
-
-	public void readCsvFile() {
-		try {
-			System.out.println("Lendo o arquivo " + this.getdirArquivoCSV());
-	        br = new BufferedReader(new InputStreamReader(new FileInputStream(dirArquivoCSV), "ISO-8859-1"));
-	        while ((linha = br.readLine()) != null) {
-	        	System.out.println("Linha ...");
-	            String[] celula = linha.split(csvDivisor);
-	            for(int i = 0; i<9; i++) {
-		            System.out.println("[" + celula[i] + "]");	  
-	            }
-	        }
-	    } 
-		catch (FileNotFoundException e) {
-			System.out.println("Arquivo não encontrado");
-	        //e.printStackTrace();
-	    } 
-		catch (IOException e) {
-			System.out.println("Erro inesperado: ");
-	        e.printStackTrace();
-	    } 
-		finally {
-	        if (br != null) {
-	            try {
-	            	System.out.println("Arquivo Fechado.");
-	                br.close(); //Fecha o arquivo
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	            }
-	        }
-	    }
-	}
 	
 	public ArrayList<Empresa> getTodasEmpresas(){
 		lst_empresa = new ArrayList<Empresa>();
@@ -74,11 +42,23 @@ public class Leitor {
 	            String[] celula = linha.split(csvDivisor);
 	        	if (num_linha!=0) { //ignora a primeira linha com os cabeçalhos
 	        		//Setando Objeto Empresa
-		            celula[1] = (String) celula[1].replace("/", "-") + "-01";
-		            //celula[1] = "2018-12-01";
-		        	System.out.println(celula[1]);
-	            	this.empresa.setData_termino_fiscalizacao(LocalDate.parse(celula[1]));
+	        		try {
+	        			celula[1] = (String) celula[1].replace("/", "-") + "-01";//trata a data
+		            	this.empresa.setData_termino_fiscalizacao(LocalDate.parse(celula[1]));
+	        		}
+	        		catch (Exception e) {
+	        			System.out.println("Erro na leitura da data de termino de fiscalização");
+	        		}
+	            	this.empresa.setCnpj(celula[2]);
+	            	this.empresa.setRazao_social(celula[3]);
+	            	this.empresa.setLogradouro(celula[4]);;
+	            	this.empresa.setCep(celula[5]);
+	            	this.empresa.setBairro(celula[6]);
+	            	this.empresa.setMunicipio(celula[7]);
+	            	this.empresa.setUf(celula[8]);
+	            	System.out.println(this.empresa.toString());
 	        	}
+	        	this.lst_empresa.add(this.empresa);
 	        	num_linha++;//passa para proxima linha
 	        }
 	    } 
