@@ -9,10 +9,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.InputMismatchException; //utlizado na validacao do CNPJ
 
-import javassist.bytecode.Descriptor.Iterator;
-
-import java.io.File;
-
 public class Leitor {
 	
 	private String dirArquivoCSV;
@@ -187,7 +183,7 @@ public class Leitor {
 		finally {
 	        if (br != null) {
 	            try {
-	            	System.out.println("Arquivo lido com sucesso.\n------------------------");
+	            	System.out.println("Arquivo lido com sucesso...\nProcessando Informações...\n-------------------------------");
 	                br.close(); //Fecha o arquivo
 	            } catch (IOException e) {
 	                e.printStackTrace();
@@ -208,10 +204,12 @@ public class Leitor {
 		// 
 		//-----------------------------------------------------
 		//clona lista bruta para a this.lst_lista
+		System.out.println("Criando nova lista de empresas...\n");
 		for (Empresa item: lista_bruta_de_empresas) {
 			this.lst_empresa.add(item);
 		}
 		//corre a lista auxiliar atualizando os elementos para o mais recente
+		System.out.println("Unificando Elementos Repetidos...\n");
 		for(int i = 0 ; i < this.lst_empresa.size(); i++) {	
 			//corre a lista até a posiçaõ i atual para ver se tem elementos repetidos
 			for(int j = 0 ; j < i; j++) {			
@@ -226,6 +224,16 @@ public class Leitor {
 				}
 			}
 		}
+		System.out.println("Removendo Elementos Repetidos...\n");
+		for(int i = 0 ; i < this.lst_empresa.size(); i++) {	
+			//corre a lista até a posiçaõ i atual para ver se tem elementos repetidos
+			for(int j = 0 ; j < i; j++) {			
+				if(this.lst_empresa.get(j).getCnpj().equals(this.lst_empresa.get(i).getCnpj())) {
+					this.lst_empresa.remove(i);
+				}
+			}
+		}
+		
 		System.out.println(this.lst_empresa);
 		return this.lst_empresa;
 	}

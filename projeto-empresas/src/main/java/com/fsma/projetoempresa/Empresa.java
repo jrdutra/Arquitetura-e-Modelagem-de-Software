@@ -62,7 +62,7 @@ public class Empresa {
 	}
 	@Override
 	public String toString() {
-		return razao_social + " " + bairro + "\n";
+		return "\n" + cnpj + " " + razao_social;
 	}
 	
 	
