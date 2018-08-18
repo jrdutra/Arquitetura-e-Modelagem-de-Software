@@ -43,7 +43,7 @@ public class Leitor {
 	        	if (num_linha!=0) { //ignora a primeira linha com os cabeçalhos
 	        		//Setando Objeto Empresa
 	        		try {
-	        			celula[1] = (String) celula[1].replace("/", "-") + "-01";//trata a data
+	        			celula[1] = celula[1].replace("/", "-") + "-01";//trata a data
 		            	this.empresa.setData_termino_fiscalizacao(LocalDate.parse(celula[1]));
 	        		}
 	        		catch (Exception e) {
