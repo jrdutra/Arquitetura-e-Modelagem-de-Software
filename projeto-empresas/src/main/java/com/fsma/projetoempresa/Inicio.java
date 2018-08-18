@@ -10,7 +10,7 @@ public class Inicio {
 		ArrayList<Empresa> lista_de_empresas = new ArrayList<Empresa>();
 		Leitor leitor = new Leitor("C:\\Users\\jrdut\\Desktop\\JAVA\\Arquitetura-e-Modelagem-de-Software\\projeto-empresas\\teste.csv", ";");
 		lista_de_empresas = leitor.getTodasEmpresas();
-
+		
 	}
 
 }

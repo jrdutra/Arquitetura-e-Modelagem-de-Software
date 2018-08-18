@@ -56,7 +56,6 @@ public class Leitor {
 	            	this.empresa.setBairro(celula[6]);
 	            	this.empresa.setMunicipio(celula[7]);
 	            	this.empresa.setUf(celula[8]);
-	            	System.out.println(this.empresa.toString());
 	        	}
 	        	this.lst_empresa.add(this.empresa);
 	        	num_linha++;//passa para proxima linha
