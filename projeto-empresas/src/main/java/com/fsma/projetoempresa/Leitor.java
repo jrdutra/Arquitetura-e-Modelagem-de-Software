@@ -45,6 +45,8 @@ public class Leitor {
 	        		try {
 	        			celula[1] = celula[1].replace("/", "-") + "-01";//trata a data
 		            	this.empresa.setData_termino_fiscalizacao(LocalDate.parse(celula[1]));
+		            	//pega o ultimo dia válido do mês
+		            	this.empresa.setData_termino_fiscalizacao(LocalDate.parse(celula[1]).withDayOfMonth(LocalDate.parse(celula[1]).lengthOfMonth()));
 	        		}
 	        		catch (Exception e) {
 	        			System.out.println("Erro na leitura da data de termino de fiscalização");
