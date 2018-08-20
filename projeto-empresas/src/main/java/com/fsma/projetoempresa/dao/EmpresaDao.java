@@ -28,15 +28,13 @@ public class EmpresaDao implements Serializable {
 		this.dao = new DAO<Empresa>(this.em, Empresa.class);
 	}
 
-
-	
 	public boolean existe(Empresa empresa) {
 		
 		TypedQuery<Empresa> query = em.createQuery(
-				  " select e from Empresa e "
+				  " select e from tb_empresa e "
 				+ " where e.Cnpj = :pCnpj", Empresa.class);
 		
-		query.setParameter("pLogin", empresa.getCnpj());
+		query.setParameter("pCnpj", empresa.getCnpj());
 		try {
 			@SuppressWarnings("unused")
 			Empresa resultado = query.getSingleResult();
@@ -48,7 +46,7 @@ public class EmpresaDao implements Serializable {
 	
 	public Empresa buscaUsuarioPelaAutenticacao(Empresa empresa) {
 		StringBuilder jpql = new StringBuilder();
-		jpql.append(" select u from Empresa e ");
+		jpql.append(" select e from tb_empresa e ");
 		jpql.append(" where ");
 		jpql.append("       e.cnpj = :pCnpj ");
 		

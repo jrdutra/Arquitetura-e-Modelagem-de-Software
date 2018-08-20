@@ -17,14 +17,14 @@ public class Inicio {
 		ArrayList<Empresa> lista_de_empresas = new ArrayList<Empresa>();
 		ArrayList<Empresa> lista_de_empresas_tratadas = new ArrayList<Empresa>();
 		Leitor leitor = new Leitor("C:\\Users\\jrdut\\Desktop\\JAVA\\Arquitetura-e-Modelagem-de-Software\\projeto-empresas\\teste.csv", ";");
-		EntityManager em = JPAUtil.getEntityManager();
-		
 		lista_de_empresas = leitor.getTodasEmpresas();
 		lista_de_empresas_tratadas = leitor.trataTodasEmpresas(lista_de_empresas);
-		em.getTransaction().begin();
-		
+			
+		EntityManager em = JPAUtil.getEntityManager();
+		EmpresaDao empresaDao = new EmpresaDao(em);
+
 		try {
-			EmpresaDao empresaDao = new EmpresaDao(em);
+			em.getTransaction().begin();
 			//adiciona empresa por empresa
 			for(int i = 0; i < lista_de_empresas_tratadas.size(); i++) {
 				empresaDao.adiciona(lista_de_empresas_tratadas.get(i));

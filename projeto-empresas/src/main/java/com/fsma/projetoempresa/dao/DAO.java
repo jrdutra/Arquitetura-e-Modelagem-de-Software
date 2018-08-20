@@ -4,52 +4,54 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
+import com.fsma.projetoempresa.modelo.Empresa;
 
-public class DAO<T> implements Serializable {
+@SuppressWarnings("hiding")
+public class DAO<Empresa> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private final Class<T> classe;
+	private final Class<Empresa> classe;
 	private EntityManager em;
 
-	public DAO(EntityManager em, Class<T> classe) {
+	public DAO(EntityManager em, Class<Empresa> classe) {
 		this.classe = classe;
 		this.em = em;
 	}
 
-	public void adiciona(T empresa) {
+	public void adiciona(Empresa empresa) {
 		em.persist(empresa);
 	}
 
-	public void remove(T empresa) {
+	public void remove(Empresa empresa) {
 		em.remove(em.merge(empresa));
 	}
 
-	public void atualiza(T empresa) {
+	public void atualiza(Empresa empresa) {
 		em.merge(empresa);
 	}
 
-	public List<T> listaTodos() {
+	public List<Empresa> listaTodos() {
 
-		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
+		CriteriaQuery<Empresa> query = em.getCriteriaBuilder().createQuery(classe);
 		query.select(query.from(classe));
 
-		List<T> lista = em.createQuery(query).getResultList();
+		List<Empresa> lista = em.createQuery(query).getResultList();
 
 		return lista;
 	}
 
-	public T buscaPorId(Long id) {
-		T instancia = em.find(classe, id);
+	public Empresa buscaPorId(Long id) {
+		Empresa instancia = em.find(classe, id);
 		return instancia;
 	}
 
-	public List<T> listaTodosPaginada(int firstResult, int maxResults) {
+	public List<Empresa> listaTodosPaginada(int firstResult, int maxResults) {
 
-		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
+		CriteriaQuery<Empresa> query = em.getCriteriaBuilder().createQuery(classe);
 		query.select(query.from(classe));
 
-		List<T> lista = em.createQuery(query).setFirstResult(firstResult)
+		List<Empresa> lista = em.createQuery(query).setFirstResult(firstResult)
 				.setMaxResults(maxResults).getResultList();
 
 		return lista;

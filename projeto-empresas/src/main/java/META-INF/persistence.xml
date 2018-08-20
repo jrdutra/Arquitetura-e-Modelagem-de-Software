@@ -32,8 +32,8 @@
 			<property name="hibernate.c3p0.max_statements"  value="30" />
 			<property name="hibernate.c3p0.idle_test_period"  value="150" />
 			<property name="hibernate.c3p0.preferredTestQuery"  value="select 1" />
-			<property name="hibernate.c3p0.verifyServerCertificate" value="false" />
-			<property name="hibernate.c3p0.useSSL" value="false" />
+			<property name="hibernate.c3p0.verifyServerCertificate" value="true" />
+			<property name="hibernate.c3p0.useSSL" value="true" />
 			
 			
 		</properties>
