@@ -1,8 +1,7 @@
-package br.com.fsma.projeto_web.modelo.dao;
+package com.fsma.projetoempresa.dao;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
 

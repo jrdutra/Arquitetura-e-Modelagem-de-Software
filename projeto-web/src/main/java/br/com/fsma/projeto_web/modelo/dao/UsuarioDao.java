@@ -11,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import br.com.fsma.projeto_web.modelo.dao.DAO;
+
 import br.com.fsma.projeto_web.modelo.negocio.Usuario;
 
 @Named

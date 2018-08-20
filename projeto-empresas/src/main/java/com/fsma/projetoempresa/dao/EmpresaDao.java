@@ -1,4 +1,4 @@
-package com.fsma.projetoempresa.modelo.dao;
+package com.fsma.projetoempresa.dao;
 
 import javax.persistence.EntityManager;
 
