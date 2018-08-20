@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 
 public class JPAUtil {
 	
-	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-local");
+	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("postgres-local");
 
 	public static EntityManager getEntityManager() {
 		return emf.createEntityManager();
