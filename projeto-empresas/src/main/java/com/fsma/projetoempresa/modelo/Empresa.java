@@ -1,4 +1,4 @@
-package com.fsma.projetoempresa;
+package com.fsma.projetoempresa.modelo;
 
 import java.time.LocalDate;
 import java.io.Serializable;

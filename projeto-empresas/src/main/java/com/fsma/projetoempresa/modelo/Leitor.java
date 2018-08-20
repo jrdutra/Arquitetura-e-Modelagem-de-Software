@@ -1,4 +1,4 @@
-package com.fsma.projetoempresa;
+package com.fsma.projetoempresa.modelo;
 
 import java.io.IOException;
 import java.io.BufferedReader;
