@@ -20,8 +20,8 @@ public class EmpresaDao implements Serializable {
 	//@Inject
 	private EntityManager em;
 	//no lugar do inject e postconstruct fiz o construtor instanciando o em e dao
-	public EmpresaDao() {
-		this.em = JPAUtil.getEntityManager();
+	public EmpresaDao(EntityManager em2) {
+		this.em = em2;
 		this.dao = new DAO<Empresa>(this.em, Empresa.class);
 	}
 

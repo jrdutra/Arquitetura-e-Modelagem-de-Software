@@ -16,5 +16,4 @@ public class JPAUtil {
 	public void close(EntityManager em) {
 		em.close();
 	}
-
 }
