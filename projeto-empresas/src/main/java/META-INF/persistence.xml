@@ -56,6 +56,8 @@
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.default_schema" value="dbempresas" />
 			<property name="hibernate.max_fetch_depth" value="3" />
+			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
+			
 			
 			<property name="hibernate.c3p0.min_size" value="5" />
 			<property name="hibernate.c3p0.max_size" value="25" />
@@ -66,6 +68,7 @@
 			<property name="hibernate.c3p0.preferredTestQuery"  value="select 1" />
 			
 		</properties>
+		
 	</persistence-unit>
 
 </persistence>

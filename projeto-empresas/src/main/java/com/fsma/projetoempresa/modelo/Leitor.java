@@ -252,6 +252,7 @@ public class Leitor {
 		// pega as empresas em ordem
 		
 		for (int i = 0; i < (k_value + 1); i++) {
+			//lst_empresa_aux.get(i).setId((long) k_value);
 			this.lst_empresa.add(lst_empresa_aux.get(i));
 		}
 		//this.lst_empresa.remove(j);

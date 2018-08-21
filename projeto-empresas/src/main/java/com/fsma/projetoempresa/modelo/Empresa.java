@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "tb_empresa")
+@Table(name = "tbempresa")
 public class Empresa implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -22,10 +22,9 @@ public class Empresa implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	private LocalDate data_termino_fiscalizacao;
-	@Column(name = "cnpj", unique = true)
+	private LocalDate dataterminofiscalizacao;
 	private String cnpj;
-	private String razao_social;
+	private String razaosocial;
 	private String logradouro;
 	private String cep;
 	private String bairro;
@@ -33,10 +32,10 @@ public class Empresa implements Serializable{
 	private String uf;
 	
 	public LocalDate getData_termino_fiscalizacao() {
-		return data_termino_fiscalizacao;
+		return dataterminofiscalizacao;
 	}
 	public void setData_termino_fiscalizacao(LocalDate data_termino_fiscalizacao) {
-		this.data_termino_fiscalizacao = data_termino_fiscalizacao;
+		this.dataterminofiscalizacao = data_termino_fiscalizacao;
 	}
 	public String getCnpj() {
 		return cnpj;
@@ -45,10 +44,10 @@ public class Empresa implements Serializable{
 		this.cnpj = cnpj;
 	}
 	public String getRazao_social() {
-		return razao_social;
+		return razaosocial;
 	}
-	public void setRazao_social(String razao_social) {
-		this.razao_social = razao_social;
+	public void setRazao_social(String razaosocial) {
+		this.razaosocial = razaosocial;
 	}
 	public String getLogradouro() {
 		return logradouro;
@@ -92,7 +91,7 @@ public class Empresa implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "\n" + cnpj + " " + razao_social;
+		return "\n" + cnpj + " " + razaosocial;
 	}
 	@Override
 	public int hashCode() {
@@ -101,11 +100,11 @@ public class Empresa implements Serializable{
 		result = prime * result + ((bairro == null) ? 0 : bairro.hashCode());
 		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
 		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
-		result = prime * result + ((data_termino_fiscalizacao == null) ? 0 : data_termino_fiscalizacao.hashCode());
+		result = prime * result + ((dataterminofiscalizacao == null) ? 0 : dataterminofiscalizacao.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((logradouro == null) ? 0 : logradouro.hashCode());
 		result = prime * result + ((municipio == null) ? 0 : municipio.hashCode());
-		result = prime * result + ((razao_social == null) ? 0 : razao_social.hashCode());
+		result = prime * result + ((razaosocial == null) ? 0 : razaosocial.hashCode());
 		result = prime * result + ((uf == null) ? 0 : uf.hashCode());
 		return result;
 	}
@@ -133,10 +132,10 @@ public class Empresa implements Serializable{
 				return false;
 		} else if (!cnpj.equals(other.cnpj))
 			return false;
-		if (data_termino_fiscalizacao == null) {
-			if (other.data_termino_fiscalizacao != null)
+		if (dataterminofiscalizacao == null) {
+			if (other.dataterminofiscalizacao != null)
 				return false;
-		} else if (!data_termino_fiscalizacao.equals(other.data_termino_fiscalizacao))
+		} else if (!dataterminofiscalizacao.equals(other.dataterminofiscalizacao))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -153,10 +152,10 @@ public class Empresa implements Serializable{
 				return false;
 		} else if (!municipio.equals(other.municipio))
 			return false;
-		if (razao_social == null) {
-			if (other.razao_social != null)
+		if (razaosocial == null) {
+			if (other.razaosocial != null)
 				return false;
-		} else if (!razao_social.equals(other.razao_social))
+		} else if (!razaosocial.equals(other.razaosocial))
 			return false;
 		if (uf == null) {
 			if (other.uf != null)

@@ -44,7 +44,7 @@ public class EmpresaDao implements Serializable {
 		}
 	}
 	
-	public Empresa buscaUsuarioPelaAutenticacao(Empresa empresa) {
+	public Empresa buscaEmpresaPeloCNPJ(Empresa empresa) {
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" select e from tb_empresa e ");
 		jpql.append(" where ");

@@ -19,15 +19,31 @@ public class Inicio {
 		Leitor leitor = new Leitor("C:\\Users\\jrdut\\Desktop\\JAVA\\Arquitetura-e-Modelagem-de-Software\\projeto-empresas\\teste.csv", ";");
 		lista_de_empresas = leitor.getTodasEmpresas();
 		lista_de_empresas_tratadas = leitor.trataTodasEmpresas(lista_de_empresas);
-			
+		Empresa empresa = new Empresa();	
+		
+		
+		
+		
+		
 		EntityManager em = JPAUtil.getEntityManager();
 		EmpresaDao empresaDao = new EmpresaDao(em);
-
+		
+		
+		
+		//Grava uma empresa
+		/*
+		em.getTransaction().begin();
+		em.persist(empresa);
+		em.getTransaction().commit();
+		*/
+		
 		try {
+			
 			em.getTransaction().begin();
 			//adiciona empresa por empresa
 			for(int i = 0; i < lista_de_empresas_tratadas.size(); i++) {
-				empresaDao.adiciona(lista_de_empresas_tratadas.get(i));
+				empresa = lista_de_empresas_tratadas.get(i);
+				em.persist(empresa);
 			}
 			em.getTransaction().commit();
 		} 
@@ -35,6 +51,7 @@ public class Inicio {
 			em.getTransaction().rollback();
 		}
 		
-		System.out.println(lista_de_empresas_tratadas);
+		
+		System.out.println(empresa);
 	}
 }
