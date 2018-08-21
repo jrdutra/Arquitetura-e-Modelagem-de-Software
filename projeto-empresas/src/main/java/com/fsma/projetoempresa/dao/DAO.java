@@ -4,57 +4,61 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
-import com.fsma.projetoempresa.modelo.Empresa;
 
-@SuppressWarnings("hiding")
-public class DAO<Empresa> implements Serializable {
+
+public class DAO<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private final Class<Empresa> classe;
+	private final Class<T> classe;
 	private EntityManager em;
 
-	public DAO(EntityManager em, Class<Empresa> classe) {
+	public DAO(EntityManager em, Class<T> classe) {
 		this.classe = classe;
 		this.em = em;
 	}
 
-	public void adiciona(Empresa empresa) {
+	public void adiciona(T empresa) {
 		em.persist(empresa);
 	}
 
-	public void remove(Empresa empresa) {
+	public void remove(T empresa) {
 		em.remove(em.merge(empresa));
 	}
 
-	public void atualiza(Empresa empresa) {
+	public void atualiza(T empresa) {
 		em.merge(empresa);
 	}
 
-	public List<Empresa> listaTodos() {
+	public List<T> listaTodos() {
 
-		CriteriaQuery<Empresa> query = em.getCriteriaBuilder().createQuery(classe);
+		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
 		query.select(query.from(classe));
 
-		List<Empresa> lista = em.createQuery(query).getResultList();
+		List<T> lista = em.createQuery(query).getResultList();
 
 		return lista;
 	}
 
-	public Empresa buscaPorId(Long id) {
-		Empresa instancia = em.find(classe, id);
+	public T buscaPorId(Long id) {
+		T instancia = em.find(classe, id);
 		return instancia;
 	}
 
-	public List<Empresa> listaTodosPaginada(int firstResult, int maxResults) {
+	public List<T> listaTodosPaginada(int firstResult, int maxResults) {
 
-		CriteriaQuery<Empresa> query = em.getCriteriaBuilder().createQuery(classe);
+		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
 		query.select(query.from(classe));
 
-		List<Empresa> lista = em.createQuery(query).setFirstResult(firstResult)
+		List<T> lista = em.createQuery(query).setFirstResult(firstResult)
 				.setMaxResults(maxResults).getResultList();
 
 		return lista;
 	}
-
+	
+	public EntityManager getEntityManager() {
+		return this.em;
+	}
+	
+	
 }
