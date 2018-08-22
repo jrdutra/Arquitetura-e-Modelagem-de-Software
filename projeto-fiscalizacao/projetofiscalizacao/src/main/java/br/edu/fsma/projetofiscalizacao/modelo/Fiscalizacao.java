@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,21 +21,27 @@ public class Fiscalizacao implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
+	@Column(name = "idfiscalizacao")
+	private Long idfiscalizacao;
 	
+	@OneToOne
+	@JoinColumn(name = "idempresa")
 	private Empresa empresa;
+	
 	private LocalDate dataterminofiscalizacao;
 	private String logradouro;
 	private String cep;
+	
+	@ManyToOne
+	@JoinColumn(name = "idbairro")
 	private Bairro bairro;
 	
 	
 	public Long getId() {
-		return id;
+		return idfiscalizacao;
 	}
 	public void setId(Long id) {
-		this.id = id;
+		this.idfiscalizacao = id;
 	}
 	public Empresa getEmpresa() {
 		return empresa;
@@ -53,11 +62,28 @@ public class Fiscalizacao implements Serializable{
 	public void setBairro(Bairro bairro) {
 		this.bairro = bairro;
 	}
+	
+	
+	
+	public String getLogradouro() {
+		return logradouro;
+	}
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+	public String getCep() {
+		return cep;
+	}
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
 	@Override
 	public String toString() {
-		return "Fiscalizacao [id=" + id + ", empresa=" + empresa + ", dataterminofiscalizacao="
+		return "Fiscalizacao [id=" + idfiscalizacao + ", empresa=" + empresa + ", dataterminofiscalizacao="
 				+ dataterminofiscalizacao + ", bairro=" + bairro + "]";
 	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -66,7 +92,7 @@ public class Fiscalizacao implements Serializable{
 		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
 		result = prime * result + ((dataterminofiscalizacao == null) ? 0 : dataterminofiscalizacao.hashCode());
 		result = prime * result + ((empresa == null) ? 0 : empresa.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idfiscalizacao == null) ? 0 : idfiscalizacao.hashCode());
 		result = prime * result + ((logradouro == null) ? 0 : logradouro.hashCode());
 		return result;
 	}
@@ -99,10 +125,10 @@ public class Fiscalizacao implements Serializable{
 				return false;
 		} else if (!empresa.equals(other.empresa))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (idfiscalizacao == null) {
+			if (other.idfiscalizacao != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idfiscalizacao.equals(other.idfiscalizacao))
 			return false;
 		if (logradouro == null) {
 			if (other.logradouro != null)

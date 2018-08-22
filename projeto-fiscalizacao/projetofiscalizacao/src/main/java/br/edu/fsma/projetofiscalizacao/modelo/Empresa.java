@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -20,15 +23,21 @@ public class Empresa implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
+	@Column(name = "idempresa")
+	private Long idempresa;
 	
 	private String cnpj;
 	private String razaosocial;
+	
+	@OneToMany( targetEntity=Fiscalizacao.class )
+	@JoinColumn(name = "idfiscalizacao")
 	private ArrayList<Fiscalizacao> fiscalizacoes = new ArrayList<Fiscalizacao>();
 	
 	private String logradouro;
 	private String cep;
+	
+	@ManyToOne
+	@JoinColumn(name = "idbairro")
 	private Bairro bairro;
 	
 	public ArrayList<Fiscalizacao> getFiscalizacoes() {
@@ -36,18 +45,18 @@ public class Empresa implements Serializable{
 	}
 	
 	public void recebeFiscalizacao(Fiscalizacao fiscalizacao) {
-		
 		this.fiscalizacoes.add(fiscalizacao);
 		this.setBairro(fiscalizacao.getBairro());
-		
+		this.setCep(fiscalizacao.getCep());
+		this.setLogradouro(fiscalizacao.getLogradouro());
 	}
 	
 	public Long getId() {
-		return id;
+		return idempresa;
 	}
 	
 	public void setId(Long id) {
-		this.id = id;
+		this.idempresa = id;
 	}
 
 	public String getCnpj() {
@@ -74,8 +83,7 @@ public class Empresa implements Serializable{
 		this.bairro = bairro;
 	}
 	
-	
-	
+
 	public String getLogradouro() {
 		return logradouro;
 	}
@@ -104,7 +112,7 @@ public class Empresa implements Serializable{
 		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
 		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
 		result = prime * result + ((fiscalizacoes == null) ? 0 : fiscalizacoes.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idempresa == null) ? 0 : idempresa.hashCode());
 		result = prime * result + ((logradouro == null) ? 0 : logradouro.hashCode());
 		result = prime * result + ((razaosocial == null) ? 0 : razaosocial.hashCode());
 		return result;
@@ -138,10 +146,10 @@ public class Empresa implements Serializable{
 				return false;
 		} else if (!fiscalizacoes.equals(other.fiscalizacoes))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (idempresa == null) {
+			if (other.idempresa != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idempresa.equals(other.idempresa))
 			return false;
 		if (logradouro == null) {
 			if (other.logradouro != null)

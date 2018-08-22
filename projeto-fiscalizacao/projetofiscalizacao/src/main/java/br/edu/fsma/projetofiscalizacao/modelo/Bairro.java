@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,16 +19,20 @@ public class Bairro implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
+	@Column(name = "idbairro")
+	private Long idbairro;
+	
+	@OneToOne
+	@JoinColumn(name = "idmunicipio")
+	private Municipio municipio;
 	
 	private String nome;
 	
 	public Long getId() {
-		return id;
+		return idbairro;
 	}
 	public void setId(Long id) {
-		this.id = id;
+		this.idbairro = id;
 	}
 	public String getNome() {
 		return nome;
@@ -35,12 +41,18 @@ public class Bairro implements Serializable{
 		this.nome = nome;
 	}
 	
+	public Municipio getMunicipio() {
+		return municipio;
+	}
+	public void setMunicipio(Municipio municipio) {
+		this.municipio = municipio;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idbairro == null) ? 0 : idbairro.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}
@@ -54,10 +66,10 @@ public class Bairro implements Serializable{
 			return false;
 		Bairro other = (Bairro) obj;
 		
-		if (id == null) {
-			if (other.id != null)
+		if (idbairro == null) {
+			if (other.idbairro != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idbairro.equals(other.idbairro))
 			return false;
 		
 		if (nome == null) {
@@ -69,7 +81,7 @@ public class Bairro implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Bairro [id=" + id + ", nome=" + nome + "]";
+		return "Bairro [id=" + idbairro + ", nome=" + nome + "]";
 	}
 	
 	

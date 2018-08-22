@@ -18,8 +18,9 @@ public class Uf implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
+	@Column(name = "iduf")
+	private Long iduf;
+	
 	private String nome;
 
 	public String getNome() {
@@ -28,6 +29,16 @@ public class Uf implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	
+
+	public Long getIduf() {
+		return iduf;
+	}
+
+	public void setIduf(Long iduf) {
+		this.iduf = iduf;
 	}
 
 	@Override
