@@ -4,10 +4,14 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "tbfiscalizacao")
 public class Fiscalizacao implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -35,6 +39,7 @@ public class Fiscalizacao implements Serializable{
 	}
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
+		this.empresa.recebeFiscalizacao(this);
 	}
 	public LocalDate getDataterminofiscalizacao() {
 		return dataterminofiscalizacao;

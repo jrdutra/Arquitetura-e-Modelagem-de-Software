@@ -35,8 +35,11 @@ public class Empresa implements Serializable{
 		return (ArrayList<Fiscalizacao>) Collections.unmodifiableList(fiscalizacoes);
 	}
 	
-	public void setFiscalizacoes(ArrayList<Fiscalizacao> fiscalizacoes) {
-		this.fiscalizacoes = fiscalizacoes;
+	public void recebeFiscalizacao(Fiscalizacao fiscalizacao) {
+		
+		this.fiscalizacoes.add(fiscalizacao);
+		this.setBairro(fiscalizacao.getBairro());
+		
 	}
 	
 	public Long getId() {
@@ -71,6 +74,24 @@ public class Empresa implements Serializable{
 		this.bairro = bairro;
 	}
 	
+	
+	
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
 	@Override
 	public String toString() {
 		return "\n" + cnpj + " " + razaosocial;
