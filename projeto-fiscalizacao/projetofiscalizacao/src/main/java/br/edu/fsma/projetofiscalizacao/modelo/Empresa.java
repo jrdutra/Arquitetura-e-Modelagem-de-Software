@@ -29,7 +29,7 @@ public class Empresa implements Serializable{
 	private String cnpj;
 	private String razaosocial;
 	
-	@OneToMany(targetEntity=Fiscalizacao.class)
+	@OneToMany(targetEntity=Fiscalizacao.class, mappedBy="tbempresa")
 	@JoinColumn(name = "idfiscalizacao")
 	private ArrayList<Fiscalizacao> fiscalizacoes = new ArrayList<Fiscalizacao>();
 	
