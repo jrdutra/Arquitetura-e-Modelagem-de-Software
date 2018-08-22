@@ -29,7 +29,7 @@ public class Empresa implements Serializable{
 	private String cnpj;
 	private String razaosocial;
 	
-	@OneToMany( targetEntity=Fiscalizacao.class )
+	@OneToMany(targetEntity=Fiscalizacao.class)
 	@JoinColumn(name = "idfiscalizacao")
 	private ArrayList<Fiscalizacao> fiscalizacoes = new ArrayList<Fiscalizacao>();
 	
@@ -37,7 +37,7 @@ public class Empresa implements Serializable{
 	private String cep;
 	
 	@ManyToOne
-	@JoinColumn(name = "idbairro")
+	@JoinColumn(name = "idbairro", referencedColumnName="idbairro")
 	private Bairro bairro;
 	
 	public ArrayList<Fiscalizacao> getFiscalizacoes() {
@@ -83,7 +83,6 @@ public class Empresa implements Serializable{
 		this.bairro = bairro;
 	}
 	
-
 	public String getLogradouro() {
 		return logradouro;
 	}

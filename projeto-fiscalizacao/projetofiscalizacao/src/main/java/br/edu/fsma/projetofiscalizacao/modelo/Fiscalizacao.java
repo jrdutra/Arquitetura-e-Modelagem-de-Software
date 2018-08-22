@@ -25,7 +25,7 @@ public class Fiscalizacao implements Serializable{
 	private Long idfiscalizacao;
 	
 	@OneToOne
-	@JoinColumn(name = "idempresa")
+	@JoinColumn(name = "idempresa", referencedColumnName="idempresa")
 	private Empresa empresa;
 	
 	private LocalDate dataterminofiscalizacao;
@@ -33,7 +33,7 @@ public class Fiscalizacao implements Serializable{
 	private String cep;
 	
 	@ManyToOne
-	@JoinColumn(name = "idbairro")
+	@JoinColumn(name = "idbairro", referencedColumnName="idbairro")
 	private Bairro bairro;
 	
 	

@@ -23,7 +23,7 @@ public class Municipio implements Serializable{
 	private Long idmunicipio;
 	
 	@OneToOne
-	@JoinColumn(name = "iduf")
+	@JoinColumn(name = "iduf", referencedColumnName="iduf")
 	private Uf uf;
 	private String nome;
 	
