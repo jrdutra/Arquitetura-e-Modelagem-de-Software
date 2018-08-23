@@ -24,6 +24,7 @@ public class Main {
 		String razaosocial;
 		Empresa empresa = new Empresa();
 		Fiscalizacao fiscalizacao = new Fiscalizacao();
+		Fiscalizacao fiscalizacao2 = new Fiscalizacao();
 		Bairro bairro = new Bairro();
 		Municipio municipio = new Municipio();
 		Uf uf = new Uf();
@@ -62,7 +63,14 @@ public class Main {
 		fiscalizacao.setBairro(bairro);
 		fiscalizacao.setEmpresa(empresa);
 		
+		fiscalizacao2.setLogradouro("LOGRADOURO TESTE");
+		fiscalizacao2.setCep("46235-665");
+		fiscalizacao2.setDataterminofiscalizacao(dataterminofiscalizacao);
+		fiscalizacao2.setBairro(bairro);
+		fiscalizacao2.setEmpresa(empresa);
+		
 		empresa.recebeFiscalizacao(fiscalizacao);
+		empresa.recebeFiscalizacao(fiscalizacao2);
 		
 		try {
 			
@@ -74,6 +82,9 @@ public class Main {
 			empresadao.adiciona(empresa);
 			
 			fiscalizacaodao.adiciona(fiscalizacao);
+			fiscalizacaodao.adiciona(fiscalizacao2);
+			
+			empresadao.atualiza(empresa);
 			
 			em.getTransaction().commit();
 		} 
