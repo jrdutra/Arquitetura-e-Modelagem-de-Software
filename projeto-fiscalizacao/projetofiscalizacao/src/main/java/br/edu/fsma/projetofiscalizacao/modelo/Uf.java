@@ -30,8 +30,6 @@ public class Uf implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
 
 	public Long getIduf() {
 		return iduf;

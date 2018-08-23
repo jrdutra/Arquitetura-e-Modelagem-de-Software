@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
-import com.fsma.projetoempresa.conexao.JPAUtil;
+
 import com.fsma.projetoempresa.dao.DAO;
 import com.fsma.projetoempresa.modelo.Empresa;
 
