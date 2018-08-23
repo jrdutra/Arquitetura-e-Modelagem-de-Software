@@ -17,6 +17,9 @@ public class Main {
 		//EXEMPLO DE FISCALIZACAO DO ARQUIVO:
 		//2010;2010/06;96.534.094/0001-58;ACCENTURE DO BRASIL LTDA;RUA ALEXANDRE DUMAS,2051;04717-004;CHAC SANTO ANTONIO;São Paulo;São Paulo
 		
+		ImportadorDeArquivo imp = new ImportadorDeArquivo("C:\\\\Users\\\\jrdut\\\\Desktop\\\\JAVA\\\\Arquitetura-e-Modelagem-de-Software\\\\projeto-empresas\\\\teste.csv");
+		imp.importarArquivoParaBanco();
+		/*
 		LocalDate dataterminofiscalizacao;
 		String logradouro;
 		String cep;
@@ -91,5 +94,6 @@ public class Main {
 		catch(Exception ex)  {
 			em.getTransaction().rollback();
 		}
+		*/
 	}
 }

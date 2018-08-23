@@ -37,6 +37,22 @@ public class UfDAO implements Serializable {
 		}
 	}
 	
+	public Uf buscaUfPorNome(Uf uf) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select u from tbuf u ");
+		jpql.append(" where ");
+		jpql.append("       u.nome = :pNome ");
+		
+		TypedQuery<Uf> query = em.createQuery(jpql.toString() , Uf.class);
+		
+		query.setParameter("pNome", uf.getNome());
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException ex) {
+			return null;
+		}
+	}
+	
 	public void adiciona(Uf uf) {
 		this.dao.adiciona(uf);
 	}

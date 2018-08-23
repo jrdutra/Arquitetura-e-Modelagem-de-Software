@@ -8,6 +8,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.edu.fsma.projetofiscalizacao.modelo.Municipio;
+import br.edu.fsma.projetofiscalizacao.modelo.Uf;
 
 public class MunicipioDAO implements Serializable {
 
@@ -34,6 +35,22 @@ public class MunicipioDAO implements Serializable {
 			return true;
 		} catch (NoResultException ex) {
 			return false;
+		}
+	}
+	
+	public Municipio buscaMunicipioPorNome(Municipio municipio) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select m from tbmunicipio m ");
+		jpql.append(" where ");
+		jpql.append("       m.nome = :pNome ");
+		
+		TypedQuery<Municipio> query = em.createQuery(jpql.toString() , Municipio.class);
+		
+		query.setParameter("pNome", municipio.getNome());
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException ex) {
+			return null;
 		}
 	}
 	
