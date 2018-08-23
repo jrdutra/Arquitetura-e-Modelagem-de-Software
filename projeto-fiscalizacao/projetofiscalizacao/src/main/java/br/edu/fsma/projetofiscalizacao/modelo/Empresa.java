@@ -1,10 +1,12 @@
 package br.edu.fsma.projetofiscalizacao.modelo;
 
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,8 +31,11 @@ public class Empresa implements Serializable{
 	private String cnpj;
 	private String razaosocial;
 	
+	/*
 	@OneToMany(targetEntity=Fiscalizacao.class, mappedBy="tbempresa")
-	@JoinColumn(name = "idfiscalizacao")
+	@JoinColumn(name = "idfiscalizacao")*/
+	
+	@Embedded
 	private ArrayList<Fiscalizacao> fiscalizacoes = new ArrayList<Fiscalizacao>();
 	
 	private String logradouro;
@@ -40,6 +45,7 @@ public class Empresa implements Serializable{
 	@JoinColumn(name = "idbairro", referencedColumnName="idbairro")
 	private Bairro bairro;
 	
+
 	public ArrayList<Fiscalizacao> getFiscalizacoes() {
 		return (ArrayList<Fiscalizacao>) Collections.unmodifiableList(fiscalizacoes);
 	}
@@ -98,6 +104,8 @@ public class Empresa implements Serializable{
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
+	
+	
 
 	@Override
 	public String toString() {
