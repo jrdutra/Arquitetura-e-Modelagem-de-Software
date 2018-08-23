@@ -80,10 +80,10 @@ public class Main {
 			municipiodao.adiciona(municipio);
 			bairrodao.adiciona(bairro);
 			empresadao.adiciona(empresa);
-			
 			fiscalizacaodao.adiciona(fiscalizacao);
-			fiscalizacaodao.adiciona(fiscalizacao2);
 			
+			fiscalizacaodao.adiciona(fiscalizacao2);
+				
 			empresadao.atualiza(empresa);
 			
 			em.getTransaction().commit();
@@ -91,7 +91,5 @@ public class Main {
 		catch(Exception ex)  {
 			em.getTransaction().rollback();
 		}
-		
-		
 	}
 }
