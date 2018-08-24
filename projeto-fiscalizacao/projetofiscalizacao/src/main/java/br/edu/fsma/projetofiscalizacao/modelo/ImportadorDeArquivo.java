@@ -46,7 +46,7 @@ public class ImportadorDeArquivo {
     //private Bairro objBairro;
     //private Fiscalizacao objFiscalizacao;
     //private Empresa objEmpresa;
-    
+ 
     //OBJETOS DE PERSISTENCIA
     //private UfDAO objUfDAO;
     //private MunicipioDAO objMunicipioDAO;
@@ -140,9 +140,23 @@ public class ImportadorDeArquivo {
     }
 	
 	public Boolean importarArquivoParaBanco() {
+		//Declara objetos locais
+		
+		//Objetos do modelo
+	    Uf objUf;
+	    Municipio objMunicipio;
+	    Bairro objBairro;
+	    Fiscalizacao objFiscalizacao;
+	    Empresa objEmpresa;
+	 
+	    //Objetos de Persistencia
 		EntityManager em = JPAUtil.getEntityManager();
-		UfDAO objUfDAO = new UfDAO(em);
-		Uf objUf = new Uf();
+	    UfDAO objUfDAO = new UfDAO(em);
+	    MunicipioDAO objMunicipioDAO = new MunicipioDAO(em);
+	    BairroDAO objBairroDAO = new BairroDAO(em);
+	    FiscalizacaoDAO objFiscalizacaoDAO = new FiscalizacaoDAO(em);
+	    EmpresaDAO objEmpresaDAO = new EmpresaDAO(em);
+
 		try {
 	        br = new BufferedReader(new InputStreamReader(new FileInputStream(file_dir), "ISO-8859-1"));
 	        //================================
@@ -167,13 +181,13 @@ public class ImportadorDeArquivo {
 		        			System.out.println("Erro na leitura do CNPJ na linha " + num_linha);
 		        		}
 		        		try { //Lê Razap SOcial
-		        			this.razaoSocial = (celula[3].toUpperCase());
+		        			this.razaoSocial = this.removerAcentos((celula[3].toUpperCase()));
 		        		}
 		        		catch (Exception e) {
 		        			System.out.println("Erro na leitura da Razao Social na linha " + num_linha);
 		        		}
 		        		try { //Lê Logradouro
-		        			this.logradouro = (celula[4].toUpperCase());
+		        			this.logradouro = this.removerAcentos((celula[4].toUpperCase()));
 		        		}
 		        		catch (Exception e) {
 		        			System.out.println("Erro na leitura do Logradouro na linha " + num_linha);
@@ -185,13 +199,13 @@ public class ImportadorDeArquivo {
 		        			System.out.println("Erro na leitura do CEP na linha " + num_linha);
 		        		}
 		        		try { //Lê Bairro
-		        			this.bairro = (celula[6].toUpperCase());
+		        			this.bairro = this.removerAcentos((celula[6].toUpperCase()));
 		        		}
 		        		catch (Exception e) {
 		        			System.out.println("Erro na leitura do Bairro na linha " + num_linha);
 		        		}
 		        		try { //Lê Municipio
-		        			this.municipio = (celula[7].toUpperCase());
+		        			this.municipio = this.removerAcentos((celula[7].toUpperCase()));
 		        		}
 		        		catch (Exception e) {
 		        			System.out.println("Erro na leitura do Municipio na linha " + num_linha);
@@ -212,31 +226,32 @@ public class ImportadorDeArquivo {
 			        			// INICIO DA LOGICA DE PERSISTENCIA
 			        			//==================================
 			        			em.getTransaction().begin();
+			        			
+			        			
 			        			objUf = new Uf();
 			        			objUf.setNome(this.uf);
 			        			//Testa se UF ja existe, se existe pega se nao exite grava
 			        			//objUfDAO.existe(objUf)
 			        			
 			        			if(objUfDAO.existe(objUf)){
-			        				objUf = objUfDAO.buscaUfPorNome(objUf.getNome());
+			        				objUf = objUfDAO.buscaUfPorNome(objUf);
 			        			}
 			        			else
 			        			{
 			        				objUfDAO.adiciona(objUf);
 			        			}
 			        			
-			        			
 			        			/*
-			        			this.objMunicipio = new Municipio();
-			        			this.objMunicipioDAO = new MunicipioDAO(em);
-			        			this.objMunicipio.setUf(this.objUf);
-			        			this.objMunicipio.setNome(this.municipio);
+			        			objMunicipio = new Municipio();
+			        			objMunicipioDAO = new MunicipioDAO(em);
+			        			objMunicipio.setUf(objUf);
+			        			objMunicipio.setNome(this.municipio);
 			        			
 			        			//Testa se Munnicipio ja existe, se existe pega se nao exite grava
 			        			if(objMunicipioDAO.existe(objMunicipio)) {
-			        				this.objMunicipio = this.objMunicipioDAO.buscaMunicipioPorNome(this.objMunicipio);
+			        				objMunicipio = objMunicipioDAO.buscaMunicipioPorNome(objMunicipio);
 			        			}else {
-			        				this.objMunicipioDAO.adiciona(objMunicipio);
+			        				objMunicipioDAO.adiciona(objMunicipio);
 			        			}
 			        			
 			        			

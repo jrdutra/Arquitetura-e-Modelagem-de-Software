@@ -38,10 +38,8 @@ public class UfDAO implements Serializable {
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" select u from Uf u ");
 		jpql.append(" where ");
-		jpql.append("       u.nome = :pNome ");
-		
+		jpql.append(" u.nome = :pNome ");
 		TypedQuery<Uf> query = em.createQuery(jpql.toString() , Uf.class);
-		
 		query.setParameter("pNome", uf.getNome());
 		try {
 			return query.getSingleResult();

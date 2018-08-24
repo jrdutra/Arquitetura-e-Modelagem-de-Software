@@ -27,7 +27,7 @@ public class BairroDAO implements Serializable {
 		@SuppressWarnings("unused")
 		Bairro resultado = new Bairro();
 		TypedQuery<Bairro> query = em.createQuery(
-				  " select b from tbbairro b "
+				  " select b from Bairro b "
 				+ " where b.Nome = :pNome", Bairro.class);
 		query.setParameter("pNome", bairro.getNome());
 		try {
@@ -40,9 +40,9 @@ public class BairroDAO implements Serializable {
 	
 	public Bairro buscaBairroPorNome(Bairro bairro) {
 		StringBuilder jpql = new StringBuilder();
-		jpql.append(" select b from tbmunicipio b ");
+		jpql.append(" select b from Bairro b ");
 		jpql.append(" where ");
-		jpql.append("       b.nome = :pNome ");
+		jpql.append(" b.nome = :pNome ");
 		
 		TypedQuery<Bairro> query = em.createQuery(jpql.toString() , Bairro.class);
 		
