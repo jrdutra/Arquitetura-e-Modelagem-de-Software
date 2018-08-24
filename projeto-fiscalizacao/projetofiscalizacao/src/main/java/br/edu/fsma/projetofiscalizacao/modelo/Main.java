@@ -18,7 +18,17 @@ public class Main {
 		//2010;2010/06;96.534.094/0001-58;ACCENTURE DO BRASIL LTDA;RUA ALEXANDRE DUMAS,2051;04717-004;CHAC SANTO ANTONIO;São Paulo;São Paulo
 		
 		ImportadorDeArquivo imp = new ImportadorDeArquivo("C:\\\\Users\\\\jrdut\\\\Desktop\\\\JAVA\\\\Arquitetura-e-Modelagem-de-Software\\\\projeto-empresas\\\\teste.csv");
-		imp.importarArquivoParaBanco();
+		boolean resultado = imp.importarArquivoParaBanco();
+		
+		/*
+		Uf uf = new Uf();
+		uf.setNome("São Paulo");
+		EntityManager em = JPAUtil.getEntityManager();
+		UfDAO ufdao = new UfDAO(em);
+		em.getTransaction().begin();
+		ufdao.adiciona(uf);
+		em.getTransaction().commit();
+		*/
 		/*
 		LocalDate dataterminofiscalizacao;
 		String logradouro;
@@ -33,12 +43,12 @@ public class Main {
 		Uf uf = new Uf();
 
 		
-		EntityManager em = JPAUtil.getEntityManager();
+		
 		EmpresaDAO empresadao = new EmpresaDAO(em);
 		FiscalizacaoDAO fiscalizacaodao = new FiscalizacaoDAO(em);
 		BairroDAO bairrodao = new BairroDAO(em);
 		MunicipioDAO municipiodao = new MunicipioDAO(em);
-		UfDAO ufdao = new UfDAO(em);
+		
 		
 		//Setando os atributos dos objetos:
 		logradouro = "RUA ALEXANDRE DUMAS,2051";

@@ -20,7 +20,6 @@ public class Uf implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "iduf")
 	private Long iduf;
-	
 	private String nome;
 
 	public String getNome() {

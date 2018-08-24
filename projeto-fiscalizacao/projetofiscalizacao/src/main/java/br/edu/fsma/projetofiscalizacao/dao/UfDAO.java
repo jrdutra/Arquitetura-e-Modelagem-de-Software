@@ -23,11 +23,8 @@ public class UfDAO implements Serializable {
 	}
 	
 	public boolean existe(Uf uf) {
-		@SuppressWarnings("unused")
 		Uf resultado = new Uf();
-		TypedQuery<Uf> query = em.createQuery(
-				  " select u from tbuf u "
-				+ " where u.Nome = :pNome", Uf.class);
+		TypedQuery<Uf> query = em.createQuery("SELECT u FROM Uf u WHERE u.nome=:pNome", Uf.class);
 		query.setParameter("pNome", uf.getNome());
 		try {
 			resultado = query.getSingleResult();
@@ -39,13 +36,29 @@ public class UfDAO implements Serializable {
 	
 	public Uf buscaUfPorNome(Uf uf) {
 		StringBuilder jpql = new StringBuilder();
-		jpql.append(" select u from tbuf u ");
+		jpql.append(" select u from Uf u ");
 		jpql.append(" where ");
 		jpql.append("       u.nome = :pNome ");
 		
 		TypedQuery<Uf> query = em.createQuery(jpql.toString() , Uf.class);
 		
 		query.setParameter("pNome", uf.getNome());
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException ex) {
+			return null;
+		}
+	}
+	
+	public Uf buscaUfPorNome(String nome) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select u from Uf u ");
+		jpql.append(" where ");
+		jpql.append(" u.nome = :pNome ");
+		
+		TypedQuery<Uf> query = em.createQuery(jpql.toString() , Uf.class);
+		
+		query.setParameter("pNome", nome);
 		try {
 			return query.getSingleResult();
 		} catch (NoResultException ex) {

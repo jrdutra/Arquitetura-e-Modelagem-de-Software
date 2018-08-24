@@ -5,21 +5,20 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 
 import javax.persistence.EntityManager;
-
 import java.time.LocalDate;
-
 import br.edu.fsma.projetofiscalizacao.conexao.JPAUtil;
 import br.edu.fsma.projetofiscalizacao.dao.BairroDAO;
 import br.edu.fsma.projetofiscalizacao.dao.MunicipioDAO;
 import br.edu.fsma.projetofiscalizacao.dao.UfDAO;
 import br.edu.fsma.projetofiscalizacao.dao.FiscalizacaoDAO;
 import br.edu.fsma.projetofiscalizacao.dao.EmpresaDAO;
-
 import br.edu.fsma.projetofiscalizacao.modelo.Empresa;
+import br.edu.fsma.projetofiscalizacao.modelo.Uf;
 
 public class ImportadorDeArquivo {
 	
@@ -42,23 +41,27 @@ public class ImportadorDeArquivo {
     private String uf;
     
     //OBJETOS PARA PERSISTIR NO BANCO
-    private Uf objUf;
-    private Municipio objMunicipio;
-    private Bairro objBairro;
-    private Fiscalizacao objFiscalizacao;
-    private Empresa objEmpresa;
+    //private Uf objUf;
+    //private Municipio objMunicipio;
+    //private Bairro objBairro;
+    //private Fiscalizacao objFiscalizacao;
+    //private Empresa objEmpresa;
     
     //OBJETOS DE PERSISTENCIA
-    private UfDAO objUfDAO;
-    private MunicipioDAO objMunicipioDAO;
-    private BairroDAO objBairroDAO;
-    private FiscalizacaoDAO objFiscalizacaoDAO;
-    private EmpresaDAO objEmpresaDAO;
-    private EntityManager em;
+    //private UfDAO objUfDAO;
+    //private MunicipioDAO objMunicipioDAO;
+    //private BairroDAO objBairroDAO;
+    //private FiscalizacaoDAO objFiscalizacaoDAO;
+    //private EmpresaDAO objEmpresaDAO;
+    //private EntityManager em;
 	
 	public ImportadorDeArquivo(String file_dir) {
 		this.file_dir = file_dir;
-		this.em = JPAUtil.getEntityManager();
+		//this.em = JPAUtil.getEntityManager();
+	}
+	
+	private String removerAcentos(String str) {
+	    return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 	}
 	
 	private LocalDate trataData(String data) {
@@ -137,6 +140,9 @@ public class ImportadorDeArquivo {
     }
 	
 	public Boolean importarArquivoParaBanco() {
+		EntityManager em = JPAUtil.getEntityManager();
+		UfDAO objUfDAO = new UfDAO(em);
+		Uf objUf = new Uf();
 		try {
 	        br = new BufferedReader(new InputStreamReader(new FileInputStream(file_dir), "ISO-8859-1"));
 	        //================================
@@ -191,40 +197,36 @@ public class ImportadorDeArquivo {
 		        			System.out.println("Erro na leitura do Municipio na linha " + num_linha);
 		        		}
 		        		try { //Lê UF
-		        			this.uf = (celula[8].toUpperCase());
+		        			this.uf = this.removerAcentos((celula[8].toUpperCase()));
 		        		}
 		        		catch (Exception e) {
 		        			System.out.println("Erro na leitura da UF na linha " + num_linha);
 		        		}
 		        		//so faz a importação se o CNPJ for válido
 		        		if(this.validaCnpj(this.cnpj)) {
-		        			System.out.println("CNPJ Valido");
+		        			
 		        			try {
+		        				
 		        				
 		        				//==================================
 			        			// INICIO DA LOGICA DE PERSISTENCIA
 			        			//==================================
-			        			this.em.getTransaction().begin();
-			        			//Cria os objeto para o endereço
-			        			
-			        			
-			        			
-			        			this.objUf = new Uf();
-			        			this.objUfDAO = new UfDAO(em);
-			        			this.objUf.setNome(this.uf);
-			        			
+			        			em.getTransaction().begin();
+			        			objUf = new Uf();
+			        			objUf.setNome(this.uf);
 			        			//Testa se UF ja existe, se existe pega se nao exite grava
-			        			if(objUfDAO.existe(objUf)) {
-			        				System.out.println("Existe UF");
-			        				this.objUf = this.objUfDAO.buscaUfPorNome(this.objUf);
-			        			}else {
-			        				System.out.println("NAO Existe UF");
-			        				this.objUfDAO.adiciona(objUf);
+			        			//objUfDAO.existe(objUf)
+			        			
+			        			if(objUfDAO.existe(objUf)){
+			        				objUf = objUfDAO.buscaUfPorNome(objUf.getNome());
+			        			}
+			        			else
+			        			{
+			        				objUfDAO.adiciona(objUf);
 			        			}
 			        			
 			        			
-			        			
-			        			
+			        			/*
 			        			this.objMunicipio = new Municipio();
 			        			this.objMunicipioDAO = new MunicipioDAO(em);
 			        			this.objMunicipio.setUf(this.objUf);
@@ -278,13 +280,15 @@ public class ImportadorDeArquivo {
 			        			this.objEmpresa.recebeFiscalizacao(this.objFiscalizacao);
 			        			//atualiza empresa no banco
 			        			this.objEmpresaDAO.atualiza(this.objEmpresa);
-			        			//persiste a fiscalizacao com a empresa
+			        			//persiste a fiscalizacao com a empresa 
+			        			// Já que o cnpj da empresa é válido, cria a fiscalização correspondente a linha*/
 			        			
-			        			// Já que o cnpj da empresa é válido, cria a fiscalização correspondente a linha
-			        			this.em.getTransaction().commit();
+			        			em.getTransaction().commit();
 		        				
+			        			
+			        			
 		        			}catch(Exception ex)  {
-		        				this.em.getTransaction().rollback();
+		        				em.getTransaction().rollback();
 		        			}
 		        			
 		        		}
