@@ -25,9 +25,7 @@ public class BairroDAO implements Serializable {
 	public boolean existe(Bairro bairro) {
 		@SuppressWarnings("unused")
 		Bairro resultado = new Bairro();
-		TypedQuery<Bairro> query = em.createQuery(
-				  " select b from Bairro b "
-				+ " where b.Nome = :pNome", Bairro.class);
+		TypedQuery<Bairro> query = em.createQuery("SELECT b FROM Bairro b WHERE b.nome=:pNome", Bairro.class);
 		query.setParameter("pNome", bairro.getNome());
 		try {
 			resultado = query.getSingleResult();

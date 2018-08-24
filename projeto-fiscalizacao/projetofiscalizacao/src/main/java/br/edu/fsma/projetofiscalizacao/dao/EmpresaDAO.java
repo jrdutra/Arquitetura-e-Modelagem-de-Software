@@ -26,10 +26,10 @@ public class EmpresaDAO implements Serializable{
 	public boolean existe(Empresa empresa) {
 		@SuppressWarnings("unused")
 		Empresa resultado = new Empresa();
-		TypedQuery<Empresa> query = em.createQuery(
-				  " select e from Empresa e "
-				+ " where e.Cnpj = :pCnpj", Empresa.class);
+		System.out.println(empresa.getCnpj());
+		TypedQuery<Empresa> query = em.createQuery("SELECT e FROM Empresa e WHERE e.cnpj=:pCnpj", Empresa.class);
 		query.setParameter("pCnpj", empresa.getCnpj());
+
 		try {
 			resultado = query.getSingleResult();
 			return true;

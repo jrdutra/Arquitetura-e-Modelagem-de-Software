@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.InputMismatchException;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
 import br.edu.fsma.projetofiscalizacao.conexao.JPAUtil;
 import br.edu.fsma.projetofiscalizacao.dao.BairroDAO;
 import br.edu.fsma.projetofiscalizacao.dao.MunicipioDAO;
@@ -256,47 +255,52 @@ public class ImportadorDeArquivo {
 			        			
 			        			
 			        			
-			        			this.objBairro = new Bairro();
-			        			this.objBairroDAO = new BairroDAO(em);
-			        			this.objBairro.setMunicipio(this.objMunicipio);
-			        			this.objBairro.setNome(this.bairro);
+			        			objBairro = new Bairro();
+			        			objBairroDAO = new BairroDAO(em);
+			        			objBairro.setMunicipio(objMunicipio);
+			        			objBairro.setNome(this.bairro);
 			        			
 			        			//Testa se Bairro ja existe, se existe pega se nao exite grava
 			        			if(objBairroDAO.existe(objBairro)) {
-			        				this.objBairro = this.objBairroDAO.buscaBairroPorNome(this.objBairro);
+			        				objBairro = objBairroDAO.buscaBairroPorNome(objBairro);
 			        			}else {
-			        				this.objBairroDAO.adiciona(objBairro);
+			        				objBairroDAO.adiciona(objBairro);
 			        			}
 			        			
-			        			/*
-			        			this.objEmpresa= new Empresa();
-			        			this.objEmpresaDAO = new EmpresaDAO(em);
 			        			
-			        			//Testa se Bairro ja existe, se existe pega se nao exite grava
+			        			objEmpresa= new Empresa();
+			        			objEmpresaDAO = new EmpresaDAO(em);
+			        			objEmpresa.setBairro(objBairro);
+			        			objEmpresa.setCep(this.cep);
+			        			objEmpresa.setCnpj(this.cnpj);
+			        			objEmpresa.setLogradouro(this.logradouro);
+			        			objEmpresa.setRazaosocial(this.razaoSocial);
+			        			
+			        			//Testa se Empresa ja existe, se existe pega se nao exite grava
 			        			if(objEmpresaDAO.existe(objEmpresa)) {
-			        				this.objEmpresa = this.objEmpresaDAO.buscaEmpresaPeloCNPJ(this.objEmpresa);
+			        				objEmpresa = objEmpresaDAO.buscaEmpresaPeloCNPJ(objEmpresa);
 			        			}else {
-			        				this.objEmpresaDAO.adiciona(objEmpresa);
+			        				objEmpresaDAO.adiciona(objEmpresa);
 			        			}
 			        			
 			        			
-			        			this.objFiscalizacao = new Fiscalizacao();
-			        			this.objFiscalizacaoDAO = new FiscalizacaoDAO(em);
-			        			this.objFiscalizacao.setDataterminofiscalizacao(this.dataLida);
-			        			this.objFiscalizacao.setCep(this.cep);
-			        			this.objFiscalizacao.setLogradouro(this.logradouro);
-			        			this.objFiscalizacao.setBairro(this.objBairro);
-			        			this.objFiscalizacao.setEmpresa(this.objEmpresa);
+			        			objFiscalizacao = new Fiscalizacao();
+			        			objFiscalizacaoDAO = new FiscalizacaoDAO(em);
+			        			objFiscalizacao.setDataterminofiscalizacao(this.dataLida);
+			        			objFiscalizacao.setCep(this.cep);
+			        			objFiscalizacao.setLogradouro(this.logradouro);
+			        			objFiscalizacao.setBairro(objBairro);
+			        			objFiscalizacao.setEmpresa(objEmpresa);
 			        			//Persiste a fiscalizacao
-			        			this.objFiscalizacaoDAO.adiciona(this.objFiscalizacao);
+			        			objFiscalizacaoDAO.adiciona(objFiscalizacao);
 			        			
 			        			
 			        			//atualiza endereço empresa
-			        			this.objEmpresa.recebeFiscalizacao(this.objFiscalizacao);
+			        			objEmpresa.recebeFiscalizacao(objFiscalizacao);
 			        			//atualiza empresa no banco
-			        			this.objEmpresaDAO.atualiza(this.objEmpresa);
+			        			objEmpresaDAO.atualiza(objEmpresa);
 			        			//persiste a fiscalizacao com a empresa 
-			        			// Já que o cnpj da empresa é válido, cria a fiscalização correspondente a linha*/
+			        			// Já que o cnpj da empresa é válido, cria a fiscalização correspondente a linha
 			        			
 			        			em.getTransaction().commit();
 		        				
