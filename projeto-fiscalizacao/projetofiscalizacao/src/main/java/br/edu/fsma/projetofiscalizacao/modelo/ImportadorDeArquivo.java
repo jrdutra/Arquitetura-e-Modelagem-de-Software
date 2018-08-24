@@ -241,7 +241,7 @@ public class ImportadorDeArquivo {
 			        				objUfDAO.adiciona(objUf);
 			        			}
 			        			
-			        			/*
+			        			
 			        			objMunicipio = new Municipio();
 			        			objMunicipioDAO = new MunicipioDAO(em);
 			        			objMunicipio.setUf(objUf);
@@ -268,7 +268,7 @@ public class ImportadorDeArquivo {
 			        				this.objBairroDAO.adiciona(objBairro);
 			        			}
 			        			
-			        			
+			        			/*
 			        			this.objEmpresa= new Empresa();
 			        			this.objEmpresaDAO = new EmpresaDAO(em);
 			        			

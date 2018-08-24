@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-
 import br.edu.fsma.projetofiscalizacao.modelo.Municipio;
-import br.edu.fsma.projetofiscalizacao.modelo.Uf;
 
 public class MunicipioDAO implements Serializable {
 
@@ -24,12 +22,12 @@ public class MunicipioDAO implements Serializable {
 	}
 	
 	public boolean existe(Municipio municipio) {
+
 		@SuppressWarnings("unused")
 		Municipio resultado = new Municipio();
-		TypedQuery<Municipio> query = em.createQuery(
-				  " select m from tbmunicipio m "
-				+ " where m.Nome = :pNome", Municipio.class);
+		TypedQuery<Municipio> query = em.createQuery("SELECT m FROM Municipio m WHERE m.nome=:pNome", Municipio.class);
 		query.setParameter("pNome", municipio.getNome());
+		System.out.println(municipio.getNome());
 		try {
 			resultado = query.getSingleResult();
 			return true;
@@ -39,8 +37,9 @@ public class MunicipioDAO implements Serializable {
 	}
 	
 	public Municipio buscaMunicipioPorNome(Municipio municipio) {
+
 		StringBuilder jpql = new StringBuilder();
-		jpql.append(" select m from tbmunicipio m ");
+		jpql.append(" select m from Municipio m ");
 		jpql.append(" where ");
 		jpql.append("       m.nome = :pNome ");
 		

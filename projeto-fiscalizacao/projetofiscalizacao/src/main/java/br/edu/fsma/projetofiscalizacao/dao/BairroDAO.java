@@ -8,7 +8,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.edu.fsma.projetofiscalizacao.modelo.Bairro;
-import br.edu.fsma.projetofiscalizacao.modelo.Municipio;
 
 public class BairroDAO implements Serializable {
 

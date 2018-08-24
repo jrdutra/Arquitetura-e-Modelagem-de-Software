@@ -27,7 +27,7 @@ public class EmpresaDAO implements Serializable{
 		@SuppressWarnings("unused")
 		Empresa resultado = new Empresa();
 		TypedQuery<Empresa> query = em.createQuery(
-				  " select e from tbempresa e "
+				  " select e from Empresa e "
 				+ " where e.Cnpj = :pCnpj", Empresa.class);
 		query.setParameter("pCnpj", empresa.getCnpj());
 		try {
@@ -40,7 +40,7 @@ public class EmpresaDAO implements Serializable{
 	
 	public Empresa buscaEmpresaPeloCNPJ(Empresa empresa) {
 		StringBuilder jpql = new StringBuilder();
-		jpql.append(" select e from tbempresa e ");
+		jpql.append(" select e from Empresa e ");
 		jpql.append(" where ");
 		jpql.append("       e.cnpj = :pCnpj ");
 		

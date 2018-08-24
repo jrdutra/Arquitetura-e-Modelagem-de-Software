@@ -23,6 +23,7 @@ public class UfDAO implements Serializable {
 	}
 	
 	public boolean existe(Uf uf) {
+		@SuppressWarnings("unused")
 		Uf resultado = new Uf();
 		TypedQuery<Uf> query = em.createQuery("SELECT u FROM Uf u WHERE u.nome=:pNome", Uf.class);
 		query.setParameter("pNome", uf.getNome());
