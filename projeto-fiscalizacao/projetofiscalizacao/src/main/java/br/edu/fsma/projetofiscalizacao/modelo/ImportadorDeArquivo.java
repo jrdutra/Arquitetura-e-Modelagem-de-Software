@@ -410,6 +410,7 @@ public class ImportadorDeArquivo {
 			        		
 			        		try { //Lê Razao Social no caso das empresas
 			        			this.razaoSocial = this.removerAcentos((celula[1].toUpperCase()));
+			        			//System.out.println(this.razaoSocial);
 			        		}
 			        		catch (Exception e) {
 			        			System.out.println("Erro na leitura da razao social na linha " + num_linha);
@@ -461,6 +462,7 @@ public class ImportadorDeArquivo {
 			        		
 			        		try { //Lê Razao nome no caso de pessoa fisica
 			        			this.nome = this.removerAcentos((celula[1].toUpperCase()));
+			        			//System.out.println(this.nome);
 			        		}
 			        		catch (Exception e) {
 			        			System.out.println("Erro na leitura do nome na linha " + num_linha);
