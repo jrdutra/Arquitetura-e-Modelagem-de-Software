@@ -54,8 +54,8 @@ public class ImportadorDeArquivo {
     //private EmpresaDAO objEmpresaDAO;
     //private EntityManager em;
 	
-	public ImportadorDeArquivo(String file_dir) {
-		this.file_dir = file_dir;
+	public ImportadorDeArquivo() {
+		//this.file_dir = file_dir;
 		//this.em = JPAUtil.getEntityManager();
 	}
 	
@@ -138,7 +138,7 @@ public class ImportadorDeArquivo {
 	    }
     }
 	
-	public Boolean importarArquivoParaBanco() {
+	public Boolean importarArquivoDeEmpresasParaBanco(String file_dir) {
 		//Declara objetos locais
 		
 		//Objetos do modelo
@@ -219,14 +219,11 @@ public class ImportadorDeArquivo {
 		        		if(this.validaCnpj(this.cnpj)) {
 		        			
 		        			try {
-		        				
-		        				
 		        				//==================================
 			        			// INICIO DA LOGICA DE PERSISTENCIA
 			        			//==================================
 			        			em.getTransaction().begin();
-			        			
-			        			
+
 			        			objUf = new Uf();
 			        			objUf.setNome(this.uf);
 			        			//Testa se UF ja existe, se existe pega se nao exite grava
@@ -341,5 +338,49 @@ public class ImportadorDeArquivo {
 	    }
 	}
 	
+	public Boolean importarArquivoDeFornecedoresParaBanco(String file_dir) {
+
+		try {
+	        br = new BufferedReader(new InputStreamReader(new FileInputStream(file_dir), "ISO-8859-1"));
+	        //================================
+	        //TODO CODIGO DE LEITURA RODA AQUI
+	        //================================
+	        int num_linha = 0;
+	        while ((linha = br.readLine()) != null) {
+	        	if(!linha.contains(";;;;;")) {// Trata se é o rodapé do arquivo.
+		            String[] celula = linha.split(csvDivisor);
+		        	if (num_linha!=0) { //ignora a primeira linha com os cabeçalhos
+		        		
+			        	
+		        		
+		        	}
+		        	num_linha++;//passa para proxima linha
+	        	} 	
+	        }
+	        return true;
+	    } 
+		catch (FileNotFoundException e) {
+			System.out.println("Arquivo não encontrado");
+	        //e.printStackTrace();
+			return false;
+	    } 
+		catch (IOException e) {
+			System.out.println("Erro inesperado: ");
+	        e.printStackTrace();
+	        return false;
+	    } 
+		finally {
+	        if (br != null) {
+	            try {
+	            	
+	                br.close(); //Fecha o arquivo
+	                return true;
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	                return false;
+	            }
+	        }
+	    }
+	}
 
 }
