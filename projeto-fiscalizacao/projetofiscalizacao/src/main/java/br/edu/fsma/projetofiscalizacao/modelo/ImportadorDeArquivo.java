@@ -15,8 +15,8 @@ import br.edu.fsma.projetofiscalizacao.dao.BairroDAO;
 import br.edu.fsma.projetofiscalizacao.dao.MunicipioDAO;
 import br.edu.fsma.projetofiscalizacao.dao.UfDAO;
 import br.edu.fsma.projetofiscalizacao.dao.FiscalizacaoDAO;
-import br.edu.fsma.projetofiscalizacao.dao.EmpresaDAO;
-import br.edu.fsma.projetofiscalizacao.modelo.Empresa;
+import br.edu.fsma.projetofiscalizacao.dao.PessoaJuridicaDAO;
+import br.edu.fsma.projetofiscalizacao.modelo.PessoaJuridica;
 import br.edu.fsma.projetofiscalizacao.modelo.Uf;
 
 public class ImportadorDeArquivo {
@@ -31,10 +31,11 @@ public class ImportadorDeArquivo {
   	//2009;2009/06;05.789.313/0001-94;01 ENXUTO SUPERMERCADOS LTDA;RUA OTTO HERBEST,719;13150-000;VILA JOSE KALIL AUN;Cosmópolis;São Paulo
     // ATRIBUTOS REFERENTES A LINHA
     private LocalDate dataLida;
+    private String cnpj_cpf;
     private String cnpj;
     private String razaoSocial;
-    private String cnpj_cpf;
-    private String denominacao;
+    private String cpf;
+    private String nome;
     private String logradouro;
     private String cep;
     private String bairro;
@@ -193,7 +194,7 @@ public class ImportadorDeArquivo {
 	    Municipio objMunicipio;
 	    Bairro objBairro;
 	    Fiscalizacao objFiscalizacao;
-	    Empresa objEmpresa;
+	    PessoaJuridica objEmpresa;
 	 
 	    //Objetos de Persistencia
 		EntityManager em = JPAUtil.getEntityManager();
@@ -201,7 +202,7 @@ public class ImportadorDeArquivo {
 	    MunicipioDAO objMunicipioDAO = new MunicipioDAO(em);
 	    BairroDAO objBairroDAO = new BairroDAO(em);
 	    FiscalizacaoDAO objFiscalizacaoDAO = new FiscalizacaoDAO(em);
-	    EmpresaDAO objEmpresaDAO = new EmpresaDAO(em);
+	    PessoaJuridicaDAO objEmpresaDAO = new PessoaJuridicaDAO(em);
 
 		try {
 	        br = new BufferedReader(new InputStreamReader(new FileInputStream(file_dir), "ISO-8859-1"));
@@ -312,8 +313,8 @@ public class ImportadorDeArquivo {
 			        			}
 			        			
 			        			
-			        			objEmpresa= new Empresa();
-			        			objEmpresaDAO = new EmpresaDAO(em);
+			        			objEmpresa= new PessoaJuridica();
+			        			objEmpresaDAO = new PessoaJuridicaDAO(em);
 			        			objEmpresa.setBairro(objBairro);
 			        			objEmpresa.setCep(this.cep);
 			        			objEmpresa.setCnpj(this.cnpj);
@@ -351,6 +352,7 @@ public class ImportadorDeArquivo {
 			        			
 			        			
 		        			}catch(Exception ex)  {
+		        				System.out.println("\n\nErro ao gravar no banco.");
 		        				em.getTransaction().rollback();
 		        			}
 		        			
@@ -386,7 +388,6 @@ public class ImportadorDeArquivo {
 	}
 	
 	public Boolean importarArquivoDeFornecedoresParaBanco(String file_dir) {
-
 		try {
 	        br = new BufferedReader(new InputStreamReader(new FileInputStream(file_dir), "ISO-8859-1"));
 	        //================================
@@ -396,13 +397,114 @@ public class ImportadorDeArquivo {
 	        while ((linha = br.readLine()) != null) {
 	        	if(!linha.contains(";;;;;")) {// Trata se é o rodapé do arquivo.
 		            String[] celula = linha.split(csvDivisor);
-		        	if (num_linha != 0) { //ignora as tres primeiras linhas
+		        	if (num_linha != 0) { //ignora o cabeçalho
 		        		this.cnpj_cpf = celula[0];
 			        	if(this.validaCnpj(this.cnpj_cpf)){
-			        		System.out.println("CNPJ encontrado: " + this.cnpj_cpf);
+			        		//System.out.println("CNPJ encontrado: " + this.cnpj_cpf);
+			        		try { //Lê CNPJ
+			        			this.cnpj = this.cnpj_cpf;
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura do CNPJ na linha " + num_linha);
+			        		}
+			        		
+			        		try { //Lê Razao Social no caso das empresas
+			        			this.razaoSocial = this.removerAcentos((celula[1].toUpperCase()));
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura da razao social na linha " + num_linha);
+			        		}
+			        		
+			        		try { //Lê logradouro
+			        			this.logradouro = this.removerAcentos((celula[2].toUpperCase()));
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura do logradouro " + num_linha);
+			        		}
+			        		
+			        		try { //Lê bairro
+			        			this.bairro = this.removerAcentos((celula[3].toUpperCase()));
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura do bairro " + num_linha);
+			        		}
+			        		
+			        		try { //Lê cep
+			        			this.cep = this.removerAcentos((celula[4].toUpperCase()));
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura do cep " + num_linha);
+			        		}
+			        		
+			        		try { //Lê municipio
+			        			this.municipio = this.removerAcentos((celula[5].toUpperCase()));
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura do municipio " + num_linha);
+			        		}
+			        		
+			        		try { //Lê UF
+			        			this.uf = this.removerAcentos((celula[6].toUpperCase()));
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura da uf " + num_linha);
+			        		}
+			        		
 			        	}else if(this.validaCPF(this.cnpj_cpf)) {
-			        		System.out.println("CPF encontrado: " + this.cnpj_cpf);
+			        		//System.out.println("CPF encontrado: " + this.cnpj_cpf);
+			        		try { //Lê CNPJ
+			        			this.cpf = this.cnpj_cpf;
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura do cpf na linha " + num_linha);
+			        		}
+			        		
+			        		try { //Lê Razao nome no caso de pessoa fisica
+			        			this.nome = this.removerAcentos((celula[1].toUpperCase()));
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura do nome na linha " + num_linha);
+			        		}
+			        		
+			        		try { //Lê logradouro
+			        			this.logradouro = this.removerAcentos((celula[2].toUpperCase()));
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura do logradouro " + num_linha);
+			        		}
+			        		
+			        		try { //Lê bairro
+			        			this.bairro = this.removerAcentos((celula[3].toUpperCase()));
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura do bairro " + num_linha);
+			        		}
+			        		
+			        		try { //Lê cep
+			        			this.cep = this.removerAcentos((celula[4].toUpperCase()));
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura do cep " + num_linha);
+			        		}
+			        		
+			        		try { //Lê municipio
+			        			this.municipio = this.removerAcentos((celula[5].toUpperCase()));
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura do municipio " + num_linha);
+			        		}
+			        		
+			        		try { //Lê UF
+			        			this.uf = this.removerAcentos((celula[6].toUpperCase()));
+			        		}
+			        		catch (Exception e) {
+			        			System.out.println("Erro na leitura da uf " + num_linha);
+			        		}
 			        	}
+			        	//==============================
+		        		//   FAZ GRAVAÇÃO NO BANCO
+		        		//==============================
+			        	
 		        	}
 		        	num_linha++;//passa para proxima linha
 	        	} 	

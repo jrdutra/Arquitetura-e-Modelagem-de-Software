@@ -26,7 +26,7 @@ public class Fiscalizacao implements Serializable{
 	
 	@OneToOne
 	@JoinColumn(name = "idempresa", referencedColumnName="idempresa")
-	private Empresa empresa;
+	private PessoaJuridica empresa;
 	
 	private LocalDate dataterminofiscalizacao;
 	private String logradouro;
@@ -43,10 +43,10 @@ public class Fiscalizacao implements Serializable{
 	public void setId(Long id) {
 		this.idfiscalizacao = id;
 	}
-	public Empresa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
-	public void setEmpresa(Empresa empresa) {
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 		this.empresa.recebeFiscalizacao(this);
 	}

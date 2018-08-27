@@ -17,8 +17,8 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "tbempresa")
-public class Empresa implements Serializable{
+@Table(name = "tbpessoajuridica")
+public class PessoaJuridica implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -131,7 +131,7 @@ public class Empresa implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Empresa other = (Empresa) obj;
+		PessoaJuridica other = (PessoaJuridica) obj;
 		if (bairro == null) {
 			if (other.bairro != null)
 				return false;
