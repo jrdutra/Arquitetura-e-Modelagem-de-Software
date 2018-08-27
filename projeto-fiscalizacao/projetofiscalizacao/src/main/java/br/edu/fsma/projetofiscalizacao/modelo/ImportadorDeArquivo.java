@@ -396,10 +396,13 @@ public class ImportadorDeArquivo {
 	        while ((linha = br.readLine()) != null) {
 	        	if(!linha.contains(";;;;;")) {// Trata se é o rodapé do arquivo.
 		            String[] celula = linha.split(csvDivisor);
-		        	if (num_linha!=0) { //ignora a primeira linha com os cabeçalhos
-		        		
-			        	
-		        		
+		        	if (num_linha != 0) { //ignora as tres primeiras linhas
+		        		this.cnpj_cpf = celula[0];
+			        	if(this.validaCnpj(this.cnpj_cpf)){
+			        		System.out.println("CNPJ encontrado: " + this.cnpj_cpf);
+			        	}else if(this.validaCPF(this.cnpj_cpf)) {
+			        		System.out.println("CPF encontrado: " + this.cnpj_cpf);
+			        	}
 		        	}
 		        	num_linha++;//passa para proxima linha
 	        	} 	
