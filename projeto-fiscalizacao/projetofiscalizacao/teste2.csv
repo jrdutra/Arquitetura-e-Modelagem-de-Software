@@ -1,5 +1,5 @@
 Dados Cadastrais dos Fornecedores - Empresa Nacional;;;;;;;;;;;;
-;;;;;;;;;;;; DROP TABLE tbfiscalizacao, tbpessoajuridica, tbbairro, tbmunicipio, tbuf
+;;;;;;;;;;;; DROP TABLE tbfiscalizacao, tbpessoajuridica, tbpessoafisica, tbbairro, tbmunicipio, tbuf
 ;;;;;;;;;;;; https://yuml.me/
 ;;;;;;;;;;;;
 CNPJ / CPF;DENOMINAÇÃO;ENDEREÇO;BAIRRO;CEP;MUNICÍPIO;UF;NATUREZA JURÍDICA;ATIVIDADE;ENQUADRAMENTO;SITUAÇÃO DO CADASTRO;CÓDIGO DA UNIDADE CADASTRADORA;DENOMINAÇÃO DA UNIDADE CADASTRADORA

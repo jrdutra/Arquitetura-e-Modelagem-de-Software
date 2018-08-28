@@ -9,18 +9,17 @@ public class Main {
 
 		ImportadorDeArquivo imp = new ImportadorDeArquivo();
 		boolean resultado;
-		//IMPRTACAO ARQUIVO EMPRESAS
-		/*
+
 		resultado = imp.importarArquivoDeEmpresasParaBanco("C:\\Users\\jrdut\\Desktop\\JAVA\\Arquitetura-e-Modelagem-de-Software\\projeto-fiscalizacao\\projetofiscalizacao\\teste.csv");
 		if(resultado) {
 			System.out.println("\n\nArquivo importado com sucesso!");
 		}else {
 			System.out.println("\n\nOcorreu algum erro ao importar o arquivo.");
 		}
-		*/
+
 		//IMPORTACAO ARQUIVO FORNECEDORES
 		
-		resultado = imp.importarArquivoDeFornecedoresParaBanco("C:\\Users\\jrdut\\Desktop\\JAVA\\Arquitetura-e-Modelagem-de-Software\\projeto-fiscalizacao\\projetofiscalizacao\\teste2.csv");
+		resultado = imp.importarArquivoDeFornecedoresParaBanco("C:\\Users\\jrdut\\Desktop\\JAVA\\Arquitetura-e-Modelagem-de-Software\\projeto-fiscalizacao\\projetofiscalizacao\\fornecedores_nacionais.csv");
 		if(resultado) {
 			System.out.println("\n\nArquivo importado com sucesso!");
 		}else {
