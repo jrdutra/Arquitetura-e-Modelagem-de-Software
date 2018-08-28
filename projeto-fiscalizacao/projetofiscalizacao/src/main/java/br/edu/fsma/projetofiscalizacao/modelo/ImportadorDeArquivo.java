@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import br.edu.fsma.projetofiscalizacao.conexao.JPAUtil;
 import br.edu.fsma.projetofiscalizacao.dao.BairroDAO;
 import br.edu.fsma.projetofiscalizacao.dao.MunicipioDAO;
+import br.edu.fsma.projetofiscalizacao.dao.PessoaFisicaDAO;
 import br.edu.fsma.projetofiscalizacao.dao.UfDAO;
 import br.edu.fsma.projetofiscalizacao.dao.FiscalizacaoDAO;
 import br.edu.fsma.projetofiscalizacao.dao.PessoaJuridicaDAO;
@@ -21,7 +22,6 @@ import br.edu.fsma.projetofiscalizacao.modelo.Uf;
 
 public class ImportadorDeArquivo {
 	
-	private String file_dir;
 	private BufferedReader br = null;
     private String linha;
     private String csvDivisor = ";";
@@ -388,6 +388,24 @@ public class ImportadorDeArquivo {
 	}
 	
 	public Boolean importarArquivoDeFornecedoresParaBanco(String file_dir) {
+		
+		//Declara objetos locais
+		
+		//Objetos do modelo
+	    Uf objUf;
+	    Municipio objMunicipio;
+	    Bairro objBairro;
+	    PessoaJuridica objEmpresa;
+	    PessoaFisica objPessoaFisica;
+	 
+	    //Objetos de Persistencia
+		EntityManager em = JPAUtil.getEntityManager();
+	    UfDAO objUfDAO = new UfDAO(em);
+	    MunicipioDAO objMunicipioDAO = new MunicipioDAO(em);
+	    BairroDAO objBairroDAO = new BairroDAO(em);
+	    PessoaFisicaDAO objPessoaFisicaDAO = new PessoaFisicaDAO(em);
+	    PessoaJuridicaDAO objEmpresaDAO = new PessoaJuridicaDAO(em);
+		
 		try {
 	        br = new BufferedReader(new InputStreamReader(new FileInputStream(file_dir), "ISO-8859-1"));
 	        //================================
@@ -453,7 +471,70 @@ public class ImportadorDeArquivo {
 			        		//================================
 			        		//  GRAVA PESSOA JURIDICA NO BANCO
 			        		//================================
-			        		
+			        		try {
+		        				//==================================
+			        			// INICIO DA LOGICA DE PERSISTENCIA
+			        			//==================================
+			        			em.getTransaction().begin();
+
+			        			objUf = new Uf();
+			        			objUf.setNome(this.uf);
+			        			//Testa se UF ja existe, se existe pega se nao exite grava
+			        			//objUfDAO.existe(objUf)
+			        			if(objUfDAO.existe(objUf)){
+			        				objUf = objUfDAO.buscaUfPorNome(objUf);
+			        			}
+			        			else
+			        			{
+			        				objUfDAO.adiciona(objUf);
+			        			}
+			        			
+			        			objMunicipio = new Municipio();
+			        			objMunicipioDAO = new MunicipioDAO(em);
+			        			objMunicipio.setUf(objUf);
+			        			objMunicipio.setNome(this.municipio);
+			        			
+			        			//Testa se Munnicipio ja existe, se existe pega se nao exite grava
+			        			if(objMunicipioDAO.existe(objMunicipio)) {
+			        				objMunicipio = objMunicipioDAO.buscaMunicipioPorNome(objMunicipio);
+			        			}else {
+			        				objMunicipioDAO.adiciona(objMunicipio);
+			        			}
+			        			
+			        			objBairro = new Bairro();
+			        			objBairroDAO = new BairroDAO(em);
+			        			objBairro.setMunicipio(objMunicipio);
+			        			objBairro.setNome(this.bairro);
+			        			
+			        			//Testa se Bairro ja existe, se existe pega se nao exite grava
+			        			if(objBairroDAO.existe(objBairro)) {
+			        				objBairro = objBairroDAO.buscaBairroPorNome(objBairro);
+			        			}else {
+			        				objBairroDAO.adiciona(objBairro);
+			        			}
+			        			
+			        			
+			        			objEmpresa= new PessoaJuridica();
+			        			objEmpresaDAO = new PessoaJuridicaDAO(em);
+			        			objEmpresa.setBairro(objBairro);
+			        			objEmpresa.setCep(this.cep);
+			        			objEmpresa.setCnpj(this.cnpj);
+			        			objEmpresa.setLogradouro(this.logradouro);
+			        			objEmpresa.setRazaosocial(this.razaoSocial);
+			        			
+			        			//Testa se Empresa ja existe, se existe pega se nao exite grava
+			        			if(objEmpresaDAO.existe(objEmpresa)) {
+			        				objEmpresa = objEmpresaDAO.buscaEmpresaPeloCNPJ(objEmpresa);
+			        			}else {
+			        				objEmpresaDAO.adiciona(objEmpresa);
+			        			}
+
+			        			em.getTransaction().commit();
+
+		        			}catch(Exception ex)  {
+		        				System.out.println("\n\nErro ao gravar Empresa no banco.");
+		        				em.getTransaction().rollback();
+		        			}
 			        	}else if(this.validaCPF(this.cnpj_cpf)) {
 			        		//System.out.println("CPF encontrado: " + this.cnpj_cpf);
 			        		try { //Lê CNPJ
@@ -508,6 +589,70 @@ public class ImportadorDeArquivo {
 			        		//===============================
 			        		//  GRAVA PESSOA FISICA NO BANCO
 			        		//===============================
+			        		try {
+		        				//==================================
+			        			// INICIO DA LOGICA DE PERSISTENCIA
+			        			//==================================
+			        			em.getTransaction().begin();
+
+			        			objUf = new Uf();
+			        			objUf.setNome(this.uf);
+			        			//Testa se UF ja existe, se existe pega se nao exite grava
+			        			//objUfDAO.existe(objUf)
+			        			if(objUfDAO.existe(objUf)){
+			        				objUf = objUfDAO.buscaUfPorNome(objUf);
+			        			}
+			        			else
+			        			{
+			        				objUfDAO.adiciona(objUf);
+			        			}
+			        			
+			        			objMunicipio = new Municipio();
+			        			objMunicipioDAO = new MunicipioDAO(em);
+			        			objMunicipio.setUf(objUf);
+			        			objMunicipio.setNome(this.municipio);
+			        			
+			        			//Testa se Munnicipio ja existe, se existe pega se nao exite grava
+			        			if(objMunicipioDAO.existe(objMunicipio)) {
+			        				objMunicipio = objMunicipioDAO.buscaMunicipioPorNome(objMunicipio);
+			        			}else {
+			        				objMunicipioDAO.adiciona(objMunicipio);
+			        			}
+			        			
+			        			objBairro = new Bairro();
+			        			objBairroDAO = new BairroDAO(em);
+			        			objBairro.setMunicipio(objMunicipio);
+			        			objBairro.setNome(this.bairro);
+			        			
+			        			//Testa se Bairro ja existe, se existe pega se nao exite grava
+			        			if(objBairroDAO.existe(objBairro)) {
+			        				objBairro = objBairroDAO.buscaBairroPorNome(objBairro);
+			        			}else {
+			        				objBairroDAO.adiciona(objBairro);
+			        			}
+			        			
+			        			
+			        			objPessoaFisica = new PessoaFisica();
+			        			objPessoaFisicaDAO = new PessoaFisicaDAO(em);
+			        			objPessoaFisica.setBairro(objBairro);
+			        			objPessoaFisica.setCep(this.cep);
+			        			objPessoaFisica.setCpf(this.cpf);
+			        			objPessoaFisica.setLogradouro(this.logradouro);
+			        			objPessoaFisica.setNome(this.nome);
+			        			
+			        			//Testa se Empresa ja existe, se existe pega se nao exite grava
+			        			if(objPessoaFisicaDAO.existe(objPessoaFisica)) {
+			        				objPessoaFisica = objPessoaFisicaDAO.buscaPessoaPeloCpf(objPessoaFisica);
+			        			}else {
+			        				objPessoaFisicaDAO.adiciona(objPessoaFisica);
+			        			}
+
+			        			em.getTransaction().commit();
+
+		        			}catch(Exception ex)  {
+		        				System.out.println("\n\nErro ao gravar Pessoa Fisica no banco.");
+		        				em.getTransaction().rollback();
+		        			}
 			        	}
 			        	
 		        	}
