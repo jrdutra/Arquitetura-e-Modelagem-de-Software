@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<meta charset="UTF-8" />
+	<title>Menu</title>
+	<link type="text/css" rel="stylesheet"	href="#{facesContext.externalContext.requestContextPath}/resources/css/estilo.css" />
+</h:head>
+<h:body>
+	
+	<h:form>  
+	    <p:growl id="messages" showDetail="false"/>
+
+	    <h3>Toggleable</h3>
+	    <p:menu toggleable="true">
+	        <p:submenu label="Ajax">
+	            <p:menuitem value="Save" update="messages" icon="ui-icon-disk" />
+	            <p:menuitem value="Update" update="messages" icon="ui-icon-arrowrefresh-1-w"/>
+	        </p:submenu>
+	        <p:submenu label="Non-Ajax">
+	            <p:menuitem value="Delete" update="messages" ajax="false" icon="ui-icon-close"/>
+	        </p:submenu>
+	        <p:submenu label="Navigations">
+	            <p:menuitem value="External" url="http://www.primefaces.org" icon="ui-icon-home"/>
+	            <p:menuitem value="Internal" icon="ui-icon-star"/>
+	        </p:submenu>
+	    </p:menu>
+	</h:form>
+	
+</h:body>
+</html>
