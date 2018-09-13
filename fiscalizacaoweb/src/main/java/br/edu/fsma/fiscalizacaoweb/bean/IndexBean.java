@@ -1,11 +1,5 @@
 package br.edu.fsma.fiscalizacaoweb.bean;
-
 import java.io.Serializable;
-
-import javax.annotation.PostConstruct;
-//import javax.enterprise.context.ApplicationScoped;
-//import javax.faces.view.ViewScoped;
-//import javax.enterprise.context.RequestScoped;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -13,17 +7,36 @@ import javax.inject.Named;
 @Named
 @ViewScoped
 public class IndexBean implements Serializable {
-	
-	
 
 	private static final long serialVersionUID = 1L;
 
+	private enum Cor {VERMELHO, VERDE, AZUL, NONE};
 	
-
-	@PostConstruct
-	public void init() {
-		System.out.println("IndexBean.init();");
+	private Cor cor = Cor.NONE;
 	
+	
+	public void setVermelho() {
+		cor = Cor.VERMELHO;
+	}
+	
+	public void setVerde() {
+		cor = Cor.VERDE;
+	}
+	
+	public void setAzul() {
+		cor = Cor.AZUL;
+	}
+	
+	public boolean isMostraVermelho() {
+		return (cor == Cor.VERMELHO || cor == Cor.NONE);
+	}
+	
+	public boolean isMostraVerde() {
+		return (cor == Cor.VERDE || cor == Cor.NONE);
+	}
+	
+	public boolean isMostraAzul() {
+		return (cor == Cor.AZUL || cor == Cor.NONE);
 	}
 	
 }

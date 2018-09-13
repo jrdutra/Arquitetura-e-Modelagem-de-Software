@@ -5,29 +5,67 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
+	<style>
+		table#estrutura{
+			width: 100%
+		}
+		td#menu{
+			width: 16%;
+			vertical-align: top;
+		}
+		td#conteudo{
+			vertical-align: top;
+		}
+	</style>
 	<meta charset="UTF-8" />
 	<title>Menu</title>
 	<link type="text/css" rel="stylesheet"	href="#{facesContext.externalContext.requestContextPath}/resources/css/estilo.css" />
 </h:head>
 <h:body>
-	
-	<h:form>  
-	    <p:growl id="messages" showDetail="false"/>
 
-	    <p:menu toggleable="true">
-	        <p:submenu label="Ajax">
-	            <p:menuitem value="Save" update="messages" icon="ui-icon-disk" />
-	            <p:menuitem value="Update" update="messages" icon="ui-icon-arrowrefresh-1-w"/>
-	        </p:submenu>
-	        <p:submenu label="Non-Ajax">
-	            <p:menuitem value="Delete" update="messages" ajax="false" icon="ui-icon-close"/>
-	        </p:submenu>
-	        <p:submenu label="Navigations">
-	            <p:menuitem value="External" url="http://www.primefaces.org" icon="ui-icon-home"/>
-	            <p:menuitem value="Internal" icon="ui-icon-star"/>
-	        </p:submenu>
-	    </p:menu>
-	</h:form>
-	
+	<p:panel header="Fiscalização WEB" style="width: 90%;">
+		<h3>Arquitetura e Modelagem de Software</h3>
+		<table id="estrutura">
+			<tr>
+				<td id="menu">
+					<h:form>  
+					    <p:growl id="messages" showDetail="false"/>
+					    <p:menu toggleable="true">
+					        <p:submenu label="Escolhe Painel">
+					            <p:menuitem value="Azul" actionListener="#{indexBean.setAzul()}" process="@this" update=":frmVermelho :frmVerde :frmAzul " icon="ui-icon-star" />
+					            <p:menuitem value="Verde" actionListener="#{indexBean.setVerde()}" process="@this" update=":frmVermelho :frmVerde :frmAzul" icon="ui-icon-star"/>
+					            <p:menuitem value="Vermelho" actionListener="#{indexBean.setVermelho()}" process="@this" update=":frmVermelho :frmVerde :frmAzul" icon="ui-icon-star"/>
+					        </p:submenu>
+					        <p:submenu label="UF">
+					            <p:menuitem value="Listar" update="messages" ajax="false" icon="ui-icon-triangle-1-s"/>
+					            <p:menuitem value="Inserir" update="messages" ajax="false" icon="ui-icon-arrowstop-1-w"/>
+					            <p:menuitem value="Excluir" update="messages" ajax="false" icon="ui-icon-close"/>
+					            <p:menuitem value="Modificar" update="messages" ajax="false" icon="ui-icon-pencil"/>
+					        </p:submenu>
+					    </p:menu>
+					</h:form>
+				</td>
+				<td id="conteudo">
+					<h:form id="frmVermelho" >
+						<p:panel id="pnlVermelho" style="width: 100%; height: 300px; background: red;" rendered="#{indexBean.mostraVermelho}" >
+							
+						</p:panel>
+					</h:form>
+					 
+					<h:form id="frmVerde" >
+						<p:panel id="pnlVerde" style="width: 100%; height: 300px; background: green;" rendered="#{indexBean.mostraVerde}" >
+							
+						</p:panel>
+					</h:form>
+					
+					<h:form id="frmAzul" >
+						<p:panel id="pnlAzul" style="width: 100%; height: 300px; background: blue;" rendered="#{indexBean.mostraAzul}" >
+							
+						</p:panel>
+					</h:form>
+				</td>
+			</tr>
+		</table>
+	</p:panel>
 </h:body>
 </html>
