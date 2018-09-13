@@ -28,15 +28,15 @@ public class IndexBean implements Serializable {
 	}
 	
 	public boolean isMostraVermelho() {
-		return (cor == Cor.VERMELHO || cor == Cor.NONE);
+		return (cor == Cor.VERMELHO);
 	}
 	
 	public boolean isMostraVerde() {
-		return (cor == Cor.VERDE || cor == Cor.NONE);
+		return (cor == Cor.VERDE);
 	}
 	
 	public boolean isMostraAzul() {
-		return (cor == Cor.AZUL || cor == Cor.NONE);
+		return (cor == Cor.AZUL);
 	}
 	
 }
