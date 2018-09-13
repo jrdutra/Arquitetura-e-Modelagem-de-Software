@@ -10,33 +10,48 @@ public class IndexBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private enum Cor {VERMELHO, VERDE, AZUL, NONE};
+	private enum Nome {VERMELHO, VERDE, AZUL, PAINELPESQUISAFISCALIZACAO, NONE};
 	
-	private Cor cor = Cor.NONE;
+	private Nome nome = Nome.NONE;
 	
 	
 	public void setVermelho() {
-		cor = Cor.VERMELHO;
-	}
-	
-	public void setVerde() {
-		cor = Cor.VERDE;
-	}
-	
-	public void setAzul() {
-		cor = Cor.AZUL;
+		nome = Nome.VERMELHO;
 	}
 	
 	public boolean isMostraVermelho() {
-		return (cor == Cor.VERMELHO);
+		return (nome == Nome.VERMELHO);
+	}
+	
+	public void setVerde() {
+		nome = Nome.VERDE;
 	}
 	
 	public boolean isMostraVerde() {
-		return (cor == Cor.VERDE);
+		return (nome == Nome.VERDE);
+	}
+	
+	public void setAzul() {
+		nome = Nome.AZUL;
 	}
 	
 	public boolean isMostraAzul() {
-		return (cor == Cor.AZUL);
+		return (nome == Nome.AZUL);
+	}
+	
+	public void setPainelPesquisaFiscalizacao() {
+		nome = Nome.PAINELPESQUISAFISCALIZACAO;
+	}	
+	
+	public boolean isMostraPainelPesquisaFiscalizacao() {
+		return (nome == Nome.PAINELPESQUISAFISCALIZACAO);
+	}
+	
+	public String getIdToUpdate() {
+		return (":frmVermelho " + 
+				":frmVerde " +
+				":frmAzul " +
+				":frmPainelPesquisaFiscalizacao" );
 	}
 	
 }

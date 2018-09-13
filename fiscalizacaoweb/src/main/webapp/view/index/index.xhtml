@@ -10,11 +10,19 @@
 			width: 100%
 		}
 		td#menu{
-			width: 16%;
+			width: 18%;
 			vertical-align: top;
 		}
 		td#conteudo{
 			vertical-align: top;
+		}
+		#frmPainelPesquisaFiscalizacao{
+			margin-left: auto;
+    		margin-right: auto;
+		}
+		.botaomenu{
+			width: 200px;
+			margin: 9px;
 		}
 	</style>
 	<meta charset="UTF-8" />
@@ -23,7 +31,7 @@
 </h:head>
 <h:body>
 
-	<p:panel header="Fiscalização WEB" style="width: 90%;">
+	<p:panel header="Fiscalização WEB" style="width: 98%;">
 		<h3>Arquitetura e Modelagem de Software</h3>
 		<table id="estrutura">
 			<tr>
@@ -31,16 +39,45 @@
 					<h:form>  
 					    <p:growl id="messages" showDetail="false"/>
 					    <p:menu toggleable="true">
-					        <p:submenu label="Escolhe Painel">
-					            <p:menuitem value="Azul" actionListener="#{indexBean.setAzul()}" process="@this" update=":frmVermelho :frmVerde :frmAzul " icon="ui-icon-star" />
-					            <p:menuitem value="Verde" actionListener="#{indexBean.setVerde()}" process="@this" update=":frmVermelho :frmVerde :frmAzul" icon="ui-icon-star"/>
-					            <p:menuitem value="Vermelho" actionListener="#{indexBean.setVermelho()}" process="@this" update=":frmVermelho :frmVerde :frmAzul" icon="ui-icon-star"/>
+					        <p:submenu label="Teste Painel">
+					            <p:menuitem value="Azul" actionListener="#{indexBean.setAzul()}" process="@this" update="#{indexBean.getIdToUpdate()}" icon="ui-icon-star" />
+					            <p:menuitem value="Verde" actionListener="#{indexBean.setVerde()}" process="@this" update="#{indexBean.getIdToUpdate()}" icon="ui-icon-star"/>
+					            <p:menuitem value="Vermelho" actionListener="#{indexBean.setVermelho()}" process="@this" update="#{indexBean.getIdToUpdate()}" icon="ui-icon-star"/>
 					        </p:submenu>
 					        <p:submenu label="UF">
-					            <p:menuitem value="Listar" update="messages" ajax="false" icon="ui-icon-triangle-1-s"/>
-					            <p:menuitem value="Inserir" update="messages" ajax="false" icon="ui-icon-arrowstop-1-w"/>
+					            <p:menuitem value="Icluir" update="messages" ajax="false" icon="ui-icon-arrowstop-1-w"/>
 					            <p:menuitem value="Excluir" update="messages" ajax="false" icon="ui-icon-close"/>
-					            <p:menuitem value="Modificar" update="messages" ajax="false" icon="ui-icon-pencil"/>
+					            <p:menuitem value="Pesquisar" update="messages" ajax="false" icon="ui-icon-search"/>
+					            <p:menuitem value="Alterar" update="messages" ajax="false" icon="ui-icon-pencil"/>
+					        </p:submenu>
+					        <p:submenu label="Município">
+					            <p:menuitem value="Icluir" update="messages" ajax="false" icon="ui-icon-arrowstop-1-w"/>
+					            <p:menuitem value="Excluir" update="messages" ajax="false" icon="ui-icon-close"/>
+					            <p:menuitem value="Pesquisar" update="messages" ajax="false" icon="ui-icon-search"/>
+					            <p:menuitem value="Alterar" update="messages" ajax="false" icon="ui-icon-pencil"/>
+					        </p:submenu>
+					        <p:submenu label="Bairro">
+					            <p:menuitem value="Icluir" update="messages" ajax="false" icon="ui-icon-arrowstop-1-w"/>
+					            <p:menuitem value="Excluir" update="messages" ajax="false" icon="ui-icon-close"/>
+					            <p:menuitem value="Pesquisar" update="messages" ajax="false" icon="ui-icon-search"/>
+					            <p:menuitem value="Alterar" update="messages" ajax="false" icon="ui-icon-pencil"/>
+					        </p:submenu>
+					        <p:submenu label="Pessoa Física">
+					            <p:menuitem value="Icluir" update="messages" ajax="false" icon="ui-icon-arrowstop-1-w"/>
+					            <p:menuitem value="Excluir" update="messages" ajax="false" icon="ui-icon-close"/>
+					            <p:menuitem value="Pesquisar" update="messages" ajax="false" icon="ui-icon-search"/>
+					            <p:menuitem value="Alterar" update="messages" ajax="false" icon="ui-icon-pencil"/>
+					        </p:submenu>
+					        <p:submenu label="Pessoa Jurídica">
+					            <p:menuitem value="Icluir" update="messages" ajax="false" icon="ui-icon-arrowstop-1-w"/>
+					            <p:menuitem value="Excluir" update="messages" ajax="false" icon="ui-icon-close"/>
+					            <p:menuitem value="Pesquisar" update="messages" ajax="false" icon="ui-icon-search"/>
+					            <p:menuitem value="Alterar" update="messages" ajax="false" icon="ui-icon-pencil"/>
+					        </p:submenu>
+					        <p:submenu label="Fiscalização">
+					            <p:menuitem value="Icluir" update="messages" ajax="false" icon="ui-icon-arrowstop-1-w"/>
+					            <p:menuitem value="Excluir" update="messages" ajax="false" icon="ui-icon-close"/>
+					            <p:menuitem value="Pesquisar" actionListener="#{indexBean.setPainelPesquisaFiscalizacao()}" process="@this" update="#{indexBean.getIdToUpdate()}" icon="ui-icon-search"/>
 					        </p:submenu>
 					    </p:menu>
 					</h:form>
@@ -63,6 +100,15 @@
 							
 						</p:panel>
 					</h:form>
+					
+					<h:form id="frmPainelPesquisaFiscalizacao" >
+						<p:panel id="pnlPesquisaFiscalizacao" style="width: 100%;" rendered="#{indexBean.mostraPainelPesquisaFiscalizacao}" >
+							<p:commandButton class="botaomenu" value="Por Periodo" />
+							<p:commandButton class="botaomenu" value="Por Periodo e Fiscal" />
+							<p:commandButton class="botaomenu" value="Em pessoa física"  />
+						</p:panel>
+					</h:form>
+					
 				</td>
 			</tr>
 		</table>
