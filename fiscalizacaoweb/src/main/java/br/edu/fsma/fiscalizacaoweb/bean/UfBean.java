@@ -6,7 +6,7 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-public class IndexBean implements Serializable {
+public class UfBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
