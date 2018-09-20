@@ -21,6 +21,15 @@ public class Uf implements Serializable{
 	@Column(name = "iduf")
 	private Long iduf;
 	private String nome;
+	private String sigla;
+
+	public String getSigla() {
+		return sigla;
+	}
+
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
+	}
 
 	public String getNome() {
 		return nome;
@@ -37,12 +46,15 @@ public class Uf implements Serializable{
 	public void setIduf(Long iduf) {
 		this.iduf = iduf;
 	}
+	
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((iduf == null) ? 0 : iduf.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((sigla == null) ? 0 : sigla.hashCode());
 		return result;
 	}
 
@@ -55,10 +67,20 @@ public class Uf implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Uf other = (Uf) obj;
+		if (iduf == null) {
+			if (other.iduf != null)
+				return false;
+		} else if (!iduf.equals(other.iduf))
+			return false;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;
 		} else if (!nome.equals(other.nome))
+			return false;
+		if (sigla == null) {
+			if (other.sigla != null)
+				return false;
+		} else if (!sigla.equals(other.sigla))
 			return false;
 		return true;
 	}

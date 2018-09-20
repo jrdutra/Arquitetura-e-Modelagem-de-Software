@@ -13,10 +13,47 @@
 		<link type="text/css" rel="stylesheet"	href="#{facesContext.externalContext.requestContextPath}/resources/css/estilo.css" />
 	</h:head>
 	<h:body>
-		<p:panel header="UF - Unidade Federativa" style="width: 98%;">	
-		<h:form>		
-			<p:commandButton class="botavoltar" value="Voltar" action="/view/index/index" ajax="false"/>
-		</h:form>
+		<p:panel header="Gestão de UF - Unidade Federativa" style="width: 98%;">
+			
+				<p:panel header="Pesquisa" style="width: 40%;">
+					<h:form>	
+						<h:panelGrid columns="2" style="width: 100%;">
+							<label for="sigla">Sigla:</label>
+							<p:inputText id="sigla" style="width: 100%;"/>
+							<label for="nome">Nome:</label>
+							<p:inputText id="nome" style="width: 100%;"/>
+							<p:spacer />
+							<p:commandButton value="Pesquisar"/>
+						</h:panelGrid>
+					</h:form>
+				</p:panel>
+				
+				<p:spacer />
+				
+				<p:panel header="Resultado" style="width: 40%;">
+					<h:form>	
+						<p:dataTable var="uf" value="#{UfBean.ufs}">
+				             <p:column headerText="Sigla">
+				                    <h:outputText value="#{uf.sigla}" />
+				             </p:column>
+				  
+				             <p:column headerText="Nome">
+				                    <h:outputText value="#{uf.nome}" />
+				             </p:column>
+				  
+				             <p:column headerText="Ações">
+				                    
+				             </p:column> 
+				       </p:dataTable>
+					</h:form>
+				</p:panel>
+			
+			<p:spacer />
+			
+			<h:form>	
+				<p:commandButton class="botavoltar" value="Voltar" action="/view/index/index" ajax="false"/>
+			</h:form>
+		
 		</p:panel>
 	</h:body>
 </html>
