@@ -16,14 +16,18 @@
 		<p:panel header="Gestão de UF - Unidade Federativa" style="width: 98%;">
 			
 				<p:panel header="Pesquisa" style="width: 40%;">
-					<h:form>	
+					<h:form id="frm_pesquisar_uf">	
 						<h:panelGrid columns="2" style="width: 100%;">
-							<label for="sigla">Sigla:</label>
-							<p:inputText id="sigla" style="width: 100%;"/>
-							<label for="nome">Nome:</label>
-							<p:inputText id="nome" style="width: 100%;"/>
+							<label for="input_sigla_pesquisa">Sigla:</label>
+							<p:inputText id="input_sigla_pesquisa" value="#{ufBean.currentUf.getSigla()}" style="width: 100%;"/>
+							<label for="input_nome_pesquisa">Nome:</label>
+							<p:inputText id="input_nome_pesquisa" value="#{ufBean.currentUf.getNome()}" style="width: 100%;"/>
 							<p:spacer />
-							<p:commandButton value="Pesquisar"/>
+							<h:panelGrid columns="2" style="width: 100%;">
+								<p:commandButton value="Pesquisar"/>
+								<p:commandButton value="Incluir" action="#{ufBean.capturaDadosPesquisa()}" process="@this" update=":frmnova_uf:inputsiglainclusao :frmnova_uf:inputnomeinclusao"/>
+							</h:panelGrid>
+							
 						</h:panelGrid>
 					</h:form>
 				</p:panel>
@@ -47,11 +51,26 @@
 				       </p:dataTable>
 					</h:form>
 				</p:panel>
+				
+				<p:spacer />
+				
+				<p:panel id="pnlnova_uf" header="Nova UF" style="width: 40%;">
+					<h:form id="frmnova_uf">	
+						<h:panelGrid columns="2" style="width: 100%;">
+							<label for="inputsiglainclusao">Sigla:</label>
+							<p:inputText id="inputsiglainclusao" value="#{ufBean.currentUf.getSigla()}" style="width: 100%;"/>
+							<label for="inputnomeinclusao">Nome:</label>
+							<p:inputText id="inputnomeinclusao" value="#{ufBean.currentUf.getNome()}" style="width: 100%;"/>
+							<p:spacer />
+							<p:commandButton value="OK"/>
+						</h:panelGrid>
+					</h:form>
+				</p:panel>
 			
 			<p:spacer />
 			
 			<h:form>	
-				<p:commandButton class="botavoltar" value="Voltar" action="/view/index/index" ajax="false"/>
+				<p:commandButton class="botavoltar para index" value="Voltar" action="/view/index/index" ajax="false"/>
 			</h:form>
 		
 		</p:panel>
