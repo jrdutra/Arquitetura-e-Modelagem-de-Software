@@ -104,7 +104,7 @@ public class UfDAO implements Serializable {
 			jpql.append(" where ");
 		}
 		if(uf.getNome() != "") {
-			jpql.append(" u.nome = :pNome");
+			jpql.append(" u.nome like :pNome");
 		}
 		if(uf.getNome() != "" && uf.getSigla() != "") {
 			jpql.append(" AND ");
