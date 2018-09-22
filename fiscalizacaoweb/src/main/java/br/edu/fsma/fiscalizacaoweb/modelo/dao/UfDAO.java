@@ -3,24 +3,25 @@ package br.edu.fsma.fiscalizacaoweb.modelo.dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Uf;
 
 public class UfDAO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private DAO<Uf> dao;
-	//@Inject
-	private EntityManager em;
-	//no lugar do inject e postconstruct fiz o construtor instanciando o em e dao
 	
-	public UfDAO(EntityManager em2) {
-		this.em = em2;
+	@PostConstruct
+	void init() {
 		this.dao = new DAO<Uf>(this.em, Uf.class);
 	}
+	
+	@Inject
+	private EntityManager em;
 	
 	public boolean existe(Uf uf) {
 		@SuppressWarnings("unused")
@@ -34,7 +35,6 @@ public class UfDAO implements Serializable {
 			return false;
 		}
 	}
-	
 	public Uf buscaUfPorNome(Uf uf) {
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" select u from Uf u ");
@@ -48,20 +48,32 @@ public class UfDAO implements Serializable {
 			return null;
 		}
 	}
-	
 	public Uf buscaUfPorNome(String nome) {
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" select u from Uf u ");
 		jpql.append(" where ");
 		jpql.append(" u.nome = :pNome ");
-		
 		TypedQuery<Uf> query = em.createQuery(jpql.toString() , Uf.class);
-		
 		query.setParameter("pNome", nome);
 		try {
 			return query.getSingleResult();
 		} catch (NoResultException ex) {
 			return null;
+		}
+	}
+	
+	public void escreveUf(Uf uf) {
+		
+		Uf ufbuscada = buscaUfPorNomeSigla(uf);
+		System.out.println("[ESCREVE UF] UF buscada: " + ufbuscada);
+		if(ufbuscada != null) {
+			ufbuscada.setNome(uf.getNome());
+			ufbuscada.setSigla(uf.getSigla());
+			System.out.println("Atualizou Uf");
+			this.atualiza(ufbuscada);
+		}else {
+			System.out.println("Adicionou NOVA UF");
+			this.adiciona(uf);
 		}
 	}
 	
@@ -84,5 +96,64 @@ public class UfDAO implements Serializable {
 	public ArrayList<Uf> listaTodosPaginada(int firstResult, int maxResults) {
 		return (ArrayList<Uf>) this.dao.listaTodosPaginada(firstResult, maxResults);
 	}
+	
+	public ArrayList<Uf> buscaListaUfPorNomeSigla(Uf uf) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select u from Uf u ");
+		if(uf.getNome() != "" || uf.getSigla() != "") {
+			jpql.append(" where ");
+		}
+		if(uf.getNome() != "") {
+			jpql.append(" u.nome = :pNome");
+		}
+		if(uf.getNome() != "" && uf.getSigla() != "") {
+			jpql.append(" AND ");
+		}
+		if(uf.getSigla() != "") {
+			jpql.append("u.sigla = :pSigla");
+		}
+		TypedQuery<Uf> query = em.createQuery(jpql.toString() , Uf.class);
+		if(uf.getNome() != "") {
+			query.setParameter("pNome", uf.getNome());
+		}
+		if(uf.getSigla() != "") {
+			query.setParameter("pSigla", uf.getSigla());
+		}
+		try {
+			return (ArrayList<Uf>) query.getResultList();
+		} catch (NoResultException ex) {
+			return null;
+		}
+	}
+	
+	public Uf buscaUfPorNomeSigla(Uf uf) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select u from Uf u ");
+		if(uf.getNome() != "" || uf.getSigla() != "") {
+			jpql.append(" where ");
+		}
+		if(uf.getNome() != "") {
+			jpql.append(" u.nome = :pNome");
+		}
+		if(uf.getNome() != "" && uf.getSigla() != "") {
+			jpql.append(" AND ");
+		}
+		if(uf.getSigla() != "") {
+			jpql.append("u.sigla = :pSigla");
+		}
+		TypedQuery<Uf> query = em.createQuery(jpql.toString() , Uf.class);
+		if(uf.getNome() != "") {
+			query.setParameter("pNome", uf.getNome());
+		}
+		if(uf.getSigla() != "") {
+			query.setParameter("pSigla", uf.getSigla());
+		}
+		try {
+			return (Uf) query.getSingleResult();
+		} catch (NoResultException ex) {
+			return null;
+		}
+	}
+	
 	
 }

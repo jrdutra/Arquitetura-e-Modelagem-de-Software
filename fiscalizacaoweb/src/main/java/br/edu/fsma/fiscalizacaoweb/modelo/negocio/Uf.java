@@ -12,17 +12,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tbuf")
 public class Uf implements Serializable{
-	
 	private static final long serialVersionUID = 1L;
-	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "iduf")
 	private Long iduf;
 	private String nome;
 	private String sigla;
-
+	
 	public String getSigla() {
 		return sigla;
 	}
@@ -87,9 +84,8 @@ public class Uf implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Uf [nome=" + nome + "]";
+		return "Uf [nome=" + nome + ", sigla=" + sigla + "]";
 	}
-	
-	
+
 	
 }

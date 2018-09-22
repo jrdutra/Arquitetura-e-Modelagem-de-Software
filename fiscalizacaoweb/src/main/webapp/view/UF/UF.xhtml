@@ -22,38 +22,45 @@
 								<p:inputText id="input_nome_pesquisa" value="#{ufBean.currentUf.getNome()}" style="width: 100%;"/>
 								<p:spacer />
 								<h:panelGrid columns="2" style="width: 100%;">
-									<p:commandButton value="Pesquisar"/>
-									<p:commandButton value="Incluir" actionListener="#{ufBean.incluirClick()}" process="@this" update="#{ufBean.getIdToUpdate()}"/>
+									<p:commandButton value="Pesquisar" actionListener="#{ufBean.pesquisarClick()}" process="@this" update="#{ufBean.getIdToUpdate()}">
+										<f:ajax  render=":frmResultado:tabelaUf" ></f:ajax>
+									</p:commandButton>
+									
 								</h:panelGrid>	
 							</h:panelGrid>
 					</p:panel>
+					<p:spacer />
 				</h:form>
-				<p:spacer />
 				<h:form id="frmResultado">
-					<p:panel id="pnlResultado" header="Resultado" style="width: 40%;" rendered="#{ufBean.mostraPesquisar}">
-							<p:dataTable var="uf" value="#{UfBean.ufs}">
-					             <p:column headerText="Sigla">
+					<p:panel id="pnlResultado" header="Resultado" style="width: 70%;" rendered="#{ufBean.mostraPesquisar}">
+						<h:panelGrid columns="1" style="width: 100%;">
+							<p:commandButton value="Incluir Novo" actionListener="#{ufBean.incluirClick()}" process="@this" update="#{ufBean.getIdToUpdate()}"/>
+							<p:dataTable id="tabelaUf" var="uf" value="#{ufBean.listaUf}">
+					             <p:column headerText="Sigla" style="width: 10%;">
 					                    <h:outputText value="#{uf.sigla}" />
 					             </p:column>
 					             <p:column headerText="Nome">
 					                    <h:outputText value="#{uf.nome}" />
 					             </p:column>
-					             <p:column headerText="Ações">
+					             <p:column headerText="Ações" style="width: 30%;">
 					             </p:column> 
 					       </p:dataTable>
-						
+					    </h:panelGrid>
 					</p:panel>
 				</h:form>
-				<p:spacer />
+				
 				<h:form id="frmnovauf">	
-					<p:panel id="pnlnovauf" header="Nova UF" style="width: 40%;" rendered="#{ufBean.mostraIncluir}">
+					<p:panel id="pnlnovauf" header="UF" style="width: 40%;" rendered="#{ufBean.mostraIncluir}">
 							<h:panelGrid columns="2" style="width: 100%;">
 								<label for="inputsiglainclusao">Sigla:</label>
 								<p:inputText id="inputsiglainclusao" value="#{ufBean.currentUf.getSigla()}" style="width: 100%;"/>
 								<label for="inputnomeinclusao">Nome:</label>
 								<p:inputText id="inputnomeinclusao" value="#{ufBean.currentUf.getNome()}" style="width: 100%;"/>
 								<p:spacer />
-								<p:commandButton value="OK" action="#{ufBean.okClick()}" process="@this" update="#{ufBean.getIdToUpdate()}" />
+								<h:panelGrid columns="2" style="width: 100%;">
+									<p:commandButton value="OK" action="#{ufBean.okClick()}" process="@this" update="#{ufBean.getIdToUpdate()}" />
+									<p:commandButton value="Cancelar" action="#{ufBean.cancelarClick()}" process="@this" update="#{ufBean.getIdToUpdate()}" />
+								</h:panelGrid>
 							</h:panelGrid>
 					</p:panel>
 				</h:form>
