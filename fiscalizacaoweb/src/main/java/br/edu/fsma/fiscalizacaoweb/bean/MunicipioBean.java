@@ -25,6 +25,7 @@ public class MunicipioBean implements Serializable {
 	private List<Uf> listaUf = new ArrayList<Uf>();
 	private Municipio currentMunicipio = new Municipio();
 	private Uf currentUf = new Uf();
+	private Long iduf;
 	private enum Nome {PAINELINCLUIR, PAINELPESQUISAR};
 	private Nome nome = Nome.PAINELPESQUISAR;
 	private enum EditarNovo {EDITAR, NOVO};
@@ -80,7 +81,13 @@ public class MunicipioBean implements Serializable {
 	
 	public void okClick() {
 		//capturaDadosInclusao();
-		System.out.println("[OKCLICK]" + currentMunicipio);
+		System.out.println("[UF id]" + iduf);
+		System.out.println(ufDao.buscaPorId(iduf));
+		
+		currentUf = new Uf();
+		currentUf = ufDao.buscaPorId(iduf);
+		
+		currentMunicipio.setUf(currentUf);
 		
 		em.getTransaction().begin();
 		if(flag == EditarNovo.NOVO) {
@@ -122,6 +129,14 @@ public class MunicipioBean implements Serializable {
 		return (nome == Nome.PAINELINCLUIR);
 	}
 	
+	public Long getIduf() {
+		return iduf;
+	}
+
+	public void setIduf(Long iduf) {
+		this.iduf = iduf;
+	}
+
 	public void setPesquisar() {
 		nome = Nome.PAINELPESQUISAR;
 	}

@@ -58,7 +58,7 @@
 								<p:inputText id="inputsiglainclusao" value="#{municipioBean.currentMunicipio.nome}" style="width: 100%;"/>
 								
 								<p:outputLabel for="iduf" value="UF: " />
-					            <p:selectOneMenu id="iduf" value="#{municipioBean.currentMunicipio.uf}" converter="objectConverter" items="#{municipioBean.listaUf}" style="width:150px">
+					            <p:selectOneMenu id="iduf" value="#{municipioBean.iduf}" style="width:150px">
 					                <f:selectItem itemLabel="Selecione a UF" itemValue="" noSelectionOption="true" />
 					                <f:selectItems value="#{municipioBean.listaUf}" var="obj" itemLabel="#{obj.sigla}"	itemValue="#{obj.iduf}"/>
 					            </p:selectOneMenu>
