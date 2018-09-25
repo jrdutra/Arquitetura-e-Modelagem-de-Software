@@ -9,14 +9,65 @@
 			
 		</style>
 		<meta charset="UTF-8" />
-		<title>Menu</title>
+		<title>Municipio</title>
 		<link type="text/css" rel="stylesheet"	href="#{facesContext.externalContext.requestContextPath}/resources/css/estilo.css" />
 	</h:head>
 	<h:body>
 		<p:panel header="Município" style="width: 98%;">			
-		<h:form>		
-			<p:commandButton class="botavoltar" value="Voltar" action="/view/index/index" ajax="false"/>
-		</h:form>	
+			<h:form>		
+				<p:commandButton class="botavoltar" value="Voltar" action="/view/index/index" ajax="false"/>
+			</h:form>	
+			<h:form id="frmpesquisar">	
+				<p:panel id="pnlPesquisa" header="Pesquisa" style="width: 40%;" rendered="#{municipioBean.mostraPesquisar}">
+						<h:panelGrid columns="2" style="width: 100%;">
+							<label for="input_nome_pesquisa">Nome:</label>
+							<p:inputText id="input_nome_pesquisa" value="#{municipioBean.currentMunicipio.nome}" style="width: 100%;"/>
+							<p:spacer />
+							<h:panelGrid columns="2" style="width: 100%;">
+								<p:commandButton value="Pesquisar" actionListener="#{municipioBean.pesquisarClick()}" process="@form" update="#{municipioBean.getIdToUpdate()}">
+									<f:ajax  render=":frmResultado:tabelaMunicipio" ></f:ajax>
+								</p:commandButton>
+							</h:panelGrid>	
+						</h:panelGrid>
+				</p:panel>
+				<p:spacer />
+			</h:form>
+			<h:form id="frmResultado">
+					<p:panel id="pnlResultado" header="Resultado" style="width: 70%;" rendered="#{municipioBean.mostraPesquisar}">
+						<h:panelGrid columns="1" style="width: 100%;">
+							<p:commandButton value="Incluir Novo" actionListener="#{municipioBean.incluirClick()}" process="@this" update="#{municipioBean.getIdToUpdate()}"/>
+							<p:dataTable id="tabelaMunicipio" var="municipio" value="#{municipioBean.listaMunicipio}">
+					             <p:column headerText="Nome">
+					                    <h:outputText value="#{municipio.nome}" />
+					             </p:column>
+					             <p:column headerText="UF" style="width: 10%;">
+					                    <h:outputText value="#{municipio.uf.sigla}" />
+					             </p:column>
+					             <p:column headerText="Ações" style="width: 30%;">
+					             	<p:commandButton value="Excluir" actionListener="#{municipioBean.excluirClick(municipio)}" process="@form" update="#{municipioBean.getIdToUpdate()}" oncomplete="#{municipioBean.listaMunicipio}"/>
+					             	<p:commandButton value="Editar" actionListener="#{municipioBean.editarClick(municipio)}" process="@form" update="#{municipioBean.getIdToUpdate()}" oncomplete="#{municipioBean.listaMunicipio}"/>
+					             </p:column> 
+					       </p:dataTable>
+					    </h:panelGrid>
+					</p:panel>
+			</h:form>
+			<h:form id="frmnovoMunicipio">	
+					<p:panel id="pnlnovomunicipio" header="Municipio" style="width: 40%;" rendered="#{municipioBean.mostraIncluir}">
+							<h:panelGrid columns="2" style="width: 100%;">
+								<label for="inputsiglainclusao">Nome:</label>
+								<p:inputText id="inputsiglainclusao" value="#{municipioBean.currentMunicipio.nome}" style="width: 100%;"/>
+								<p:spacer />
+								<h:panelGrid columns="2" style="width: 100%;">
+									<p:commandButton value="OK" actionListener="#{municipioBean.okClick()}" process="@form" update="#{municipioBean.getIdToUpdate()}" />
+									<p:commandButton value="Cancelar" actionListener="#{municipioBean.cancelarClick()}" process="@this" update="#{municipioBean.getIdToUpdate()}" />
+								</h:panelGrid>
+							</h:panelGrid>
+					</p:panel>
+				</h:form>
+			<p:spacer />
+			<h:form>	
+				<p:commandButton class="botavoltar para index" value="Voltar" action="/view/index/index" ajax="false"/>
+			</h:form>
 		</p:panel>
 	</h:body>
 </html>

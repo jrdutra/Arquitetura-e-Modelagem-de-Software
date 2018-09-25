@@ -4,25 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
-import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Uf;
-import br.edu.fsma.fiscalizacaoweb.modelo.dao.UfDAO;
+import br.edu.fsma.fiscalizacaoweb.modelo.dao.MunicipioDAO;
+import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
 
 
 @Named
 @ViewScoped
-public class UfBean implements Serializable {
+public class MunicipioBean implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
-	private List<Uf> listaUf = new ArrayList<Uf>();
-	private Uf currentUf = new Uf();
+	private List<Municipio> listaMunicipio = new ArrayList<Municipio>();
+	private Municipio currentMunicipio = new Municipio();
 	private enum Nome {PAINELINCLUIR, PAINELPESQUISAR};
 	private Nome nome = Nome.PAINELPESQUISAR;
 	private enum EditarNovo {EDITAR, NOVO};
@@ -36,51 +34,51 @@ public class UfBean implements Serializable {
 	private HttpSession session;
 	
 	@Inject
-	private UfDAO ufDao;
+	private MunicipioDAO municipioDao;
 	
-	public UfBean() {
+	public MunicipioBean() {
 		
 	}
 	
 	public void incluirClick() {
-		currentUf = new Uf();
+		currentMunicipio = new Municipio();
 		setIncluirModificar();
 		flag = EditarNovo.NOVO;
 	}
 	
 
-	public void excluirClick(Uf uf) {
+	public void excluirClick(Municipio municipio) {
 		
 		try {
 			em.getTransaction().begin();
-			ufDao.remove(uf);
+			municipioDao.remove(municipio);
 			em.getTransaction().commit();
 		}
 		catch (Exception e){
-			System.out.println("Não foi possivel excluir: " + uf);
+			System.out.println("Não foi possivel excluir: " + municipio);
 		}
 		
 		
 		setPesquisar();
 	}
 	
-	public void editarClick(Uf uf) {
-		currentUf = new Uf();
-		currentUf = uf;
+	public void editarClick(Municipio municipio) {
+		currentMunicipio = new Municipio();
+		currentMunicipio = municipio;
 		flag = EditarNovo.EDITAR;
 		setIncluirModificar();
 	}
 	
 	public void okClick() {
 		//capturaDadosInclusao();
-		System.out.println("[OKCLICK]" + currentUf);
+		System.out.println("[OKCLICK]" + currentMunicipio);
 		em.getTransaction().begin();
 		if(flag == EditarNovo.NOVO) {
-			ufDao.adiciona(currentUf);
-			listaUf.add(currentUf);
+			municipioDao.adiciona(currentMunicipio);
+			listaMunicipio.add(currentMunicipio);
 		}
 		if(flag == EditarNovo.EDITAR) {
-			ufDao.atualiza(currentUf);
+			municipioDao.atualiza(currentMunicipio);
 		}
 		
 		em.getTransaction().commit();
@@ -89,9 +87,9 @@ public class UfBean implements Serializable {
 	
 	public void pesquisarClick() {
 		//capturaDadosPesquisa();
-		listaUf = ufDao.buscaListaUfPorNomeSigla(currentUf);
+		listaMunicipio = municipioDao.buscaListaMunicipioPorNome(currentMunicipio);
 		setPesquisar();
-		System.out.println(listaUf);
+		System.out.println(listaMunicipio);
 	}
 	
 	public void cancelarClick() {
@@ -101,8 +99,8 @@ public class UfBean implements Serializable {
 	public String getIdToUpdate() {
 		return (":frmpesquisar "
 				+ ":frmResultado "
-				+ ":frmResultado:tabelaUf "
-				+ ":frmnovauf "
+				+ ":frmResultado:tabelaMunicipio "
+				+ ":frmnovoMunicipio "
 				);
 	}
 	
@@ -122,18 +120,18 @@ public class UfBean implements Serializable {
 		return (nome == Nome.PAINELPESQUISAR);
 	}
 	
-	public Uf getCurrentUf() {
-		return currentUf;
+	public Municipio getCurrentMunicipio() {
+		return currentMunicipio;
 	}
-	public void setCurrentUf(Uf currentUf) {
-		this.currentUf = currentUf;
-	}
-
-	public List<Uf> getListaUf() {
-		return this.listaUf;
+	public void setCurrentMunicipio(Municipio currentMunicipio) {
+		this.currentMunicipio = currentMunicipio;
 	}
 
-	public void setListaUf(List<Uf> listaUf) {
-		this.listaUf = listaUf;
+	public List<Municipio> getListaMunicipio() {
+		return this.listaMunicipio;
+	}
+
+	public void setListaMunicipio(List<Municipio> listaMunicipio) {
+		this.listaMunicipio = listaMunicipio;
 	}
 }
