@@ -13,6 +13,10 @@
 	</h:head>
 	<h:body>
 		<p:panel header="Gestão de UF - Unidade Federativa" style="width: 98%;">
+				<h:form>	
+					<p:commandButton class="botavoltar para index" value="Voltar" action="/view/index/index" ajax="false"/>
+				</h:form>
+				<p:spacer />
 				<h:form id="frmpesquisar">	
 					<p:panel id="pnlPesquisa" header="Pesquisa" style="width: 40%;" rendered="#{ufBean.mostraPesquisar}">
 							<h:panelGrid columns="2" style="width: 100%;">
