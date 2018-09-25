@@ -10,7 +10,9 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.MunicipioDAO;
+import br.edu.fsma.fiscalizacaoweb.modelo.dao.UfDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
+import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Uf;
 
 
 @Named
@@ -20,7 +22,9 @@ public class MunicipioBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private List<Municipio> listaMunicipio = new ArrayList<Municipio>();
+	private List<Uf> listaUf = new ArrayList<Uf>();
 	private Municipio currentMunicipio = new Municipio();
+	private Uf currentUf = new Uf();
 	private enum Nome {PAINELINCLUIR, PAINELPESQUISAR};
 	private Nome nome = Nome.PAINELPESQUISAR;
 	private enum EditarNovo {EDITAR, NOVO};
@@ -34,6 +38,9 @@ public class MunicipioBean implements Serializable {
 	private HttpSession session;
 	
 	@Inject
+	private UfDAO ufDao;
+	
+	@Inject
 	private MunicipioDAO municipioDao;
 	
 	public MunicipioBean() {
@@ -42,6 +49,7 @@ public class MunicipioBean implements Serializable {
 	
 	public void incluirClick() {
 		currentMunicipio = new Municipio();
+		listaUf = ufDao.listaTodos();
 		setIncluirModificar();
 		flag = EditarNovo.NOVO;
 	}
@@ -65,6 +73,7 @@ public class MunicipioBean implements Serializable {
 	public void editarClick(Municipio municipio) {
 		currentMunicipio = new Municipio();
 		currentMunicipio = municipio;
+		listaUf = ufDao.listaTodos();
 		flag = EditarNovo.EDITAR;
 		setIncluirModificar();
 	}
@@ -72,6 +81,7 @@ public class MunicipioBean implements Serializable {
 	public void okClick() {
 		//capturaDadosInclusao();
 		System.out.println("[OKCLICK]" + currentMunicipio);
+		
 		em.getTransaction().begin();
 		if(flag == EditarNovo.NOVO) {
 			municipioDao.adiciona(currentMunicipio);
@@ -134,4 +144,14 @@ public class MunicipioBean implements Serializable {
 	public void setListaMunicipio(List<Municipio> listaMunicipio) {
 		this.listaMunicipio = listaMunicipio;
 	}
+
+	public List<Uf> getListaUf() {
+		return listaUf;
+	}
+
+	public void setListaUf(List<Uf> listaUf) {
+		this.listaUf = listaUf;
+	}
+	
+	
 }

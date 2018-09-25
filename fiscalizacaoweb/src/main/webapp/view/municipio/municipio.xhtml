@@ -54,8 +54,14 @@
 			<h:form id="frmnovoMunicipio">	
 					<p:panel id="pnlnovomunicipio" header="Municipio" style="width: 40%;" rendered="#{municipioBean.mostraIncluir}">
 							<h:panelGrid columns="2" style="width: 100%;">
-								<label for="inputsiglainclusao">Nome:</label>
+								<p:outputLabel for="inputsiglainclusao">Nome:</p:outputLabel>
 								<p:inputText id="inputsiglainclusao" value="#{municipioBean.currentMunicipio.nome}" style="width: 100%;"/>
+								
+								<p:outputLabel for="iduf" value="UF: " />
+					            <p:selectOneMenu id="iduf" value="#{municipioBean.currentMunicipio.uf}" converter="objectConverter" items="#{municipioBean.listaUf}" style="width:150px">
+					                <f:selectItem itemLabel="Selecione a UF" itemValue="" noSelectionOption="true" />
+					                <f:selectItems value="#{municipioBean.listaUf}" var="obj" itemLabel="#{obj.sigla}"	itemValue="#{obj.iduf}"/>
+					            </p:selectOneMenu>
 								<p:spacer />
 								<h:panelGrid columns="2" style="width: 100%;">
 									<p:commandButton value="OK" actionListener="#{municipioBean.okClick()}" process="@form" update="#{municipioBean.getIdToUpdate()}" />

@@ -83,6 +83,10 @@ public class UfDAO implements Serializable {
 		return (ArrayList<Uf>) this.dao.listaTodosPaginada(firstResult, maxResults);
 	}
 	
+	public ArrayList<Uf> listaTodos() {
+		return (ArrayList<Uf>) this.dao.listaTodos();
+	}
+	
 	public ArrayList<Uf> buscaListaUfPorNomeSigla(Uf uf) {
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" select u from Uf u ");
