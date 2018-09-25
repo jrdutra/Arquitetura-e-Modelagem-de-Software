@@ -62,20 +62,6 @@ public class UfDAO implements Serializable {
 		}
 	}
 	
-	public void escreveUf(Uf uf) {
-		
-		Uf ufbuscada = buscaUfPorNomeSigla(uf);
-		System.out.println("[ESCREVE UF] UF buscada: " + ufbuscada);
-		if(ufbuscada != null) {
-			ufbuscada.setNome(uf.getNome());
-			ufbuscada.setSigla(uf.getSigla());
-			System.out.println("Atualizou Uf");
-			this.atualiza(ufbuscada);
-		}else {
-			System.out.println("Adicionou NOVA UF");
-			this.adiciona(uf);
-		}
-	}
 	
 	public void adiciona(Uf uf) {
 		this.dao.adiciona(uf);

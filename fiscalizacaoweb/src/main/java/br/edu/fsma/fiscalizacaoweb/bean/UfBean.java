@@ -6,13 +6,11 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.faces.bean.ManagedBean;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.UfDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Uf;
 
@@ -27,6 +25,9 @@ public class UfBean implements Serializable {
 	private Uf currentUf = new Uf();
 	private enum Nome {PAINELINCLUIR, PAINELPESQUISAR};
 	private Nome nome = Nome.PAINELPESQUISAR;
+	private enum EditarNovo {EDITAR, NOVO};
+	private EditarNovo flag;
+	
 	
 	@Inject
 	private EntityManager em;
@@ -41,38 +42,53 @@ public class UfBean implements Serializable {
 		
 	}
 	
-	public void capturaDadosPesquisa() {
-		  HttpServletRequest request = (HttpServletRequest) FacesContext
-						.getCurrentInstance().getExternalContext().getRequest();
-		  currentUf.setNome(request.getParameter("frmpesquisar:input_nome_pesquisa").toUpperCase());
-		  currentUf.setSigla(request.getParameter("frmpesquisar:input_sigla_pesquisa").toUpperCase());
-		  System.out.println("[FUN: DADOS PESQUISA] - CurrentUF: " + currentUf);
-	}
-	
-	public void capturaDadosInclusao() {
-		  HttpServletRequest request = (HttpServletRequest) FacesContext
-						.getCurrentInstance().getExternalContext().getRequest();
-		  currentUf.setNome(request.getParameter("frmnovauf:inputnomeinclusao").toUpperCase());
-		  currentUf.setSigla(request.getParameter("frmnovauf:inputsiglainclusao").toUpperCase());
-		  System.out.println("[FUN: DADOS INCLUSAO] - CurrentUF: " + currentUf);
-	}
-	
 	public void incluirClick() {
 		currentUf = new Uf();
-		setIncluir();
+		setIncluirModificar();
+		flag = EditarNovo.NOVO;
+	}
+	
+
+	public void excluirClick(Uf uf) {
+		
+		try {
+			em.getTransaction().begin();
+			ufDao.remove(uf);
+			em.getTransaction().commit();
+		}
+		catch (Exception e){
+			System.out.println("Não foi possivel excluir: " + uf);
+		}
+		
+		
+		setPesquisar();
+	}
+	
+	public void editarClick(Uf uf) {
+		currentUf = new Uf();
+		currentUf = uf;
+		flag = EditarNovo.EDITAR;
+		setIncluirModificar();
 	}
 	
 	public void okClick() {
-		capturaDadosInclusao();
+		//capturaDadosInclusao();
+		System.out.println("[OKCLICK]" + currentUf);
 		em.getTransaction().begin();
-		ufDao.escreveUf(currentUf);
+		if(flag == EditarNovo.NOVO) {
+			ufDao.adiciona(currentUf);
+			listaUf.add(currentUf);
+		}
+		if(flag == EditarNovo.EDITAR) {
+			ufDao.atualiza(currentUf);
+		}
+		
 		em.getTransaction().commit();
 		setPesquisar();
-		
 	}
 	
 	public void pesquisarClick() {
-		capturaDadosPesquisa();
+		//capturaDadosPesquisa();
 		listaUf = ufDao.buscaListaUfPorNomeSigla(currentUf);
 		setPesquisar();
 		System.out.println(listaUf);
@@ -90,7 +106,7 @@ public class UfBean implements Serializable {
 				);
 	}
 	
-	public void setIncluir() {
+	public void setIncluirModificar() {
 		nome = Nome.PAINELINCLUIR;
 	}
 	

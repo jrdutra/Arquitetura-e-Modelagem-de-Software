@@ -17,12 +17,12 @@
 					<p:panel id="pnlPesquisa" header="Pesquisa" style="width: 40%;" rendered="#{ufBean.mostraPesquisar}">
 							<h:panelGrid columns="2" style="width: 100%;">
 								<label for="input_sigla_pesquisa">Sigla:</label>
-								<p:inputText id="input_sigla_pesquisa" value="#{ufBean.currentUf.getSigla()}" style="width: 100%;"/>
+								<p:inputText id="input_sigla_pesquisa" value="#{ufBean.currentUf.sigla}" style="width: 100%;"/>
 								<label for="input_nome_pesquisa">Nome:</label>
-								<p:inputText id="input_nome_pesquisa" value="#{ufBean.currentUf.getNome()}" style="width: 100%;"/>
+								<p:inputText id="input_nome_pesquisa" value="#{ufBean.currentUf.nome}" style="width: 100%;"/>
 								<p:spacer />
 								<h:panelGrid columns="2" style="width: 100%;">
-									<p:commandButton value="Pesquisar" actionListener="#{ufBean.pesquisarClick()}" process="@this" update="#{ufBean.getIdToUpdate()}">
+									<p:commandButton value="Pesquisar" actionListener="#{ufBean.pesquisarClick()}" process="@form" update="#{ufBean.getIdToUpdate()}">
 										<f:ajax  render=":frmResultado:tabelaUf" ></f:ajax>
 									</p:commandButton>
 									
@@ -43,6 +43,8 @@
 					                    <h:outputText value="#{uf.nome}" />
 					             </p:column>
 					             <p:column headerText="Ações" style="width: 30%;">
+					             	<p:commandButton value="Excluir" actionListener="#{ufBean.excluirClick(uf)}" process="@form" update="#{ufBean.getIdToUpdate()}" oncomplete="#{ufBean.listaUf}"/>
+					             	<p:commandButton value="Editar" actionListener="#{ufBean.editarClick(uf)}" process="@form" update="#{ufBean.getIdToUpdate()}" oncomplete="#{ufBean.listaUf}"/>
 					             </p:column> 
 					       </p:dataTable>
 					    </h:panelGrid>
@@ -53,13 +55,13 @@
 					<p:panel id="pnlnovauf" header="UF" style="width: 40%;" rendered="#{ufBean.mostraIncluir}">
 							<h:panelGrid columns="2" style="width: 100%;">
 								<label for="inputsiglainclusao">Sigla:</label>
-								<p:inputText id="inputsiglainclusao" value="#{ufBean.currentUf.getSigla()}" style="width: 100%;"/>
+								<p:inputText id="inputsiglainclusao" value="#{ufBean.currentUf.sigla}" style="width: 100%;"/>
 								<label for="inputnomeinclusao">Nome:</label>
-								<p:inputText id="inputnomeinclusao" value="#{ufBean.currentUf.getNome()}" style="width: 100%;"/>
+								<p:inputText id="inputnomeinclusao" value="#{ufBean.currentUf.nome}" style="width: 100%;"/>
 								<p:spacer />
 								<h:panelGrid columns="2" style="width: 100%;">
-									<p:commandButton value="OK" action="#{ufBean.okClick()}" process="@this" update="#{ufBean.getIdToUpdate()}" />
-									<p:commandButton value="Cancelar" action="#{ufBean.cancelarClick()}" process="@this" update="#{ufBean.getIdToUpdate()}" />
+									<p:commandButton value="OK" actionListener="#{ufBean.okClick()}" process="@form" update="#{ufBean.getIdToUpdate()}" />
+									<p:commandButton value="Cancelar" actionListener="#{ufBean.cancelarClick()}" process="@this" update="#{ufBean.getIdToUpdate()}" />
 								</h:panelGrid>
 							</h:panelGrid>
 					</p:panel>
