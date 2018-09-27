@@ -12,28 +12,26 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbmunicipio")
+@Table(name = "tb_municipio")
 public class Municipio implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idmunicipio")
-	private Long idmunicipio;
-	
+	@Column(name = "id")
+	private Long id;
 	@OneToOne
-	@JoinColumn(name = "iduf", referencedColumnName="iduf")
+	@JoinColumn(name = "uf_id")
 	private Uf uf;
+	@Column(length=30)
 	private String nome;
-	
-	
-	
-	public Long getIdmunicipio() {
-		return idmunicipio;
+		
+	public Long getId() {
+		return id;
 	}
-	public void setIdmunicipio(Long idmunicipio) {
-		this.idmunicipio = idmunicipio;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public Uf getUf() {
 		return uf;
@@ -51,9 +49,7 @@ public class Municipio implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((idmunicipio == null) ? 0 : idmunicipio.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((uf == null) ? 0 : uf.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 	@Override
@@ -65,27 +61,18 @@ public class Municipio implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Municipio other = (Municipio) obj;
-		if (idmunicipio == null) {
-			if (other.idmunicipio != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idmunicipio.equals(other.idmunicipio))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (uf == null) {
-			if (other.uf != null)
-				return false;
-		} else if (!uf.equals(other.uf))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return nome;
+		return "Municipio [id=" + id + ", nome=" + nome + "]";
 	}
+
 	
 	
 }

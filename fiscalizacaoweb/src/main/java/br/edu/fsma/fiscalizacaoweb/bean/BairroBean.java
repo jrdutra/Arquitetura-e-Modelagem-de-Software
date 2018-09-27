@@ -3,7 +3,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,7 +14,6 @@ import br.edu.fsma.fiscalizacaoweb.modelo.dao.MunicipioDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.UfDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Bairro;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
-import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Uf;
 
 
 @Named

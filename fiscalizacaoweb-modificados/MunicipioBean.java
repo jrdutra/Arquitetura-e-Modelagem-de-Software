@@ -2,12 +2,13 @@ package br.edu.fsma.fiscalizacaoweb.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpSession;
-import br.edu.fsma.fiscalizacaoweb.modelo.dao.MunicipioDAO;
+
+import br.edu.fsma.fiscalizacaoweb.modelo.dao.MunicipioDao;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.UfDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Uf;
@@ -22,29 +23,18 @@ public class MunicipioBean implements Serializable {
 	private List<Municipio> listaMunicipio = new ArrayList<Municipio>();
 	private List<Uf> listaUf = new ArrayList<Uf>();
 	private Municipio currentMunicipio = new Municipio();
-	private Uf currentUf = new Uf();
 	private Long iduf;
 	private enum Nome {PAINELINCLUIR, PAINELPESQUISAR};
 	private Nome nome = Nome.PAINELPESQUISAR;
 	private enum EditarNovo {EDITAR, NOVO};
 	private EditarNovo flag;
 	
-	
 	@Inject
 	private EntityManager em;
-	
-	@Inject
-	private HttpSession session;
-	
 	@Inject
 	private UfDAO ufDao;
-	
 	@Inject
-	private MunicipioDAO municipioDao;
-	
-	public MunicipioBean() {
-		
-	}
+	private MunicipioDao municipioDao;
 	
 	public void incluirClick() {
 		currentMunicipio = new Municipio();
@@ -52,7 +42,6 @@ public class MunicipioBean implements Serializable {
 		setIncluirModificar();
 		flag = EditarNovo.NOVO;
 	}
-	
 
 	public void excluirClick(Municipio municipio) {
 		
@@ -64,7 +53,6 @@ public class MunicipioBean implements Serializable {
 		catch (Exception e){
 			System.out.println("Não foi possivel excluir: " + municipio);
 		}
-		
 		
 		setPesquisar();
 	}
@@ -79,22 +67,14 @@ public class MunicipioBean implements Serializable {
 	}
 	
 	public void okClick() {
-		//capturaDadosInclusao();
-		System.out.println("[UF id]" + iduf);
-		System.out.println(ufDao.buscaPorId(iduf));
-		
-		currentUf = new Uf();
-		currentUf = ufDao.buscaPorId(iduf);
-		
-		currentMunicipio.setUf(currentUf);
-		
 		em.getTransaction().begin();
+		
+		Uf uf = ufDao.buscaPorId(iduf);
+		currentMunicipio.setUf(uf);
+
+		municipioDao.persiste(currentMunicipio);
 		if(flag == EditarNovo.NOVO) {
-			municipioDao.adiciona(currentMunicipio);
 			listaMunicipio.add(currentMunicipio);
-		}
-		if(flag == EditarNovo.EDITAR) {
-			municipioDao.atualiza(currentMunicipio);
 		}
 		
 		em.getTransaction().commit();
