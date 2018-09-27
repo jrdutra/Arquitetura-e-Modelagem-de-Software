@@ -3,24 +3,27 @@ package br.edu.fsma.fiscalizacaoweb.modelo.dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Bairro;
+import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
 
 public class BairroDAO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private DAO<Bairro> dao;
-	//@Inject
-	private EntityManager em;
-	//no lugar do inject e postconstruct fiz o construtor instanciando o em e dao
 	
-	public BairroDAO(EntityManager em2) {
-		this.em = em2;
+	@PostConstruct
+	void init() {
 		this.dao = new DAO<Bairro>(this.em, Bairro.class);
 	}
+	
+	@Inject
+	private EntityManager em;
 	
 	public boolean existe(Bairro bairro) {
 		@SuppressWarnings("unused")
@@ -69,6 +72,20 @@ public class BairroDAO implements Serializable {
 
 	public ArrayList<Bairro> listaTodosPaginada(int firstResult, int maxResults) {
 		return (ArrayList<Bairro>) this.dao.listaTodosPaginada(firstResult, maxResults);
+	}
+	
+	public ArrayList<Bairro> buscaListaBairroPorNome(Bairro bairro) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select b from Bairro b ");
+		jpql.append(" where ");
+		jpql.append(" b.nome like :pNome");
+		TypedQuery<Bairro> query = em.createQuery(jpql.toString() , Bairro.class);
+		query.setParameter("pNome", bairro.getNome());
+		try {
+			return (ArrayList<Bairro>) query.getResultList();
+		} catch (NoResultException ex) {
+			return null;
+		}
 	}
 	
 }

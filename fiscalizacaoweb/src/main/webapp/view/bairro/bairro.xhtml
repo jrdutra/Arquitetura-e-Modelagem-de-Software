@@ -9,14 +9,71 @@
 			
 		</style>
 		<meta charset="UTF-8" />
-		<title>Bairro</title>
+		<title>Municipio</title>
 		<link type="text/css" rel="stylesheet"	href="#{facesContext.externalContext.requestContextPath}/resources/css/estilo.css" />
 	</h:head>
 	<h:body>
 		<p:panel header="Bairro" style="width: 98%;">			
-		<h:form>		
-			<p:commandButton class="botavoltar" value="Voltar" action="/view/index/index" ajax="false"/>
-		</h:form>
+			<h:form>		
+				<p:commandButton class="botavoltar" value="Voltar" action="/view/index/index" ajax="false"/>
+			</h:form>	
+			<h:form id="frmpesquisar">	
+				<p:panel id="pnlPesquisa" header="Pesquisa" style="width: 40%;" rendered="#{bairroBean.mostraPesquisar}">
+						<h:panelGrid columns="2" style="width: 100%;">
+							<label for="input_nome_pesquisa">Nome:</label>
+							<p:inputText id="input_nome_pesquisa" value="#{bairroBean.currentBairro.nome}" style="width: 100%;"/>
+							<p:spacer />
+							<h:panelGrid columns="2" style="width: 100%;">
+								<p:commandButton value="Pesquisar" actionListener="#{bairroBean.pesquisarClick()}" process="@form" update="#{bairroBean.getIdToUpdate()}">
+									<f:ajax  render=":frmResultado:tabelaBairro" ></f:ajax>
+								</p:commandButton>
+							</h:panelGrid>	
+						</h:panelGrid>
+				</p:panel>
+				<p:spacer />
+			</h:form>
+			<h:form id="frmResultado">
+					<p:panel id="pnlResultado" header="Resultado" style="width: 70%;" rendered="#{bairroBean.mostraPesquisar}">
+						<h:panelGrid columns="1" style="width: 100%;">
+							<p:commandButton value="Incluir Novo" actionListener="#{bairroBean.incluirClick()}" process="@this" update="#{bairroBean.getIdToUpdate()}"/>
+							<p:dataTable id="tabelaBairro" var="bairro" value="#{bairroBean.listaBairro}">
+					             <p:column headerText="Nome">
+					                    <h:outputText value="#{bairro.nome}" style="width: 30%;"/>
+					             </p:column>
+					             <p:column headerText="Municipio" >
+					                    <h:outputText value="#{bairro.municipio.nome}" />
+					             </p:column>
+					             <p:column headerText="Ações" style="width: 30%;">
+					             	<p:commandButton value="Excluir" actionListener="#{bairroBean.excluirClick(bairro)}" process="@form" update="#{bairroBean.getIdToUpdate()}" oncomplete="#{bairroBean.listaBairro}"/>
+					             	<p:commandButton value="Editar" actionListener="#{bairroBean.editarClick(bairro)}" process="@form" update="#{bairroBean.getIdToUpdate()}" oncomplete="#{bairroBean.listaBairro}"/>
+					             </p:column> 
+					       </p:dataTable>
+					    </h:panelGrid>
+					</p:panel>
+			</h:form>
+			<h:form id="frmnovoBairro">	
+					<p:panel id="pnlnovobairro" header="Bairro" style="width: 40%;" rendered="#{bairroBean.mostraIncluir}">
+							<h:panelGrid columns="2" style="width: 100%;">
+								<p:outputLabel for="inputnomeinclusao">Nome:</p:outputLabel>
+								<p:inputText id="inputnomeinclusao" value="#{bairroBean.currentBairro.nome}" style="width: 100%;"/>
+								
+								<p:outputLabel for="idmunicipio" value="Municipio: " />
+					            <p:selectOneMenu id="idmunicipio" value="#{bairroBean.idMunicipio}" style="width:150px" >
+					                <f:selectItem itemLabel="Selecione o Municipio" itemValue="" noSelectionOption="true" />
+					                <f:selectItems value="#{bairroBean.listaMunicipio}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.idmunicipio}"/>
+					            </p:selectOneMenu>
+								<p:spacer />
+								<h:panelGrid columns="2" style="width: 100%;">
+									<p:commandButton value="OK" actionListener="#{bairroBean.okClick()}" process="@form" update="#{bairroBean.getIdToUpdate()}" />
+									<p:commandButton value="Cancelar" actionListener="#{bairroBean.cancelarClick()}" process="@this" update="#{bairroBean.getIdToUpdate()}" />
+								</h:panelGrid>
+							</h:panelGrid>
+					</p:panel>
+				</h:form>
+			<p:spacer />
+			<h:form>	
+				<p:commandButton class="botavoltar para index" value="Voltar" action="/view/index/index" ajax="false"/>
+			</h:form>
 		</p:panel>
 	</h:body>
 </html>

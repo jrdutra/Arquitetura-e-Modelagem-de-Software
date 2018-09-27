@@ -12,7 +12,6 @@ import javax.persistence.TypedQuery;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
 
 
-
 public class MunicipioDAO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -27,7 +26,6 @@ public class MunicipioDAO implements Serializable {
 	private EntityManager em;
 		
 	public boolean existe(Municipio municipio) {
-
 		@SuppressWarnings("unused")
 		Municipio resultado = new Municipio();
 		TypedQuery<Municipio> query = em.createQuery("SELECT m FROM Municipio m WHERE m.nome=:pNome", Municipio.class);
@@ -92,6 +90,8 @@ public class MunicipioDAO implements Serializable {
 		}
 	}
 	
-	
+	public ArrayList<Municipio> listaTodos() {
+		return (ArrayList<Municipio>) this.dao.listaTodos();
+	}
 	
 }

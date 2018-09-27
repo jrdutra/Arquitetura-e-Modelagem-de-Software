@@ -28,11 +28,12 @@ public class Municipio implements Serializable{
 	private String nome;
 	
 	
-	public Long getId() {
+	
+	public Long getIdmunicipio() {
 		return idmunicipio;
 	}
-	public void setId(Long id) {
-		this.idmunicipio = id;
+	public void setIdmunicipio(Long idmunicipio) {
+		this.idmunicipio = idmunicipio;
 	}
 	public Uf getUf() {
 		return uf;
@@ -83,7 +84,7 @@ public class Municipio implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Municipio [id=" + idmunicipio + ", uf=" + uf + ", nome=" + nome + "]";
+		return nome;
 	}
 	
 	

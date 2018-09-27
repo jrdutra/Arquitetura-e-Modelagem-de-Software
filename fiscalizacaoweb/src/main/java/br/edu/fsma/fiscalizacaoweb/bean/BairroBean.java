@@ -9,23 +9,26 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
+
+import br.edu.fsma.fiscalizacaoweb.modelo.dao.BairroDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.MunicipioDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.UfDAO;
+import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Bairro;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Uf;
 
 
 @Named
 @ViewScoped
-public class MunicipioBean implements Serializable {
+public class BairroBean implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
+	private List<Bairro> listaBairro = new ArrayList<Bairro>();
 	private List<Municipio> listaMunicipio = new ArrayList<Municipio>();
-	private List<Uf> listaUf = new ArrayList<Uf>();
+	private Bairro currentBairro = new Bairro();
 	private Municipio currentMunicipio = new Municipio();
-	private Uf currentUf = new Uf();
-	private Long iduf;
+	private Long idMunicipio;
 	private enum Nome {PAINELINCLUIR, PAINELPESQUISAR};
 	private Nome nome = Nome.PAINELPESQUISAR;
 	private enum EditarNovo {EDITAR, NOVO};
@@ -44,59 +47,73 @@ public class MunicipioBean implements Serializable {
 	@Inject
 	private MunicipioDAO municipioDao;
 	
-	public MunicipioBean() {
+	@Inject
+	private BairroDAO bairroDao;
+	
+	public BairroBean() {
 		
 	}
 	
 	public void incluirClick() {
-		currentMunicipio = new Municipio();
-		listaUf = ufDao.listaTodos();
+		currentBairro = new Bairro();
+		listaMunicipio = municipioDao.listaTodos();
 		setIncluirModificar();
 		flag = EditarNovo.NOVO;
+		System.out.println(listaMunicipio);
 	}
 	
 
-	public void excluirClick(Municipio municipio) {
+	public void excluirClick(Bairro bairro) {
 		
 		try {
 			em.getTransaction().begin();
-			municipioDao.remove(municipio);
+			bairroDao.remove(bairro);
 			em.getTransaction().commit();
 		}
 		catch (Exception e){
-			System.out.println("Não foi possivel excluir: " + municipio);
+			System.out.println("Não foi possivel excluir: " + bairro);
 		}
 		
 		
 		setPesquisar();
 	}
 	
-	public void editarClick(Municipio municipio) {
-		currentMunicipio = new Municipio();
-		currentMunicipio = municipio;
-		iduf = municipio.getUf().getIduf();
-		listaUf = ufDao.listaTodos();
+	public void editarClick(Bairro bairro) {
+		currentBairro = new Bairro();
+		currentBairro = bairro;
+		idMunicipio = bairro.getMunicipio().getIdmunicipio();
+		listaMunicipio = municipioDao.listaTodos();
 		flag = EditarNovo.EDITAR;
 		setIncluirModificar();
+		System.out.println("[editarClick]" + bairro);
+		System.out.println(listaMunicipio);
 	}
 	
+	public Nome getNome() {
+		return nome;
+	}
+
+	public void setNome(Nome nome) {
+		this.nome = nome;
+	}
+
 	public void okClick() {
 		//capturaDadosInclusao();
-		System.out.println("[UF id]" + iduf);
-		System.out.println(ufDao.buscaPorId(iduf));
+		System.out.println("[Municipio id]" + idMunicipio);
+		System.out.println(municipioDao.buscaPorId(idMunicipio));
 		
-		currentUf = new Uf();
-		currentUf = ufDao.buscaPorId(iduf);
+		currentMunicipio = new Municipio();
+		currentMunicipio = municipioDao.buscaPorId(idMunicipio);
 		
-		currentMunicipio.setUf(currentUf);
+		currentBairro.setMunicipio(currentMunicipio);
 		
 		em.getTransaction().begin();
 		if(flag == EditarNovo.NOVO) {
-			municipioDao.adiciona(currentMunicipio);
-			listaMunicipio.add(currentMunicipio);
+			bairroDao.adiciona(currentBairro);
+			listaBairro.add(currentBairro);
 		}
 		if(flag == EditarNovo.EDITAR) {
-			municipioDao.atualiza(currentMunicipio);
+			bairroDao.atualiza(currentBairro);
 		}
 		
 		em.getTransaction().commit();
@@ -105,9 +122,9 @@ public class MunicipioBean implements Serializable {
 	
 	public void pesquisarClick() {
 		//capturaDadosPesquisa();
-		listaMunicipio = municipioDao.buscaListaMunicipioPorNome(currentMunicipio);
+		listaBairro = bairroDao.buscaListaBairroPorNome(currentBairro);
 		setPesquisar();
-		System.out.println(listaMunicipio);
+		System.out.println(listaBairro);
 	}
 	
 	public void cancelarClick() {
@@ -117,8 +134,8 @@ public class MunicipioBean implements Serializable {
 	public String getIdToUpdate() {
 		return (":frmpesquisar "
 				+ ":frmResultado "
-				+ ":frmResultado:tabelaMunicipio "
-				+ ":frmnovoMunicipio "
+				+ ":frmResultado:tabelaBairro "
+				+ ":frmnovoBairro "
 				);
 	}
 	
@@ -129,14 +146,6 @@ public class MunicipioBean implements Serializable {
 	public boolean isMostraIncluir() {
 		return (nome == Nome.PAINELINCLUIR);
 	}
-	
-	public Long getIduf() {
-		return iduf;
-	}
-
-	public void setIduf(Long iduf) {
-		this.iduf = iduf;
-	}
 
 	public void setPesquisar() {
 		nome = Nome.PAINELPESQUISAR;
@@ -145,29 +154,46 @@ public class MunicipioBean implements Serializable {
 	public boolean isMostraPesquisar() {
 		return (nome == Nome.PAINELPESQUISAR);
 	}
-	
-	public Municipio getCurrentMunicipio() {
-		return currentMunicipio;
-	}
-	public void setCurrentMunicipio(Municipio currentMunicipio) {
-		this.currentMunicipio = currentMunicipio;
-	}
 
 	public List<Municipio> getListaMunicipio() {
-		return this.listaMunicipio;
+		return listaMunicipio;
 	}
 
 	public void setListaMunicipio(List<Municipio> listaMunicipio) {
 		this.listaMunicipio = listaMunicipio;
 	}
 
-	public List<Uf> getListaUf() {
-		return listaUf;
+	public Bairro getCurrentBairro() {
+		return currentBairro;
 	}
 
-	public void setListaUf(List<Uf> listaUf) {
-		this.listaUf = listaUf;
+	public void setCurrentBairro(Bairro currentBairro) {
+		this.currentBairro = currentBairro;
 	}
-	
+
+	public Municipio getCurrentMunicipio() {
+		return currentMunicipio;
+	}
+
+	public void setCurrentMunicipio(Municipio currentMunicipio) {
+		this.currentMunicipio = currentMunicipio;
+	}
+
+	public Long getIdMunicipio() {
+		return idMunicipio;
+	}
+
+	public void setIdMunicipio(Long idMunicipio) {
+		this.idMunicipio = idMunicipio;
+	}
+
+	public List<Bairro> getListaBairro() {
+		return listaBairro;
+	}
+
+	public void setListaBairro(List<Bairro> listaBairro) {
+		this.listaBairro = listaBairro;
+	}
+
 	
 }
