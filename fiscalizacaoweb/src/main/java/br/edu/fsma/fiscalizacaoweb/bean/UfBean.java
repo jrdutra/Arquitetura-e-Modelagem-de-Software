@@ -9,6 +9,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.UfDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Uf;
+import br.edu.fsma.fiscalizacaoweb.tx.Transacional;
 
 @Named
 @ViewScoped
@@ -34,10 +35,8 @@ public class UfBean implements Serializable {
 		flag = EditarNovo.NOVO;
 	}
 		
-
+	@Transacional
 	public void excluirClick(Uf uf) {
-		this.em.getTransaction().begin();
-		System.out.println(uf);
 		try {
 			ufDao.remove(uf);
 			listaUf.remove(uf);
@@ -45,10 +44,7 @@ public class UfBean implements Serializable {
 		catch (Exception e){
 			System.out.println("Não foi possivel excluir: " + uf);
 		}
-		setPesquisar();
-		this.em.getTransaction().commit();
 	}
-
 
 	public void editarClick(Uf uf) {
 		currentUf = uf;
@@ -57,8 +53,8 @@ public class UfBean implements Serializable {
 		uf = null;
 	}
 	
+	@Transacional
 	public void okClick() {
-		this.em.getTransaction().begin();
 		if(flag == EditarNovo.NOVO) {
 			ufDao.adiciona(currentUf);
 			listaUf.add(currentUf);
@@ -66,8 +62,6 @@ public class UfBean implements Serializable {
 		if(flag == EditarNovo.EDITAR) {
 			ufDao.atualiza(currentUf);
 		}
-		this.em.getTransaction().commit();
-		setPesquisar();
 	}
 	
 	public void pesquisarClick() {
@@ -103,67 +97,51 @@ public class UfBean implements Serializable {
 		return (nome == Nome.PAINELPESQUISAR);
 	}
 
-
 	public List<Uf> getListaUf() {
 		return listaUf;
 	}
-
 
 	public void setListaUf(List<Uf> listaUf) {
 		this.listaUf = listaUf;
 	}
 
-
 	public Uf getCurrentUf() {
 		return currentUf;
 	}
-
 
 	public void setCurrentUf(Uf currentUf) {
 		this.currentUf = currentUf;
 	}
 
-
 	public Nome getNome() {
 		return nome;
 	}
-
 
 	public void setNome(Nome nome) {
 		this.nome = nome;
 	}
 
-
 	public EditarNovo getFlag() {
 		return flag;
 	}
-
 
 	public void setFlag(EditarNovo flag) {
 		this.flag = flag;
 	}
 
-
 	public EntityManager getEm() {
 		return em;
 	}
-
 
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
 
-
 	public UfDAO getUfDao() {
 		return ufDao;
 	}
 
-
 	public void setUfDao(UfDAO ufDao) {
 		this.ufDao = ufDao;
 	}
-	
-	
-
-	
 }

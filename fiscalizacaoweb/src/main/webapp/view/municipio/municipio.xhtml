@@ -6,7 +6,6 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 	<h:head>
 		<style>
-			
 		</style>
 		<meta charset="UTF-8" />
 		<title>Municipio</title>
@@ -44,8 +43,8 @@
 					                    <h:outputText value="#{municipio.uf.sigla}" />
 					             </p:column>
 					             <p:column headerText="Ações" style="width: 30%;">
-					             	<p:commandButton value="Excluir" actionListener="#{municipioBean.excluirClick(municipio)}" process="@form" update="#{municipioBean.getIdToUpdate()}" oncomplete="#{municipioBean.listaMunicipio}"/>
-					             	<p:commandButton value="Editar" actionListener="#{municipioBean.editarClick(municipio)}" process="@form" update="#{municipioBean.getIdToUpdate()}" oncomplete="#{municipioBean.listaMunicipio}"/>
+					             	<p:commandButton value="Excluir" actionListener="#{municipioBean.excluirClick(municipio)}" process="@form" update="#{municipioBean.getIdToUpdate()}"/>
+					             	<p:commandButton value="Editar" actionListener="#{municipioBean.editarClick(municipio)}" process="@form" update="#{municipioBean.getIdToUpdate()}"/>
 					             </p:column> 
 					       </p:dataTable>
 					    </h:panelGrid>
@@ -56,7 +55,6 @@
 							<h:panelGrid columns="2" style="width: 100%;">
 								<p:outputLabel for="inputsiglainclusao">Nome:</p:outputLabel>
 								<p:inputText id="inputsiglainclusao" value="#{municipioBean.currentMunicipio.nome}" style="width: 100%;"/>
-								
 								<p:outputLabel for="iduf" value="UF: " />
 					            <p:selectOneMenu id="iduf" value="#{municipioBean.iduf}" style="width:150px">
 					                <f:selectItem itemLabel="Selecione a UF" itemValue="" noSelectionOption="true" />

@@ -7,11 +7,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpSession;
 import br.edu.fsma.fiscalizacaoweb.tx.Transacional;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.BairroDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.MunicipioDAO;
-import br.edu.fsma.fiscalizacaoweb.modelo.dao.UfDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Bairro;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
 
@@ -20,7 +18,6 @@ import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
 @ViewScoped
 public class BairroBean implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
 	private List<Bairro> listaBairro = new ArrayList<Bairro>();
 	private List<Municipio> listaMunicipio = new ArrayList<Municipio>();
@@ -32,7 +29,6 @@ public class BairroBean implements Serializable {
 	private enum EditarNovo {EDITAR, NOVO};
 	private EditarNovo flag;
 	
-	
 	@Inject
 	private EntityManager em;
 	
@@ -42,16 +38,10 @@ public class BairroBean implements Serializable {
 	@Inject
 	private BairroDAO bairroDao;
 	
-	public BairroBean() {
-		
-	}
-	
 	public void incluirClick() {
-		currentBairro = new Bairro();
 		listaMunicipio = municipioDao.listaTodos();
 		setIncluirModificar();
 		flag = EditarNovo.NOVO;
-		System.out.println(listaMunicipio);
 	}
 	
 	@Transacional
@@ -66,7 +56,6 @@ public class BairroBean implements Serializable {
 	}
 	
 	public void editarClick(Bairro bairro) {
-		currentBairro = new Bairro();
 		currentBairro = bairro;
 		idMunicipio = bairro.getMunicipio().getIdmunicipio();
 		listaMunicipio = municipioDao.listaTodos();
@@ -84,10 +73,8 @@ public class BairroBean implements Serializable {
 
 	@Transacional
 	public void okClick() {
-		currentMunicipio = new Municipio();
 		currentMunicipio = municipioDao.buscaPorId(idMunicipio);
 		currentBairro.setMunicipio(currentMunicipio);
-		em.getTransaction().begin();
 		if(flag == EditarNovo.NOVO) {
 			bairroDao.adiciona(currentBairro);
 			listaBairro.add(currentBairro);
@@ -95,12 +82,10 @@ public class BairroBean implements Serializable {
 		if(flag == EditarNovo.EDITAR) {
 			bairroDao.atualiza(currentBairro);
 		}
-		em.getTransaction().commit();
 		setPesquisar();
 	}
 	
 	public void pesquisarClick() {
-		//capturaDadosPesquisa();
 		listaBairro = bairroDao.buscaListaBairroPorNome(currentBairro);
 		setPesquisar();
 		System.out.println(listaBairro);
@@ -173,6 +158,4 @@ public class BairroBean implements Serializable {
 	public void setListaBairro(List<Bairro> listaBairro) {
 		this.listaBairro = listaBairro;
 	}
-
-	
 }

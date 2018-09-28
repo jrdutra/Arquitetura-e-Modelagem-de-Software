@@ -44,8 +44,8 @@
 					                    <h:outputText value="#{bairro.municipio.nome}" />
 					             </p:column>
 					             <p:column headerText="Ações" style="width: 30%;">
-					             	<p:commandButton value="Excluir" actionListener="#{bairroBean.excluirClick(bairro)}" process="@form" update="#{bairroBean.getIdToUpdate()}" oncomplete="#{bairroBean.listaBairro}"/>
-					             	<p:commandButton value="Editar" actionListener="#{bairroBean.editarClick(bairro)}" process="@form" update="#{bairroBean.getIdToUpdate()}" oncomplete="#{bairroBean.listaBairro}"/>
+					             	<p:commandButton value="Excluir" actionListener="#{bairroBean.excluirClick(bairro)}" process="@form" update="#{bairroBean.getIdToUpdate()}"/>
+					             	<p:commandButton value="Editar" actionListener="#{bairroBean.editarClick(bairro)}" process="@form" update="#{bairroBean.getIdToUpdate()}"/>
 					             </p:column> 
 					       </p:dataTable>
 					    </h:panelGrid>
@@ -56,7 +56,6 @@
 							<h:panelGrid columns="2" style="width: 100%;">
 								<p:outputLabel for="inputnomeinclusao">Nome:</p:outputLabel>
 								<p:inputText id="inputnomeinclusao" value="#{bairroBean.currentBairro.nome}" style="width: 100%;"/>
-								
 								<p:outputLabel for="idmunicipio" value="Municipio: " />
 					            <p:selectOneMenu id="idmunicipio" value="#{bairroBean.idMunicipio}" style="width:150px" >
 					                <f:selectItem itemLabel="Selecione o Municipio" itemValue="" noSelectionOption="true" />

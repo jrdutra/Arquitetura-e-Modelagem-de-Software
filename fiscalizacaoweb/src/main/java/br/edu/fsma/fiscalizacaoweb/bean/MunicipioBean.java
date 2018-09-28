@@ -56,7 +56,6 @@ public class MunicipioBean implements Serializable {
 	}
 	
 	public void editarClick(Municipio municipio) {
-		currentMunicipio = new Municipio();
 		currentMunicipio = municipio;
 		iduf = municipio.getUf().getIduf();
 		listaUf = ufDao.listaTodos();
@@ -66,7 +65,6 @@ public class MunicipioBean implements Serializable {
 	
 	@Transacional
 	public void okClick() {
-		currentUf = new Uf();
 		currentUf = ufDao.buscaPorId(iduf);
 		currentMunicipio.setUf(currentUf);
 		if(flag == EditarNovo.NOVO) {
