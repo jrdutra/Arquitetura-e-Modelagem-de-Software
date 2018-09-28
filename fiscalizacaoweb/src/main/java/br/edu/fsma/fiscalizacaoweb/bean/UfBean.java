@@ -1,25 +1,19 @@
 package br.edu.fsma.fiscalizacaoweb.bean;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpSession;
-import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Uf;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.UfDAO;
-
+import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Uf;
 
 @Named
 @ViewScoped
 public class UfBean implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
 	private List<Uf> listaUf = new ArrayList<Uf>();
 	private Uf currentUf = new Uf();
@@ -28,53 +22,43 @@ public class UfBean implements Serializable {
 	private enum EditarNovo {EDITAR, NOVO};
 	private EditarNovo flag;
 	
-	
 	@Inject
 	private EntityManager em;
-	
-	@Inject
-	private HttpSession session;
-	
+
 	@Inject
 	private UfDAO ufDao;
-	
-	public UfBean() {
-		
-	}
 	
 	public void incluirClick() {
 		currentUf = new Uf();
 		setIncluirModificar();
 		flag = EditarNovo.NOVO;
 	}
-	
+		
 
 	public void excluirClick(Uf uf) {
-		
+		this.em.getTransaction().begin();
+		System.out.println(uf);
 		try {
-			em.getTransaction().begin();
 			ufDao.remove(uf);
-			em.getTransaction().commit();
+			listaUf.remove(uf);
 		}
 		catch (Exception e){
 			System.out.println("Não foi possivel excluir: " + uf);
 		}
-		
-		
 		setPesquisar();
+		this.em.getTransaction().commit();
 	}
-	
+
+
 	public void editarClick(Uf uf) {
-		currentUf = new Uf();
 		currentUf = uf;
 		flag = EditarNovo.EDITAR;
 		setIncluirModificar();
+		uf = null;
 	}
 	
 	public void okClick() {
-		//capturaDadosInclusao();
-		System.out.println("[OKCLICK]" + currentUf);
-		em.getTransaction().begin();
+		this.em.getTransaction().begin();
 		if(flag == EditarNovo.NOVO) {
 			ufDao.adiciona(currentUf);
 			listaUf.add(currentUf);
@@ -82,16 +66,13 @@ public class UfBean implements Serializable {
 		if(flag == EditarNovo.EDITAR) {
 			ufDao.atualiza(currentUf);
 		}
-		
-		em.getTransaction().commit();
+		this.em.getTransaction().commit();
 		setPesquisar();
 	}
 	
 	public void pesquisarClick() {
-		//capturaDadosPesquisa();
 		listaUf = ufDao.buscaListaUfPorNomeSigla(currentUf);
 		setPesquisar();
-		System.out.println(listaUf);
 	}
 	
 	public void cancelarClick() {
@@ -121,19 +102,68 @@ public class UfBean implements Serializable {
 	public boolean isMostraPesquisar() {
 		return (nome == Nome.PAINELPESQUISAR);
 	}
-	
-	public Uf getCurrentUf() {
-		return currentUf;
-	}
-	public void setCurrentUf(Uf currentUf) {
-		this.currentUf = currentUf;
-	}
+
 
 	public List<Uf> getListaUf() {
-		return this.listaUf;
+		return listaUf;
 	}
+
 
 	public void setListaUf(List<Uf> listaUf) {
 		this.listaUf = listaUf;
 	}
+
+
+	public Uf getCurrentUf() {
+		return currentUf;
+	}
+
+
+	public void setCurrentUf(Uf currentUf) {
+		this.currentUf = currentUf;
+	}
+
+
+	public Nome getNome() {
+		return nome;
+	}
+
+
+	public void setNome(Nome nome) {
+		this.nome = nome;
+	}
+
+
+	public EditarNovo getFlag() {
+		return flag;
+	}
+
+
+	public void setFlag(EditarNovo flag) {
+		this.flag = flag;
+	}
+
+
+	public EntityManager getEm() {
+		return em;
+	}
+
+
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
+
+
+	public UfDAO getUfDao() {
+		return ufDao;
+	}
+
+
+	public void setUfDao(UfDAO ufDao) {
+		this.ufDao = ufDao;
+	}
+	
+	
+
+	
 }

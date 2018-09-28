@@ -2,13 +2,11 @@ package br.edu.fsma.fiscalizacaoweb.modelo.dao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
 
 

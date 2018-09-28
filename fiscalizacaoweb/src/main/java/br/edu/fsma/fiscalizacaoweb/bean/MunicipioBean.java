@@ -6,18 +6,17 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpSession;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.MunicipioDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.UfDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Uf;
+import br.edu.fsma.fiscalizacaoweb.tx.Transacional;
 
 
 @Named
 @ViewScoped
 public class MunicipioBean implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
 	private List<Municipio> listaMunicipio = new ArrayList<Municipio>();
 	private List<Uf> listaUf = new ArrayList<Uf>();
@@ -28,24 +27,16 @@ public class MunicipioBean implements Serializable {
 	private Nome nome = Nome.PAINELPESQUISAR;
 	private enum EditarNovo {EDITAR, NOVO};
 	private EditarNovo flag;
-	
-	
+		
 	@Inject
 	private EntityManager em;
-	
-	@Inject
-	private HttpSession session;
 	
 	@Inject
 	private UfDAO ufDao;
 	
 	@Inject
 	private MunicipioDAO municipioDao;
-	
-	public MunicipioBean() {
 		
-	}
-	
 	public void incluirClick() {
 		currentMunicipio = new Municipio();
 		listaUf = ufDao.listaTodos();
@@ -53,19 +44,14 @@ public class MunicipioBean implements Serializable {
 		flag = EditarNovo.NOVO;
 	}
 	
-
+	@Transacional
 	public void excluirClick(Municipio municipio) {
-		
 		try {
-			em.getTransaction().begin();
 			municipioDao.remove(municipio);
-			em.getTransaction().commit();
 		}
 		catch (Exception e){
 			System.out.println("Não foi possivel excluir: " + municipio);
 		}
-		
-		
 		setPesquisar();
 	}
 	
@@ -78,17 +64,11 @@ public class MunicipioBean implements Serializable {
 		setIncluirModificar();
 	}
 	
+	@Transacional
 	public void okClick() {
-		//capturaDadosInclusao();
-		System.out.println("[UF id]" + iduf);
-		System.out.println(ufDao.buscaPorId(iduf));
-		
 		currentUf = new Uf();
 		currentUf = ufDao.buscaPorId(iduf);
-		
 		currentMunicipio.setUf(currentUf);
-		
-		em.getTransaction().begin();
 		if(flag == EditarNovo.NOVO) {
 			municipioDao.adiciona(currentMunicipio);
 			listaMunicipio.add(currentMunicipio);
@@ -96,8 +76,6 @@ public class MunicipioBean implements Serializable {
 		if(flag == EditarNovo.EDITAR) {
 			municipioDao.atualiza(currentMunicipio);
 		}
-		
-		em.getTransaction().commit();
 		setPesquisar();
 	}
 	
@@ -166,6 +144,4 @@ public class MunicipioBean implements Serializable {
 	public void setListaUf(List<Uf> listaUf) {
 		this.listaUf = listaUf;
 	}
-	
-	
 }

@@ -1,5 +1,6 @@
 package br.edu.fsma.fiscalizacaoweb.tx;
 
+
 import java.io.Serializable;
 
 import javax.inject.Inject;

@@ -350,7 +350,7 @@ public class ImportadorDeArquivo {
 			        			em.getTransaction().commit();
 		        				
 			        			
-			        			
+					
 		        			}catch(Exception ex)  {
 		        				System.out.println("\n\nErro ao gravar no banco.");
 		        				em.getTransaction().rollback();
