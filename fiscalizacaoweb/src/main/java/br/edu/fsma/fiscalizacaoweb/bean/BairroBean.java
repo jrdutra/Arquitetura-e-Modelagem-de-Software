@@ -13,7 +13,6 @@ import br.edu.fsma.fiscalizacaoweb.modelo.dao.MunicipioDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Bairro;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
 
-
 @Named
 @ViewScoped
 public class BairroBean implements Serializable {

@@ -2,6 +2,7 @@ package br.edu.fsma.fiscalizacaoweb.modelo.dao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -86,6 +87,10 @@ public class BairroDAO implements Serializable {
 		} catch (NoResultException ex) {
 			return null;
 		}
+	}
+
+	public List<Bairro> listaTodos() {
+		return (ArrayList<Bairro>) this.dao.listaTodos();
 	}
 	
 }

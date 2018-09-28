@@ -28,11 +28,12 @@ public class Bairro implements Serializable{
 	
 	private String nome;
 	
-	public Long getId() {
+	
+	public Long getIdbairro() {
 		return idbairro;
 	}
-	public void setId(Long id) {
-		this.idbairro = id;
+	public void setIdbairro(Long idbairro) {
+		this.idbairro = idbairro;
 	}
 	public String getNome() {
 		return nome;

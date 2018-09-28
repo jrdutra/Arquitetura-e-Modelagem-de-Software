@@ -2,24 +2,28 @@ package br.edu.fsma.fiscalizacaoweb.modelo.dao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.PessoaFisica;
 
 public class PessoaFisicaDAO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private DAO<PessoaFisica> dao;
 	
-	//@Inject
-		private EntityManager em;
-		//no lugar do inject e postconstruct fiz o construtor instanciando o em e dao
-		
-		public PessoaFisicaDAO(EntityManager em2) {
-			this.em = em2;
+		@PostConstruct
+		void init() {
 			this.dao = new DAO<PessoaFisica>(this.em, PessoaFisica.class);
 		}
+	
+		@Inject
+		private EntityManager em;
 		
 		public boolean existe(PessoaFisica pessoa) {
 			@SuppressWarnings("unused")
@@ -39,7 +43,7 @@ public class PessoaFisicaDAO implements Serializable{
 			StringBuilder jpql = new StringBuilder();
 			jpql.append(" select p from PessoaFisica p ");
 			jpql.append(" where ");
-			jpql.append("       e.cpf = :pCpf ");
+			jpql.append("       p.cpf = :pCpf ");
 			
 			TypedQuery<PessoaFisica> query = em.createQuery(jpql.toString() , PessoaFisica.class);
 			
@@ -52,7 +56,7 @@ public class PessoaFisicaDAO implements Serializable{
 		}
 		
 		public PessoaFisica buscaPessoaPeloCpf(String cpf) {
-			String jpql = "select p from PessoaFisica p where p.cpf = :pCpf";
+			String jpql = "select p from PessoaFisica p where p.cpf like :pCpf";
 			TypedQuery<PessoaFisica> query = em.createQuery(jpql, PessoaFisica.class);
 			query.setParameter("pCpf", cpf);
 			try {
@@ -81,5 +85,19 @@ public class PessoaFisicaDAO implements Serializable{
 		public ArrayList<PessoaFisica> listaTodosPaginada(int firstResult, int maxResults) {
 			return (ArrayList<PessoaFisica>) this.dao.listaTodosPaginada(firstResult, maxResults);
 		}
-	
+
+		public List<PessoaFisica> buscaListaPessoaFisicaPorCpf(PessoaFisica pessoaFisica) {
+			StringBuilder jpql = new StringBuilder();
+			jpql.append(" select p from PessoaFisica p ");
+			jpql.append(" where ");
+			jpql.append(" p.nome like :pCpf");
+			TypedQuery<PessoaFisica> query = em.createQuery(jpql.toString() , PessoaFisica.class);
+			query.setParameter("pCpf", pessoaFisica.getCpf());
+			try {
+				return (ArrayList<PessoaFisica>) query.getResultList();
+			} catch (NoResultException ex) {
+				return null;
+			}
+		}
+
 }
