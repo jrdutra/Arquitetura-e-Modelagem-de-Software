@@ -46,8 +46,8 @@
 					                    <h:outputText value="#{uf.nome}" />
 					             </p:column>
 					             <p:column headerText="Ações" style="width: 30%;">
-					             	<p:commandButton value="Excluir" actionListener="#{ufBean.excluirClick(uf)}" process="@form" update="#{ufBean.getIdToUpdate()}" oncomplete="#{ufBean.listaUf}"/>
-					             	<p:commandButton value="Editar" actionListener="#{ufBean.editarClick(uf)}" process="@form" update="#{ufBean.getIdToUpdate()}" oncomplete="#{ufBean.listaUf}"/>
+					             	<p:commandButton value="Excluir" actionListener="#{ufBean.excluirClick(uf)}" process="@form" update="#{ufBean.getIdToUpdate()}"/>
+					             	<p:commandButton value="Editar" actionListener="#{ufBean.editarClick(uf)}" process="@form" update="#{ufBean.getIdToUpdate()}"/>
 					             </p:column> 
 					       </p:dataTable>
 					    </h:panelGrid>
