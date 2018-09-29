@@ -90,7 +90,7 @@ public class PessoaFisicaDAO implements Serializable{
 			StringBuilder jpql = new StringBuilder();
 			jpql.append(" select p from PessoaFisica p ");
 			jpql.append(" where ");
-			jpql.append(" p.nome like :pCpf");
+			jpql.append(" p.cpf like :pCpf");
 			TypedQuery<PessoaFisica> query = em.createQuery(jpql.toString() , PessoaFisica.class);
 			query.setParameter("pCpf", pessoaFisica.getCpf());
 			try {

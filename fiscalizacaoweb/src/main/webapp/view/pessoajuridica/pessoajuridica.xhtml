@@ -6,17 +6,93 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 	<h:head>
 		<style>
-			
 		</style>
 		<meta charset="UTF-8" />
-		<title>Menu</title>
+		<title>Pessoa Jurídica</title>
 		<link type="text/css" rel="stylesheet"	href="#{facesContext.externalContext.requestContextPath}/resources/css/estilo.css" />
 	</h:head>
 	<h:body>
 		<p:panel header="Pessoa Jurídica" style="width: 98%;">			
-		<h:form>		
-			<p:commandButton class="botavoltar" value="Voltar" action="/view/index/index" ajax="false"/>
-		</h:form>	
+			<h:form>		
+				<p:commandButton class="botavoltar" value="Voltar" action="/view/index/index" ajax="false"/>
+			</h:form>	
+			<h:form id="frmpesquisar">	
+				<p:panel id="pnlPesquisa" header="Pesquisa" style="width: 40%;" rendered="#{pessoaJuridicaBean.mostraPesquisar}">
+						<h:panelGrid columns="2" style="width: 100%;">
+							<label for="input_nome_pesquisa">CNPJ:</label>
+							<p:inputText id="input_nome_pesquisa" value="#{pessoaJuridicaBean.currentCnpj}" style="width: 100%;"/>
+							<p:spacer />
+							<h:panelGrid columns="2" style="width: 100%;">
+								<p:commandButton value="Pesquisar" actionListener="#{pessoaJuridicaBean.pesquisarClick()}" process="@form" update="#{pessoaJuridicaBean.getIdToUpdate()}">
+									<f:ajax  render=":frmResultado:tabelaPessoaJuridica" ></f:ajax>
+								</p:commandButton>
+							</h:panelGrid>	
+						</h:panelGrid>
+				</p:panel>
+				<p:spacer />
+			</h:form>
+			<h:form id="frmResultado">
+					<p:panel id="pnlResultado" header="Resultado" style="width: 100%;" rendered="#{pessoaJuridicaBean.mostraPesquisar}">
+						<h:panelGrid columns="1" style="width: 100%;">
+							<p:commandButton value="Incluir Novo" actionListener="#{pessoaJuridicaBean.incluirClick()}" process="@this" update="#{pessoaJuridicaBean.getIdToUpdate()}"/>
+							<p:dataTable id="tabelaPessoaJuridica" var="pessoaJuridica" value="#{pessoaJuridicaBean.listaPessoaJuridica}">
+					             
+					             <p:column headerText="Razão Social">
+					                    <h:outputText value="#{pessoaJuridica.razaosocial}" />
+					             </p:column>
+					             
+					             <p:column headerText="CNPJ">
+					                    <h:outputText value="#{pessoaJuridica.cnpj}" />
+					             </p:column>
+					             
+					             <p:column headerText="Bairro">
+					                    <h:outputText value="#{pessoaJuridica.bairro.nome}" />
+					             </p:column>
+					             
+					             <p:column headerText="Ações" style="width: 30%;">
+					             	<p:commandButton value="Excluir" actionListener="#{pessoaJuridicaBean.excluirClick(pessoaJuridica)}" process="@form" update="#{pessoaJuridicaBean.getIdToUpdate()}"/>
+					             	<p:commandButton value="Editar" actionListener="#{pessoaJuridicaBean.editarClick(pessoaJuridica)}" process="@form" update="#{pessoaJuridicaBean.getIdToUpdate()}"/>
+					             </p:column> 
+					       </p:dataTable>
+					    </h:panelGrid>
+					</p:panel>
+			</h:form>
+			<h:form id="frmnovoPessoaJuridica">	
+					<p:panel id="pnlnovoPessoaJuridica" header="Pessoa Jurídica" style="width: 60%;" rendered="#{pessoaJuridicaBean.mostraIncluir}">
+							<h:panelGrid columns="2" style="width: 100%;">
+								<p:outputLabel for="inputrazaosocialinclusao">Razão Social:</p:outputLabel>
+								<p:inputText id="inputrazaosocialinclusao" value="#{pessoaJuridicaBean.currentPessoaJuridica.razaosocial}"/>
+								
+								<p:outputLabel for="inputcnpjinclusao">CNPJ:</p:outputLabel>
+								<p:inputText id="inputcnpjinclusao" value="#{pessoaJuridicaBean.currentPessoaJuridica.cnpj}"/>
+								
+								<p:outputLabel for="inputlogradouroinclusao">Logradouro:</p:outputLabel>
+								<p:inputText id="inputlogradouroinclusao" value="#{pessoaJuridicaBean.currentPessoaJuridica.logradouro}"/>
+								
+								<p:outputLabel for="idbairro" value="Bairro: " />
+								
+					             <p:selectOneMenu id="idbairro" value="#{pessoaJuridicaBean.idBairro}" style="width:150px">
+					                <f:selectItem itemLabel="Selecione o Bairro" itemValue="" noSelectionOption="true" />
+					                <f:selectItems value="#{pessoaJuridicaBean.listaBairro}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.idbairro}"/>
+					            </p:selectOneMenu>
+					            
+					            <p:outputLabel for="inputcepinclusao">CEP:</p:outputLabel>
+								<p:inputText id="inputcepinclusao" value="#{pessoaJuridicaBean.currentPessoaJuridica.cep}"/>
+								
+								<p:spacer />
+								
+								<h:panelGrid columns="2" style="width: 100%;">
+									<p:commandButton value="OK" actionListener="#{pessoaJuridicaBean.okClick()}" process="@form" update="#{pessoaJuridicaBean.getIdToUpdate()}" />
+									<p:commandButton value="Cancelar" actionListener="#{pessoaJuridicaBean.cancelarClick()}" process="@this" update="#{pessoaJuridicaBean.getIdToUpdate()}" />
+								</h:panelGrid>
+								
+							</h:panelGrid>
+					</p:panel>
+				</h:form>
+			<p:spacer />
+			<h:form>	
+				<p:commandButton class="botavoltar para index" value="Voltar" action="/view/index/index" ajax="false"/>
+			</h:form>
 		</p:panel>
 	</h:body>
 </html>
