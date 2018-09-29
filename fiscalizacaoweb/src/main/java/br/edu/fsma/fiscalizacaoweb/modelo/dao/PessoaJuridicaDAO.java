@@ -110,4 +110,9 @@ public class PessoaJuridicaDAO implements Serializable{
 		}
 	}
 
+	public List<PessoaJuridica> listaTodos() {
+		return (ArrayList<PessoaJuridica>) this.dao.listaTodos();
+	}
+	
+	
 }

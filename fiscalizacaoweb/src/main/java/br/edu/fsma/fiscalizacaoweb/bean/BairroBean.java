@@ -6,7 +6,6 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 import br.edu.fsma.fiscalizacaoweb.tx.Transacional;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.BairroDAO;
 import br.edu.fsma.fiscalizacaoweb.modelo.dao.MunicipioDAO;
@@ -27,9 +26,6 @@ public class BairroBean implements Serializable {
 	private Nome nome = Nome.PAINELPESQUISAR;
 	private enum EditarNovo {EDITAR, NOVO};
 	private EditarNovo flag;
-	
-	@Inject
-	private EntityManager em;
 	
 	@Inject
 	private MunicipioDAO municipioDao;

@@ -1,23 +1,29 @@
 package br.edu.fsma.fiscalizacaoweb.modelo.dao;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import javax.persistence.EntityManager;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Fiscalizacao;
 
 public class FiscalizacaoDAO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private DAO<Fiscalizacao> dao;
-	//@Inject
-	private EntityManager em;
-	//no lugar do inject e postconstruct fiz o construtor instanciando o em e dao
 	
-	public FiscalizacaoDAO(EntityManager em2) {
-		this.em = em2;
+	@PostConstruct
+	void init() {
 		this.dao = new DAO<Fiscalizacao>(this.em, Fiscalizacao.class);
 	}
+
+	@Inject
+	private EntityManager em;
 	
 	public void adiciona(Fiscalizacao fiscalizacao) {
 		this.dao.adiciona(fiscalizacao);
@@ -38,4 +44,61 @@ public class FiscalizacaoDAO implements Serializable{
 	public ArrayList<Fiscalizacao> listaTodosPaginada(int firstResult, int maxResults) {
 		return (ArrayList<Fiscalizacao>) this.dao.listaTodosPaginada(firstResult, maxResults);
 	}
+
+	public List<Fiscalizacao> buscaPorPeriodo(LocalDate dataInferior, LocalDate dataSuperior) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" SELECT f from Fiscalizacao f ");
+		jpql.append(" WHERE ");
+		jpql.append(" f.dataterminofiscalizacao "); 
+		jpql.append(" BETWEEN :pDataInferior AND :pDataSuperior");
+		TypedQuery<Fiscalizacao> query = em.createQuery(jpql.toString() , Fiscalizacao.class);
+		query.setParameter("pDataInferior", dataInferior);
+		query.setParameter("pDataSuperior", dataSuperior);
+		System.out.println(dataInferior + " " + dataSuperior);
+		try {
+			System.out.println("Buscou Vazio!");
+			return (ArrayList<Fiscalizacao>) query.getResultList();
+		} catch (NoResultException ex) {
+			System.out.println("ERRO NA BUSCA");
+			return null;
+		}
+	}
+	/*
+	public List<Fiscalizacao> buscaPorPeriodo(Date dataInferior, Date dataSuperior) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select f from Fiscalizacao f ");
+		jpql.append(" where ");
+		jpql.append(" f.dataterminofiscalizacao between :pDataInferior and :pDataInferior");
+		TypedQuery<Fiscalizacao> query = em.createQuery(jpql.toString() , Fiscalizacao.class);
+		query.setParameter("pDataInferior", dataInferior);
+		query.setParameter("pDataInferior", dataSuperior);
+		try {
+			return (ArrayList<Fiscalizacao>) query.getResultList();
+		} catch (NoResultException ex) {
+			return null;
+		}
+	}*/
+
+	public List<Fiscalizacao> buscaPorPeriodoEFiscal(LocalDate dataInferior, LocalDate dataSuperior, Long idFiscal) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" SELECT f from Fiscalizacao f ");
+		jpql.append(" WHERE ");
+		jpql.append(" f.dataterminofiscalizacao "); 
+		jpql.append(" BETWEEN :pDataInferior AND :pDataSuperior");
+		jpql.append(" AND ");
+		jpql.append("    f.pessoaFisica.idpessoafisica = :pIdFiscal");
+		TypedQuery<Fiscalizacao> query = em.createQuery(jpql.toString() , Fiscalizacao.class);
+		query.setParameter("pDataInferior", dataInferior);
+		query.setParameter("pDataSuperior", dataSuperior);
+		query.setParameter("pIdFiscal", idFiscal);
+		System.out.println(dataInferior + " " + dataSuperior + " " + idFiscal);
+		try {
+			System.out.println("Buscou Vazio!");
+			return (ArrayList<Fiscalizacao>) query.getResultList();
+		} catch (NoResultException ex) {
+			System.out.println("ERRO NA BUSCA");
+			return null;
+		}
+	}
+
 }

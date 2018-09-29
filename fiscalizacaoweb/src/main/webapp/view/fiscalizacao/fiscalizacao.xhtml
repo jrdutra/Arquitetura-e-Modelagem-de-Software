@@ -6,17 +6,140 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 	<h:head>
 		<style>
-			
 		</style>
 		<meta charset="UTF-8" />
-		<title>Menu</title>
+		<title>Fiscalização</title>
 		<link type="text/css" rel="stylesheet"	href="#{facesContext.externalContext.requestContextPath}/resources/css/estilo.css" />
 	</h:head>
 	<h:body>
 		<p:panel header="Fiscalização" style="width: 98%;">			
-		<h:form>		
-			<p:commandButton class="botavoltar" value="Voltar" action="/view/index/index" ajax="false"/>
-		</h:form>	
+			<h:form>		
+				<p:commandButton class="botavoltar" value="Voltar" action="/view/index/index" ajax="false"/>
+			</h:form>	
+			<h:form id="frmpesquisarPorPeriodo">
+				<h:panelGrid columns="1" style="width: 70%;">
+					<p:panel id="pnlPesquisaPorPeriodo" header="Pesquisa Por Periodo" style="width: 100%;" rendered="#{fiscalizacaoBean.mostraPesquisar}">
+							<h:panelGrid columns="2" style="width: 100%;">
+							
+								<label for="inputDataInferior">De:</label>
+								<p:calendar id="inputDataInferior" value="#{fiscalizacaoBean.currentDataInferior}" />
+								
+								<label for="inputDataSuperior">Até:</label>
+								<p:calendar id="inputDataSuperior" value="#{fiscalizacaoBean.currentDataSuperior}" />
+								<p:spacer />
+								
+								<h:panelGrid columns="2" style="width: 100%;">
+									<p:commandButton value="Pesquisar" actionListener="#{fiscalizacaoBean.pesquisarPorPeriodoClick()}" process="@form" update="#{fiscalizacaoBean.getIdToUpdate()}">
+										<f:ajax  render=":frmResultado:tabelaPessoaJuridica" ></f:ajax>
+									</p:commandButton>
+								</h:panelGrid>	
+							</h:panelGrid>
+					</p:panel>
+					
+					<p:panel id="pnlPesquisaPorPeriodoEFiscal" header="Pesquisa Por Periodo e Fiscal" style="width: 100%;" rendered="#{fiscalizacaoBean.mostraPesquisar}">
+							<h:panelGrid columns="2" style="width: 100%;">
+							
+								<label for="inputDataInferiorFiscal">De:</label>
+								<p:calendar id="inputDataInferiorFiscal" value="#{fiscalizacaoBean.currentDataInferior}" />
+								
+								<label for="inputDataSuperiorFiscal">Até:</label>
+								<p:calendar id="inputDataSuperiorFiscal" value="#{fiscalizacaoBean.currentDataSuperior}" />
+								
+								<p:outputLabel for="inputFiscalPesquisa">Fiscal</p:outputLabel>
+								<p:selectOneMenu id="inputFiscalPesquisa" value="#{fiscalizacaoBean.idFiscal}" style="width:150px">
+					                <f:selectItem itemLabel="Fiscal" itemValue="" noSelectionOption="true" />
+					                <f:selectItems value="#{fiscalizacaoBean.listaFiscal}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.idpessoafisica}"/>
+					            </p:selectOneMenu>
+								
+								<p:spacer />
+								
+								<h:panelGrid columns="2" style="width: 100%;">
+									<p:commandButton value="Pesquisar" actionListener="#{fiscalizacaoBean.pesquisarPorPeriodoEFiscalClick()}" process="@form" update="#{fiscalizacaoBean.getIdToUpdate()}">
+										<f:ajax  render=":frmResultado:tabelaPessoaJuridica" ></f:ajax>
+									</p:commandButton>
+								</h:panelGrid>	
+							</h:panelGrid>
+					</p:panel>
+					
+				</h:panelGrid>
+				<p:spacer />
+			</h:form>
+			<h:form id="frmResultado">
+					<p:panel id="pnlResultado" header="Resultado" style="width: 100%;" rendered="#{fiscalizacaoBean.mostraPesquisar}">
+						<h:panelGrid columns="1" style="width: 100%;">
+							<p:commandButton value="Incluir Novo" actionListener="#{fiscalizacaoBean.incluirClick()}" process="@this" update="#{fiscalizacaoBean.getIdToUpdate()}"/>
+							<p:dataTable id="tabelaFiscalizacao" var="fiscalizacao" value="#{fiscalizacaoBean.listaFiscalizacao}">
+					             
+					             <p:column headerText="Empresa">
+					                    <h:outputText value="#{fiscalizacao.empresa.razaosocial}" />
+					             </p:column>
+					             
+					             <p:column headerText="Data" style="width: 10%;">
+					                    <h:outputText value="#{fiscalizacao.dataterminofiscalizacao}" />
+					             </p:column>
+					             
+					             <p:column headerText="Cidade" style="width: 10%;">
+					                    <h:outputText value="#{fiscalizacao.bairro.municipio.nome}" />
+					             </p:column>
+					             
+					             <p:column headerText="Fiscal">
+					                    <h:outputText value="#{fiscalizacao.pessoaFisica.nome}" />
+					             </p:column>
+					             
+					             <p:column headerText="Ações" style="width: 15%;">
+					             	<p:commandButton value="Excluir" actionListener="#{fiscalizacaoBean.excluirClick(fiscalizacao)}" process="@form" update="#{fiscalizacaoBean.getIdToUpdate()}"/>
+					             	
+					             </p:column> 
+					       </p:dataTable>
+					    </h:panelGrid>
+					</p:panel>
+			</h:form>
+			<h:form id="frmnovoFiscalizacao">	
+					<p:panel id="pnlnovoFiscalizacao" header="Fiscalização" style="width: 70%;" rendered="#{fiscalizacaoBean.mostraIncluir}">
+							<h:panelGrid columns="2" style="width: 100%;">
+							
+								<p:outputLabel for="inputempresa">Empresa:</p:outputLabel>
+								<p:selectOneMenu id="inputempresa" value="#{fiscalizacaoBean.idPessoaJuridica}" style="width:80px">
+					                <f:selectItem itemLabel="Selecione a Empresa" itemValue="" noSelectionOption="true" />
+					                <f:selectItems value="#{fiscalizacaoBean.listaPessoaJuridica}" var="obj" itemLabel="#{obj.razaosocial}" itemValue="#{obj.idempresa}"/>
+					            </p:selectOneMenu>
+								
+								<label for="inputDataTermino">Data Termino:</label>
+								<p:calendar id="popup" value="#{fiscalizacaoBean.currentDataTermino}" />
+								
+								
+								<p:outputLabel for="inputlogradouro">Logradouro:</p:outputLabel>
+								<p:inputText id="inputlogradouro" value="#{fiscalizacaoBean.currentFiscalizacao.logradouro}"/>
+								
+								<p:outputLabel for="inputcep">CEP:</p:outputLabel>
+								<p:inputText id="inputcep" value="#{fiscalizacaoBean.currentFiscalizacao.cep}"/>
+								
+								<p:outputLabel for="idbairro" value="Bairro: " />
+					            <p:selectOneMenu id="idbairro" value="#{fiscalizacaoBean.idBairro}" style="width:150px">
+					                <f:selectItem itemLabel="Selecione o Bairro" itemValue="" noSelectionOption="true" />
+					                <f:selectItems value="#{fiscalizacaoBean.listaBairro}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.idbairro}"/>
+					            </p:selectOneMenu>
+					            
+					            <p:outputLabel for="idfiscal" value="Fiscal: " />
+					            <p:selectOneMenu id="idfiscal" value="#{fiscalizacaoBean.idFiscal}" style="width:150px">
+					                <f:selectItem itemLabel="Selecione o Fiscal" itemValue="" noSelectionOption="true" />
+					                <f:selectItems value="#{fiscalizacaoBean.listaFiscal}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.idpessoafisica}"/>
+					            </p:selectOneMenu>
+
+								<p:spacer />
+								
+								<h:panelGrid columns="2" style="width: 100%;">
+									<p:commandButton value="OK" actionListener="#{fiscalizacaoBean.okClick()}" process="@form" update="#{fiscalizacaoBean.getIdToUpdate()}" />
+									<p:commandButton value="Cancelar" actionListener="#{fiscalizacaoBean.cancelarClick()}" process="@this" update="#{fiscalizacaoBean.getIdToUpdate()}" />
+								</h:panelGrid>
+								
+							</h:panelGrid>
+					</p:panel>
+				</h:form>
+			<p:spacer />
+			<h:form>	
+				<p:commandButton class="botavoltar para index" value="Voltar" action="/view/index/index" ajax="false"/>
+			</h:form>
 		</p:panel>
 	</h:body>
 </html>

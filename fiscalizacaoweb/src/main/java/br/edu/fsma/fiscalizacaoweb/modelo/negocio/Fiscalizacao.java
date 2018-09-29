@@ -25,7 +25,7 @@ public class Fiscalizacao implements Serializable{
 	private Long idfiscalizacao;
 	
 	@OneToOne
-	@JoinColumn(name = "idempresa", referencedColumnName="idempresa")
+	@JoinColumn(name = "idempresa")
 	private PessoaJuridica empresa;
 	
 	private LocalDate dataterminofiscalizacao;
@@ -33,10 +33,19 @@ public class Fiscalizacao implements Serializable{
 	private String cep;
 	
 	@ManyToOne
-	@JoinColumn(name = "idbairro", referencedColumnName="idbairro")
+	@JoinColumn(name = "idbairro")
 	private Bairro bairro;
 	
+	@ManyToOne
+	@JoinColumn(name = "tbpessoafisica")
+	private PessoaFisica pessoaFisica;
 	
+	public PessoaFisica getPessoaFisica() {
+		return pessoaFisica;
+	}
+	public void setPessoaFisica(PessoaFisica pessoaFisica) {
+		this.pessoaFisica = pessoaFisica;
+	}
 	public Long getId() {
 		return idfiscalizacao;
 	}

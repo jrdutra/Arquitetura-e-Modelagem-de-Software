@@ -56,12 +56,14 @@ public class PessoaJuridica implements Serializable{
 		this.setLogradouro(fiscalizacao.getLogradouro());
 	}
 	
-	public Long getId() {
+	
+
+	public Long getIdempresa() {
 		return idempresa;
 	}
-	
-	public void setId(Long id) {
-		this.idempresa = id;
+
+	public void setIdempresa(Long idempresa) {
+		this.idempresa = idempresa;
 	}
 
 	public String getCnpj() {
