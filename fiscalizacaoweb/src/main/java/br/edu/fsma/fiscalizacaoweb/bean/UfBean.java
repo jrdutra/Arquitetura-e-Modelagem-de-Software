@@ -58,10 +58,11 @@ public class UfBean implements Serializable {
 		if(flag == EditarNovo.NOVO) {
 			ufDao.adiciona(currentUf);
 			listaUf.add(currentUf);
-		}
+		} // Nao ficou legal este if sem else
 		if(flag == EditarNovo.EDITAR) {
 			ufDao.atualiza(currentUf);
 		}
+		setPesquisar();
 	}
 	
 	public void pesquisarClick() {

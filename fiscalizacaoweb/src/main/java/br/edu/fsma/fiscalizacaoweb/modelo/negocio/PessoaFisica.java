@@ -20,24 +20,30 @@ public class PessoaFisica implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idpessoafisica")
-	private Long idpessoafisica;
+	private Long id;
 	
+	@Column(length=15)
 	private String cpf;
+	
+	@Column(length=60)
 	private String nome;
 	
+	@Column(length=180)
 	private String logradouro;
+	
+	@Column(length=11)
 	private String cep;
 	
 	@ManyToOne
 	@JoinColumn(name = "idbairro", referencedColumnName="idbairro")
 	private Bairro bairro;
 
-	public Long getIdpessoafisica() {
-		return idpessoafisica;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdpessoafisica(Long idpessoafisica) {
-		this.idpessoafisica = idpessoafisica;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getCpf() {
@@ -84,12 +90,7 @@ public class PessoaFisica implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bairro == null) ? 0 : bairro.hashCode());
-		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-		result = prime * result + ((idpessoafisica == null) ? 0 : idpessoafisica.hashCode());
-		result = prime * result + ((logradouro == null) ? 0 : logradouro.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -102,42 +103,17 @@ public class PessoaFisica implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		PessoaFisica other = (PessoaFisica) obj;
-		if (bairro == null) {
-			if (other.bairro != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!bairro.equals(other.bairro))
-			return false;
-		if (cep == null) {
-			if (other.cep != null)
-				return false;
-		} else if (!cep.equals(other.cep))
-			return false;
-		if (cpf == null) {
-			if (other.cpf != null)
-				return false;
-		} else if (!cpf.equals(other.cpf))
-			return false;
-		if (idpessoafisica == null) {
-			if (other.idpessoafisica != null)
-				return false;
-		} else if (!idpessoafisica.equals(other.idpessoafisica))
-			return false;
-		if (logradouro == null) {
-			if (other.logradouro != null)
-				return false;
-		} else if (!logradouro.equals(other.logradouro))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "PessoaFisica [cpf=" + cpf + ", nome=" + nome + "]";
+		return nome;
 	}
 
 }

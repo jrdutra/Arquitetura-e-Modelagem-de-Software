@@ -25,19 +25,21 @@ public class PessoaJuridica implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idempresa")
-	private Long idempresa;
+	private Long id;
 	
+	@Column(length=20)
 	private String cnpj;
-	private String razaosocial;
 	
-	/*
-	@OneToMany(targetEntity=Fiscalizacao.class, mappedBy="tbempresa")
-	@JoinColumn(name = "idfiscalizacao")*/
+	@Column(length=80)
+	private String razaosocial;
 	
 	@Embedded
 	private ArrayList<Fiscalizacao> fiscalizacoes = new ArrayList<Fiscalizacao>();
 	
+	@Column(length=150)
 	private String logradouro;
+	
+	@Column(length=11)
 	private String cep;
 	
 	@ManyToOne
@@ -56,14 +58,12 @@ public class PessoaJuridica implements Serializable{
 		this.setLogradouro(fiscalizacao.getLogradouro());
 	}
 	
-	
-
-	public Long getIdempresa() {
-		return idempresa;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdempresa(Long idempresa) {
-		this.idempresa = idempresa;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getCnpj() {
@@ -106,8 +106,6 @@ public class PessoaJuridica implements Serializable{
 		this.cep = cep;
 	}
 	
-	
-
 	@Override
 	public String toString() {
 		return "\n" + cnpj + " " + razaosocial;
@@ -116,15 +114,10 @@ public class PessoaJuridica implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bairro == null) ? 0 : bairro.hashCode());
-		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
-		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
-		result = prime * result + ((fiscalizacoes == null) ? 0 : fiscalizacoes.hashCode());
-		result = prime * result + ((idempresa == null) ? 0 : idempresa.hashCode());
-		result = prime * result + ((logradouro == null) ? 0 : logradouro.hashCode());
-		result = prime * result + ((razaosocial == null) ? 0 : razaosocial.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -134,40 +127,10 @@ public class PessoaJuridica implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		PessoaJuridica other = (PessoaJuridica) obj;
-		if (bairro == null) {
-			if (other.bairro != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!bairro.equals(other.bairro))
-			return false;
-		if (cep == null) {
-			if (other.cep != null)
-				return false;
-		} else if (!cep.equals(other.cep))
-			return false;
-		if (cnpj == null) {
-			if (other.cnpj != null)
-				return false;
-		} else if (!cnpj.equals(other.cnpj))
-			return false;
-		if (fiscalizacoes == null) {
-			if (other.fiscalizacoes != null)
-				return false;
-		} else if (!fiscalizacoes.equals(other.fiscalizacoes))
-			return false;
-		if (idempresa == null) {
-			if (other.idempresa != null)
-				return false;
-		} else if (!idempresa.equals(other.idempresa))
-			return false;
-		if (logradouro == null) {
-			if (other.logradouro != null)
-				return false;
-		} else if (!logradouro.equals(other.logradouro))
-			return false;
-		if (razaosocial == null) {
-			if (other.razaosocial != null)
-				return false;
-		} else if (!razaosocial.equals(other.razaosocial))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

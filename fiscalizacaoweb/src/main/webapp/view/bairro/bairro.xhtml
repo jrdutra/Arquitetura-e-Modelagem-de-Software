@@ -59,7 +59,7 @@
 								<p:outputLabel for="idmunicipio" value="Municipio: " />
 					            <p:selectOneMenu id="idmunicipio" value="#{bairroBean.idMunicipio}" style="width:150px" >
 					                <f:selectItem itemLabel="Selecione o Municipio" itemValue="" noSelectionOption="true" />
-					                <f:selectItems value="#{bairroBean.listaMunicipio}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.idmunicipio}"/>
+					                <f:selectItems value="#{bairroBean.listaMunicipio}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.id}"/>
 					            </p:selectOneMenu>
 								<p:spacer />
 								<h:panelGrid columns="2" style="width: 100%;">

@@ -58,7 +58,7 @@
 								<p:outputLabel for="iduf" value="UF: " />
 					            <p:selectOneMenu id="iduf" value="#{municipioBean.iduf}" style="width:150px">
 					                <f:selectItem itemLabel="Selecione a UF" itemValue="" noSelectionOption="true" />
-					                <f:selectItems value="#{municipioBean.listaUf}" var="obj" itemLabel="#{obj.sigla}"	itemValue="#{obj.iduf}"/>
+					                <f:selectItems value="#{municipioBean.listaUf}" var="obj" itemLabel="#{obj.sigla}"	itemValue="#{obj.id}"/>
 					            </p:selectOneMenu>
 								<p:spacer />
 								<h:panelGrid columns="2" style="width: 100%;">

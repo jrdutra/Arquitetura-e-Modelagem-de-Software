@@ -38,6 +38,17 @@ public class PessoaJuridicaDAO implements Serializable{
 		}
 	}
 	
+	public PessoaJuridica buscaPessoaPeloCnpj(String cnpj) {
+		String jpql = "select p from PessoaJuridica p where p.cnpj like :pCnpj";
+		TypedQuery<PessoaJuridica> query = em.createQuery(jpql, PessoaJuridica.class);
+		query.setParameter("pCnpj", cnpj);
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException ex) {
+			return null;
+		}
+	}
+	
 	public PessoaJuridica buscaEmpresaPeloCNPJ(PessoaJuridica empresa) {
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" select e from PessoaJuridica e ");
@@ -65,6 +76,20 @@ public class PessoaJuridicaDAO implements Serializable{
 		}
 	}
 	
+	public List<PessoaJuridica> buscaListaPessoaJuridicaPorCnpj(PessoaJuridica pessoaJuridica) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select p from PessoaJuridica p ");
+		jpql.append(" where ");
+		jpql.append(" p.cnpj like :pCnpj");
+		TypedQuery<PessoaJuridica> query = em.createQuery(jpql.toString() , PessoaJuridica.class);
+		query.setParameter("pCnpj", pessoaJuridica.getCnpj());
+		try {
+			return (ArrayList<PessoaJuridica>) query.getResultList();
+		} catch (NoResultException ex) {
+			return null;
+		}
+	}
+	
 	public void adiciona(PessoaJuridica empresa) {
 		this.dao.adiciona(empresa);
 	}
@@ -85,34 +110,8 @@ public class PessoaJuridicaDAO implements Serializable{
 		return (ArrayList<PessoaJuridica>) this.dao.listaTodosPaginada(firstResult, maxResults);
 	}
 	
-	public List<PessoaJuridica> buscaListaPessoaJuridicaPorCnpj(PessoaJuridica pessoaJuridica) {
-		StringBuilder jpql = new StringBuilder();
-		jpql.append(" select p from PessoaJuridica p ");
-		jpql.append(" where ");
-		jpql.append(" p.cnpj like :pCnpj");
-		TypedQuery<PessoaJuridica> query = em.createQuery(jpql.toString() , PessoaJuridica.class);
-		query.setParameter("pCnpj", pessoaJuridica.getCnpj());
-		try {
-			return (ArrayList<PessoaJuridica>) query.getResultList();
-		} catch (NoResultException ex) {
-			return null;
-		}
-	}
-	
-	public PessoaJuridica buscaPessoaPeloCnpj(String cnpj) {
-		String jpql = "select p from PessoaJuridica p where p.cnpj like :pCnpj";
-		TypedQuery<PessoaJuridica> query = em.createQuery(jpql, PessoaJuridica.class);
-		query.setParameter("pCnpj", cnpj);
-		try {
-			return query.getSingleResult();
-		} catch (NoResultException ex) {
-			return null;
-		}
-	}
-
 	public List<PessoaJuridica> listaTodos() {
 		return (ArrayList<PessoaJuridica>) this.dao.listaTodos();
 	}
-	
 	
 }

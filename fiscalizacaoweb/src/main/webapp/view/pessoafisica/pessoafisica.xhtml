@@ -73,7 +73,7 @@
 								
 					            <p:selectOneMenu id="idbairro" value="#{pessoaFisicaBean.idBairro}" style="width:150px">
 					                <f:selectItem itemLabel="Selecione o Bairro" itemValue="" noSelectionOption="true" />
-					                <f:selectItems value="#{pessoaFisicaBean.listaBairro}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.idbairro}"/>
+					                <f:selectItems value="#{pessoaFisicaBean.listaBairro}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.id}"/>
 					            </p:selectOneMenu>
 					            
 					            <p:outputLabel for="inputcepinclusao">CEP:</p:outputLabel>

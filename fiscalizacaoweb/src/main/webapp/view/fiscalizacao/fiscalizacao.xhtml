@@ -17,7 +17,6 @@
 				<p:commandButton class="botavoltar" value="Voltar" action="/view/index/index" ajax="false"/>
 			</h:form>	
 			<h:form id="frmpesquisarPorPeriodo">
-				<h:panelGrid columns="1" style="width: 70%;">
 					<p:panel id="pnlPesquisaPorPeriodo" header="Pesquisa Por Periodo" style="width: 100%;" rendered="#{fiscalizacaoBean.mostraPesquisar}">
 							<h:panelGrid columns="2" style="width: 100%;">
 							
@@ -35,7 +34,8 @@
 								</h:panelGrid>	
 							</h:panelGrid>
 					</p:panel>
-					
+			</h:form>
+			<h:form id="frmpesquisarPorPeriodoEFiscal">
 					<p:panel id="pnlPesquisaPorPeriodoEFiscal" header="Pesquisa Por Periodo e Fiscal" style="width: 100%;" rendered="#{fiscalizacaoBean.mostraPesquisar}">
 							<h:panelGrid columns="2" style="width: 100%;">
 							
@@ -48,7 +48,7 @@
 								<p:outputLabel for="inputFiscalPesquisa">Fiscal</p:outputLabel>
 								<p:selectOneMenu id="inputFiscalPesquisa" value="#{fiscalizacaoBean.idFiscal}" style="width:150px">
 					                <f:selectItem itemLabel="Fiscal" itemValue="" noSelectionOption="true" />
-					                <f:selectItems value="#{fiscalizacaoBean.listaFiscal}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.idpessoafisica}"/>
+					                <f:selectItems value="#{fiscalizacaoBean.listaFiscal}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.id}"/>
 					            </p:selectOneMenu>
 								
 								<p:spacer />
@@ -60,9 +60,6 @@
 								</h:panelGrid>	
 							</h:panelGrid>
 					</p:panel>
-					
-				</h:panelGrid>
-				<p:spacer />
 			</h:form>
 			<h:form id="frmResultado">
 					<p:panel id="pnlResultado" header="Resultado" style="width: 100%;" rendered="#{fiscalizacaoBean.mostraPesquisar}">
@@ -101,7 +98,7 @@
 								<p:outputLabel for="inputempresa">Empresa:</p:outputLabel>
 								<p:selectOneMenu id="inputempresa" value="#{fiscalizacaoBean.idPessoaJuridica}" style="width:80px">
 					                <f:selectItem itemLabel="Selecione a Empresa" itemValue="" noSelectionOption="true" />
-					                <f:selectItems value="#{fiscalizacaoBean.listaPessoaJuridica}" var="obj" itemLabel="#{obj.razaosocial}" itemValue="#{obj.idempresa}"/>
+					                <f:selectItems value="#{fiscalizacaoBean.listaPessoaJuridica}" var="obj" itemLabel="#{obj.razaosocial}" itemValue="#{obj.id}"/>
 					            </p:selectOneMenu>
 								
 								<label for="inputDataTermino">Data Termino:</label>
@@ -117,13 +114,13 @@
 								<p:outputLabel for="idbairro" value="Bairro: " />
 					            <p:selectOneMenu id="idbairro" value="#{fiscalizacaoBean.idBairro}" style="width:150px">
 					                <f:selectItem itemLabel="Selecione o Bairro" itemValue="" noSelectionOption="true" />
-					                <f:selectItems value="#{fiscalizacaoBean.listaBairro}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.idbairro}"/>
+					                <f:selectItems value="#{fiscalizacaoBean.listaBairro}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.id}"/>
 					            </p:selectOneMenu>
 					            
 					            <p:outputLabel for="idfiscal" value="Fiscal: " />
 					            <p:selectOneMenu id="idfiscal" value="#{fiscalizacaoBean.idFiscal}" style="width:150px">
 					                <f:selectItem itemLabel="Selecione o Fiscal" itemValue="" noSelectionOption="true" />
-					                <f:selectItems value="#{fiscalizacaoBean.listaFiscal}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.idpessoafisica}"/>
+					                <f:selectItems value="#{fiscalizacaoBean.listaFiscal}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.id}"/>
 					            </p:selectOneMenu>
 
 								<p:spacer />

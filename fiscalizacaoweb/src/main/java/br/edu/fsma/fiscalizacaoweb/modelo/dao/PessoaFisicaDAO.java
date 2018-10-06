@@ -63,6 +63,24 @@ public class PessoaFisicaDAO implements Serializable{
 			}
 		}
 		
+		public List<PessoaFisica> buscaListaPessoaFisicaPorCpf(PessoaFisica pessoaFisica) {
+			StringBuilder jpql = new StringBuilder();
+			jpql.append(" select p from PessoaFisica p ");
+			jpql.append(" where ");
+			jpql.append(" p.cpf like :pCpf");
+			TypedQuery<PessoaFisica> query = em.createQuery(jpql.toString() , PessoaFisica.class);
+			query.setParameter("pCpf", pessoaFisica.getCpf());
+			try {
+				return (ArrayList<PessoaFisica>) query.getResultList();
+			} catch (NoResultException ex) {
+				return null;
+			}
+		}
+		
+		public List<PessoaFisica> listaTodos() {
+			return (ArrayList<PessoaFisica>) this.dao.listaTodos();
+		}
+		
 		public void adiciona(PessoaFisica pessoa) {
 			this.dao.adiciona(pessoa);
 		}
@@ -82,23 +100,4 @@ public class PessoaFisicaDAO implements Serializable{
 		public ArrayList<PessoaFisica> listaTodosPaginada(int firstResult, int maxResults) {
 			return (ArrayList<PessoaFisica>) this.dao.listaTodosPaginada(firstResult, maxResults);
 		}
-
-		public List<PessoaFisica> buscaListaPessoaFisicaPorCpf(PessoaFisica pessoaFisica) {
-			StringBuilder jpql = new StringBuilder();
-			jpql.append(" select p from PessoaFisica p ");
-			jpql.append(" where ");
-			jpql.append(" p.cpf like :pCpf");
-			TypedQuery<PessoaFisica> query = em.createQuery(jpql.toString() , PessoaFisica.class);
-			query.setParameter("pCpf", pessoaFisica.getCpf());
-			try {
-				return (ArrayList<PessoaFisica>) query.getResultList();
-			} catch (NoResultException ex) {
-				return null;
-			}
-		}
-
-		public List<PessoaFisica> listaTodos() {
-			return (ArrayList<PessoaFisica>) this.dao.listaTodos();
-		}
-
 }

@@ -71,14 +71,14 @@ public class BairroDAO implements Serializable {
 	public ArrayList<Bairro> listaTodosPaginada(int firstResult, int maxResults) {
 		return (ArrayList<Bairro>) this.dao.listaTodosPaginada(firstResult, maxResults);
 	}
-	
+	// Parametro näo ficou legal. Precisava somente do nome do bairro
 	public ArrayList<Bairro> buscaListaBairroPorNome(Bairro bairro) {
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" select b from Bairro b ");
 		jpql.append(" where ");
 		jpql.append(" b.nome like :pNome");
 		TypedQuery<Bairro> query = em.createQuery(jpql.toString() , Bairro.class);
-		query.setParameter("pNome", bairro.getNome());
+		query.setParameter("pNome", bairro.getNome() + "%");
 		try {
 			return (ArrayList<Bairro>) query.getResultList();
 		} catch (NoResultException ex) {

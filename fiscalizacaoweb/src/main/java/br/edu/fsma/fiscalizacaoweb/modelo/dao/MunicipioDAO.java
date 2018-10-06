@@ -91,5 +91,4 @@ public class MunicipioDAO implements Serializable {
 	public ArrayList<Municipio> listaTodos() {
 		return (ArrayList<Municipio>) this.dao.listaTodos();
 	}
-	
 }

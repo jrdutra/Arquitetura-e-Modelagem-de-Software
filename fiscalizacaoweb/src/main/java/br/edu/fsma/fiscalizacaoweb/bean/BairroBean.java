@@ -17,15 +17,19 @@ import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Municipio;
 public class BairroBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	private List<Bairro> listaBairro = new ArrayList<Bairro>();
-	private List<Municipio> listaMunicipio = new ArrayList<Municipio>();
 	private Bairro currentBairro = new Bairro();
+	
+	private List<Municipio> listaMunicipio = new ArrayList<Municipio>();
 	private Municipio currentMunicipio = new Municipio();
 	private Long idMunicipio;
+	
 	private enum Nome {PAINELINCLUIR, PAINELPESQUISAR};
 	private Nome nome = Nome.PAINELPESQUISAR;
 	private enum EditarNovo {EDITAR, NOVO};
 	private EditarNovo flag;
+	private String idToUpdate = (":frmpesquisar :frmResultado :frmResultado:tabelaBairro :frmnovoBairro");
 	
 	@Inject
 	private MunicipioDAO municipioDao;
@@ -52,7 +56,7 @@ public class BairroBean implements Serializable {
 	
 	public void editarClick(Bairro bairro) {
 		currentBairro = bairro;
-		idMunicipio = bairro.getMunicipio().getIdmunicipio();
+		idMunicipio = bairro.getMunicipio().getId();
 		listaMunicipio = municipioDao.listaTodos();
 		flag = EditarNovo.EDITAR;
 		setIncluirModificar();
@@ -91,11 +95,7 @@ public class BairroBean implements Serializable {
 	}
 	
 	public String getIdToUpdate() {
-		return (":frmpesquisar "
-				+ ":frmResultado "
-				+ ":frmResultado:tabelaBairro "
-				+ ":frmnovoBairro "
-				);
+		return idToUpdate;
 	}
 	
 	public void setIncluirModificar() {

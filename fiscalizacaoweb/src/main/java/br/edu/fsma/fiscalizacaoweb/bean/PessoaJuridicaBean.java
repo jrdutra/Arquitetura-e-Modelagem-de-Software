@@ -17,16 +17,20 @@ import br.edu.fsma.fiscalizacaoweb.tx.Transacional;
 public class PessoaJuridicaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	private List<Bairro> listaBairro = new ArrayList<Bairro>();
-	private List<PessoaJuridica> listaPessoaJuridica = new ArrayList<PessoaJuridica>();
 	private Bairro currentBairro = new Bairro();
 	private Long idBairro;
-	private String currentCnpj;
+	
+	private List<PessoaJuridica> listaPessoaJuridica = new ArrayList<PessoaJuridica>();
 	private PessoaJuridica currentPessoaJuridica = new PessoaJuridica();
+	private String currentCnpj;
+	
 	private enum Nome {PAINELINCLUIR, PAINELPESQUISAR};
 	private Nome nome = Nome.PAINELPESQUISAR;
 	private enum EditarNovo {EDITAR, NOVO};
 	private EditarNovo flag;
+	private String idToUpdate = (":frmpesquisar :frmResultado :frmResultado:tabelaPessoaJuridica :frmnovoPessoaJuridica");
 	
 	@Inject
 	private PessoaJuridicaDAO pessoaJuridicaDao;
@@ -54,18 +58,10 @@ public class PessoaJuridicaBean implements Serializable {
 	
 	public void editarClick(PessoaJuridica pessoaJuridica) {
 		currentPessoaJuridica = pessoaJuridica;
-		idBairro = pessoaJuridica.getBairro().getIdbairro();
+		idBairro = pessoaJuridica.getBairro().getId();
 		listaBairro = bairroDao.listaTodos();
 		flag = EditarNovo.EDITAR;
 		setIncluirModificar();
-	}
-	
-	public Nome getNome() {
-		return nome;
-	}
-
-	public void setNome(Nome nome) {
-		this.nome = nome;
 	}
 
 	@Transacional
@@ -93,11 +89,7 @@ public class PessoaJuridicaBean implements Serializable {
 	}
 	
 	public String getIdToUpdate() {
-		return (":frmpesquisar "
-				+ ":frmResultado "
-				+ ":frmResultado:tabelaPessoaJuridica "
-				+ ":frmnovoPessoaJuridica "
-				);
+		return idToUpdate;
 	}
 	
 	public void setIncluirModificar() {
@@ -163,6 +155,13 @@ public class PessoaJuridicaBean implements Serializable {
 	public void setIdBairro(Long idBairro) {
 		this.idBairro = idBairro;
 	}
+	
+	public Nome getNome() {
+		return nome;
+	}
 
+	public void setNome(Nome nome) {
+		this.nome = nome;
+	}
 	
 }

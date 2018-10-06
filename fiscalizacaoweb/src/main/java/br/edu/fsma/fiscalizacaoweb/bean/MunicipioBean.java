@@ -17,15 +17,19 @@ import br.edu.fsma.fiscalizacaoweb.tx.Transacional;
 public class MunicipioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	private List<Municipio> listaMunicipio = new ArrayList<Municipio>();
-	private List<Uf> listaUf = new ArrayList<Uf>();
 	private Municipio currentMunicipio = new Municipio();
+	
+	private List<Uf> listaUf = new ArrayList<Uf>();
 	private Uf currentUf = new Uf();
 	private Long iduf;
+	
 	private enum Nome {PAINELINCLUIR, PAINELPESQUISAR};
 	private Nome nome = Nome.PAINELPESQUISAR;
 	private enum EditarNovo {EDITAR, NOVO};
 	private EditarNovo flag;
+	private String idsToUpdate = (":frmpesquisar :frmResultado :frmResultado:tabelaMunicipio :frmnovoMunicipio");
 	
 	@Inject
 	private UfDAO ufDao;
@@ -34,7 +38,6 @@ public class MunicipioBean implements Serializable {
 	private MunicipioDAO municipioDao;
 		
 	public void incluirClick() {
-		currentMunicipio = new Municipio();
 		listaUf = ufDao.listaTodos();
 		setIncluirModificar();
 		flag = EditarNovo.NOVO;
@@ -53,7 +56,7 @@ public class MunicipioBean implements Serializable {
 	
 	public void editarClick(Municipio municipio) {
 		currentMunicipio = municipio;
-		iduf = municipio.getUf().getIduf();
+		iduf = municipio.getUf().getId();
 		listaUf = ufDao.listaTodos();
 		flag = EditarNovo.EDITAR;
 		setIncluirModificar();
@@ -74,7 +77,6 @@ public class MunicipioBean implements Serializable {
 	}
 	
 	public void pesquisarClick() {
-		//capturaDadosPesquisa();
 		listaMunicipio = municipioDao.buscaListaMunicipioPorNome(currentMunicipio);
 		setPesquisar();
 		System.out.println(listaMunicipio);
@@ -85,11 +87,7 @@ public class MunicipioBean implements Serializable {
 	}
 	
 	public String getIdToUpdate() {
-		return (":frmpesquisar "
-				+ ":frmResultado "
-				+ ":frmResultado:tabelaMunicipio "
-				+ ":frmnovoMunicipio "
-				);
+		return idsToUpdate;
 	}
 	
 	public void setIncluirModificar() {

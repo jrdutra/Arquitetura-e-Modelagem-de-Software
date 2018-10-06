@@ -41,10 +41,6 @@ public class FiscalizacaoDAO implements Serializable{
 		return this.dao.buscaPorId(id);
 	}
 
-	public ArrayList<Fiscalizacao> listaTodosPaginada(int firstResult, int maxResults) {
-		return (ArrayList<Fiscalizacao>) this.dao.listaTodosPaginada(firstResult, maxResults);
-	}
-
 	public List<Fiscalizacao> buscaPorPeriodo(LocalDate dataInferior, LocalDate dataSuperior) {
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" SELECT f from Fiscalizacao f ");
@@ -54,30 +50,12 @@ public class FiscalizacaoDAO implements Serializable{
 		TypedQuery<Fiscalizacao> query = em.createQuery(jpql.toString() , Fiscalizacao.class);
 		query.setParameter("pDataInferior", dataInferior);
 		query.setParameter("pDataSuperior", dataSuperior);
-		System.out.println(dataInferior + " " + dataSuperior);
 		try {
-			System.out.println("Buscou Vazio!");
 			return (ArrayList<Fiscalizacao>) query.getResultList();
 		} catch (NoResultException ex) {
-			System.out.println("ERRO NA BUSCA");
 			return null;
 		}
 	}
-	/*
-	public List<Fiscalizacao> buscaPorPeriodo(Date dataInferior, Date dataSuperior) {
-		StringBuilder jpql = new StringBuilder();
-		jpql.append(" select f from Fiscalizacao f ");
-		jpql.append(" where ");
-		jpql.append(" f.dataterminofiscalizacao between :pDataInferior and :pDataInferior");
-		TypedQuery<Fiscalizacao> query = em.createQuery(jpql.toString() , Fiscalizacao.class);
-		query.setParameter("pDataInferior", dataInferior);
-		query.setParameter("pDataInferior", dataSuperior);
-		try {
-			return (ArrayList<Fiscalizacao>) query.getResultList();
-		} catch (NoResultException ex) {
-			return null;
-		}
-	}*/
 
 	public List<Fiscalizacao> buscaPorPeriodoEFiscal(LocalDate dataInferior, LocalDate dataSuperior, Long idFiscal) {
 		StringBuilder jpql = new StringBuilder();
@@ -86,17 +64,14 @@ public class FiscalizacaoDAO implements Serializable{
 		jpql.append(" f.dataterminofiscalizacao "); 
 		jpql.append(" BETWEEN :pDataInferior AND :pDataSuperior");
 		jpql.append(" AND ");
-		jpql.append("    f.pessoaFisica.idpessoafisica = :pIdFiscal");
+		jpql.append("    f.pessoaFisica.id = :pIdFiscal");
 		TypedQuery<Fiscalizacao> query = em.createQuery(jpql.toString() , Fiscalizacao.class);
 		query.setParameter("pDataInferior", dataInferior);
 		query.setParameter("pDataSuperior", dataSuperior);
 		query.setParameter("pIdFiscal", idFiscal);
-		System.out.println(dataInferior + " " + dataSuperior + " " + idFiscal);
 		try {
-			System.out.println("Buscou Vazio!");
 			return (ArrayList<Fiscalizacao>) query.getResultList();
 		} catch (NoResultException ex) {
-			System.out.println("ERRO NA BUSCA");
 			return null;
 		}
 	}

@@ -12,12 +12,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tbuf")
 public class Uf implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "iduf")
-	private Long iduf;
+	private Long id;
+	@Column(length=60)
 	private String nome;
+	@Column(length=2)
 	private String sigla;
 	
 	public String getSigla() {
@@ -36,19 +40,19 @@ public class Uf implements Serializable{
 		this.nome = nome;
 	}
 
-	public Long getIduf() {
-		return iduf;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIduf(Long iduf) {
-		this.iduf = iduf;
+	public void setId(Long iduf) {
+		this.id = iduf;
 	}
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((iduf == null) ? 0 : iduf.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -61,10 +65,10 @@ public class Uf implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Uf other = (Uf) obj;
-		if (iduf == null) {
-			if (other.iduf != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!iduf.equals(other.iduf))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

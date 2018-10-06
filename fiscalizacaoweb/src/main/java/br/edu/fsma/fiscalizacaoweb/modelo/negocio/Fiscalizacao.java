@@ -22,14 +22,18 @@ public class Fiscalizacao implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idfiscalizacao")
-	private Long idfiscalizacao;
+	private Long id;
 	
 	@OneToOne
 	@JoinColumn(name = "idempresa")
 	private PessoaJuridica empresa;
 	
 	private LocalDate dataterminofiscalizacao;
+	
+	@Column(length=150)
 	private String logradouro;
+	
+	@Column(length=11)
 	private String cep;
 	
 	@ManyToOne
@@ -47,10 +51,10 @@ public class Fiscalizacao implements Serializable{
 		this.pessoaFisica = pessoaFisica;
 	}
 	public Long getId() {
-		return idfiscalizacao;
+		return id;
 	}
 	public void setId(Long id) {
-		this.idfiscalizacao = id;
+		this.id = id;
 	}
 	public PessoaJuridica getEmpresa() {
 		return empresa;
@@ -72,8 +76,6 @@ public class Fiscalizacao implements Serializable{
 		this.bairro = bairro;
 	}
 	
-	
-	
 	public String getLogradouro() {
 		return logradouro;
 	}
@@ -88,21 +90,14 @@ public class Fiscalizacao implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Fiscalizacao [id=" + idfiscalizacao + ", empresa=" + empresa + ", dataterminofiscalizacao="
+		return "Fiscalizacao [id=" + id + ", empresa=" + empresa + ", dataterminofiscalizacao="
 				+ dataterminofiscalizacao + ", bairro=" + bairro + "]";
 	}
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bairro == null) ? 0 : bairro.hashCode());
-		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
-		result = prime * result + ((dataterminofiscalizacao == null) ? 0 : dataterminofiscalizacao.hashCode());
-		result = prime * result + ((empresa == null) ? 0 : empresa.hashCode());
-		result = prime * result + ((idfiscalizacao == null) ? 0 : idfiscalizacao.hashCode());
-		result = prime * result + ((logradouro == null) ? 0 : logradouro.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 	@Override
@@ -114,35 +109,10 @@ public class Fiscalizacao implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Fiscalizacao other = (Fiscalizacao) obj;
-		if (bairro == null) {
-			if (other.bairro != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!bairro.equals(other.bairro))
-			return false;
-		if (cep == null) {
-			if (other.cep != null)
-				return false;
-		} else if (!cep.equals(other.cep))
-			return false;
-		if (dataterminofiscalizacao == null) {
-			if (other.dataterminofiscalizacao != null)
-				return false;
-		} else if (!dataterminofiscalizacao.equals(other.dataterminofiscalizacao))
-			return false;
-		if (empresa == null) {
-			if (other.empresa != null)
-				return false;
-		} else if (!empresa.equals(other.empresa))
-			return false;
-		if (idfiscalizacao == null) {
-			if (other.idfiscalizacao != null)
-				return false;
-		} else if (!idfiscalizacao.equals(other.idfiscalizacao))
-			return false;
-		if (logradouro == null) {
-			if (other.logradouro != null)
-				return false;
-		} else if (!logradouro.equals(other.logradouro))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

@@ -19,16 +19,20 @@ import br.edu.fsma.fiscalizacaoweb.tx.Transacional;
 public class PessoaFisicaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	private List<Bairro> listaBairro = new ArrayList<Bairro>();
-	private List<PessoaFisica> listaPessoaFisica = new ArrayList<PessoaFisica>();
 	private Bairro currentBairro = new Bairro();
 	private Long idBairro;
-	private String currentCpf;
+	
+	private List<PessoaFisica> listaPessoaFisica = new ArrayList<PessoaFisica>();
 	private PessoaFisica currentPessoaFisica = new PessoaFisica();
+	private String currentCpf;
+	
 	private enum Nome {PAINELINCLUIR, PAINELPESQUISAR};
 	private Nome nome = Nome.PAINELPESQUISAR;
 	private enum EditarNovo {EDITAR, NOVO};
 	private EditarNovo flag;
+	private String idToUpdate = (":frmpesquisar :frmResultado :frmResultado:tabelaPessoaFisica :frmnovoPessoaFisica");
 	
 	@Inject
 	private PessoaFisicaDAO pessoaFisicaDao;
@@ -56,18 +60,10 @@ public class PessoaFisicaBean implements Serializable {
 	
 	public void editarClick(PessoaFisica pessoaFisica) {
 		currentPessoaFisica = pessoaFisica;
-		idBairro = pessoaFisica.getBairro().getIdbairro();
+		idBairro = pessoaFisica.getBairro().getId();
 		listaBairro = bairroDao.listaTodos();
 		flag = EditarNovo.EDITAR;
 		setIncluirModificar();
-	}
-	
-	public Nome getNome() {
-		return nome;
-	}
-
-	public void setNome(Nome nome) {
-		this.nome = nome;
 	}
 
 	@Transacional
@@ -95,11 +91,7 @@ public class PessoaFisicaBean implements Serializable {
 	}
 	
 	public String getIdToUpdate() {
-		return (":frmpesquisar "
-				+ ":frmResultado "
-				+ ":frmResultado:tabelaPessoaFisica "
-				+ ":frmnovoPessoaFisica "
-				);
+		return idToUpdate;
 	}
 	
 	public void setIncluirModificar() {
@@ -166,5 +158,12 @@ public class PessoaFisicaBean implements Serializable {
 		this.listaPessoaFisica = listaPessoaFisica;
 	}
 	
+	public Nome getNome() {
+		return nome;
+	}
+
+	public void setNome(Nome nome) {
+		this.nome = nome;
+	}
 	
 }

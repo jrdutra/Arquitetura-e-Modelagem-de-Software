@@ -1,7 +1,6 @@
 package br.edu.fsma.fiscalizacaoweb.bean;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ import br.edu.fsma.fiscalizacaoweb.modelo.negocio.Fiscalizacao;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.PessoaFisica;
 import br.edu.fsma.fiscalizacaoweb.modelo.negocio.PessoaJuridica;
 import br.edu.fsma.fiscalizacaoweb.tx.Transacional;
+import br.edu.fsma.fiscalizacaoweb.util.Conversor;
 
 @Named
 @ViewScoped
@@ -54,6 +54,9 @@ public class FiscalizacaoBean implements Serializable {
 	private Nome nome = Nome.PAINELPESQUISAR;
 	private enum EditarNovo {EDITAR, NOVO};
 	private EditarNovo flag;
+	private String idsToUpdate = (":frmpesquisarPorPeriodo :frmpesquisarPorPeriodoEFiscal "
+			                    + ":frmResultado :frmResultado:tabelaFiscalizacao "
+			                    + ":frmnovoFiscalizacao");
 	
 	@Inject
 	private PessoaJuridicaDAO pessoaJuridicaDao;
@@ -95,13 +98,13 @@ public class FiscalizacaoBean implements Serializable {
 	public void editarClick(Fiscalizacao fiscalizacao) {
 		currentFiscalizacao = fiscalizacao;
 		
-		idBairro = fiscalizacao.getBairro().getIdbairro();
+		idBairro = fiscalizacao.getBairro().getId();
 		listaBairro = bairroDao.listaTodos();
 		
-		idPessoaJuridica = fiscalizacao.getEmpresa().getIdempresa();
+		idPessoaJuridica = fiscalizacao.getEmpresa().getId();
 		listaPessoaJuridica = pessoaJuridicaDao.listaTodos();
 		
-		idFiscal = fiscalizacao.getPessoaFisica().getIdpessoafisica();
+		idFiscal = fiscalizacao.getPessoaFisica().getId();
 		listaFiscal = pessoaFisicaDao.listaTodos();
 		
 		flag = EditarNovo.EDITAR;
@@ -118,10 +121,8 @@ public class FiscalizacaoBean implements Serializable {
 		
 		currentFiscal = pessoaFisicaDao.buscaPorId(idFiscal);
 		currentFiscalizacao.setPessoaFisica(currentFiscal);
-		
-		Instant instant = currentDataTermino.toInstant();
-		LocalDate data = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-		
+
+		LocalDate data = Conversor.conversorData(currentDataTermino);
 		currentFiscalizacao.setDataterminofiscalizacao(data);
 		
 		if(flag == EditarNovo.NOVO) {
@@ -134,18 +135,16 @@ public class FiscalizacaoBean implements Serializable {
 	}
 	
 	public void pesquisarPorPeriodoClick() {
-		LocalDate dataInferior = conversorData(currentDataInferior);
-		LocalDate dataSuperior = conversorData(currentDataSuperior);
+		LocalDate dataInferior = Conversor.conversorData(currentDataInferior);
+		LocalDate dataSuperior = Conversor.conversorData(currentDataSuperior);
 		listaFiscalizacao = fiscalizacaoDao.buscaPorPeriodo(dataInferior, dataSuperior);
-		System.out.println("Fiscalizacoes:" + listaFiscalizacao);
 		setPesquisar();
 	}
 	
 	public void pesquisarPorPeriodoEFiscalClick() {
-		LocalDate dataInferior = conversorData(currentDataInferior);
-		LocalDate dataSuperior = conversorData(currentDataSuperior);
+		LocalDate dataInferior = Conversor.conversorData(currentDataInferior);
+		LocalDate dataSuperior = Conversor.conversorData(currentDataSuperior);
 		listaFiscalizacao = fiscalizacaoDao.buscaPorPeriodoEFiscal(dataInferior, dataSuperior, idFiscal);
-		System.out.println("Fiscalizacoes:" + listaFiscalizacao);
 		setPesquisar();
 	}
 	
@@ -154,11 +153,7 @@ public class FiscalizacaoBean implements Serializable {
 	}
 	
 	public String getIdToUpdate() {
-		return (":frmpesquisarPorPeriodo "
-				+ ":frmResultado "
-				+ ":frmResultado:tabelaFiscalizacao "
-				+ ":frmnovoFiscalizacao "
-				);
+		return idsToUpdate;
 	}
 	
 	public void setIncluirModificar() {
@@ -311,9 +306,5 @@ public class FiscalizacaoBean implements Serializable {
 
 	public void setCurrentDataTermino(Date currentDataTermino) {
 		this.currentDataTermino = currentDataTermino;
-	}
-
-	public LocalDate conversorData(Date data) {
-		return data.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 }
