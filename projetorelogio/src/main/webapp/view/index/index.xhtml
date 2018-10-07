@@ -44,15 +44,15 @@
 		<link type="text/css" rel="stylesheet"	href="#{facesContext.externalContext.requestContextPath}/resources/css/estilo.css" />
 	</h:head>
 	<h:body>
-		<p:panel class="painel" header="Relógio">	
-			<h:form id="frmRelogio">
+		<h:form id="frmRelogio">
+			<p:panel id="pnRelogio" class="painel" header="Relógio">	
 				<p:outputLabel class="display" value="#{IndexBean.relogio}" rendered="#{IndexBean.mostraBranco}"></p:outputLabel>
 				<p:outputLabel class="displayAmarelo" value="#{IndexBean.relogio}" rendered="#{IndexBean.mostraAmarelo}"></p:outputLabel>
 				<h:panelGrid columns="2" style="width: 100%;">	
-					<p:commandButton class="botao" value="A" actionListener="#{IndexBean.botaoAClick()}" process="@form" update=":frmRelogio"/>
-					<p:commandButton class="botao" value="B" actionListener="#{IndexBean.botaoBAClick()}" process="@form" update=":frmRelogio"/>
+					<p:commandButton class="botao" value="A" actionListener="#{IndexBean.botaoAClick()}" update=":frmRelogio:pnRelogio" ajax="true"/>
+					<p:commandButton class="botao" value="B" actionListener="#{IndexBean.botaoBClick()}" update=":frmRelogio:pnRelogio"  ajax="true"/>
 				</h:panelGrid>
-			</h:form>
-		</p:panel>
+			</p:panel>
+		</h:form>
 	</h:body>
 </html>

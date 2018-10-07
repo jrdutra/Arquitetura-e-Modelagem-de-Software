@@ -2,12 +2,13 @@ package br.edu.fsma.relogio.bean;
 
 import java.io.Serializable;
 
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.view.ViewScoped;
+
 import br.edu.fsma.relogio.modelo.negocio.Relogio;
 
-@ManagedBean (name = "IndexBean")
-@ViewScoped
+@ManagedBean(name = "IndexBean")
+@ApplicationScoped
 public class IndexBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -27,15 +28,25 @@ public class IndexBean implements Serializable {
 		if(modo == Modo.EXIBIR) {
 			modo = Modo.AJUSTAR;
 			fundo = Fundo.AMARELO;
-		}else if(modo == Modo.AJUSTAR) {
-			modo = Modo.EXIBIR;
-			fundo = Fundo.BRANCO;
+		}else if(modo == Modo.AJUSTAR){
+			if(acertar == Acertar.HORA) {
+				acertar = Acertar.MINUTO;
+			}else if (acertar == Acertar.MINUTO) {
+				acertar = Acertar.HORA;
+				modo = Modo.EXIBIR;
+				fundo = Fundo.BRANCO;
+			}
 		}
-		System.out.println(modo);
 	}
 	
 	public void botaoBClick() {
-		System.out.println("Boto B CLicado");
+		if(modo == Modo.AJUSTAR) {
+			if(acertar == Acertar.HORA) {
+				relogio.adicionaHora();
+			}else if(acertar == Acertar.MINUTO) {
+				relogio.adicionaMinuto();
+			}
+		}
 	}
 	
 	public void setFundoBranco() {
