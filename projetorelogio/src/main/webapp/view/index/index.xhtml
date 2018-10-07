@@ -19,7 +19,7 @@
 				margin: auto auto;
 			}
 			.display{
-				font-size: 20px;
+				font-size: 50px;
 				text-align: center;
 				background-color:white;
 				display: block;
@@ -28,7 +28,7 @@
 				border-radius: 8px;
 			}
 			.displayAmarelo{
-				font-size: 20px;
+				font-size: 50px;
 				text-align: center;
 				background-color: yellow;
 				display: block;
@@ -45,7 +45,8 @@
 	</h:head>
 	<h:body>
 		<h:form id="frmRelogio">
-			<p:panel id="pnRelogio" class="painel" header="Relógio">	
+			<p:panel id="pnRelogio" class="painel" header="Relógio">
+			    <p:outputLabel value="#{IndexBean.status}" rendered="true"></p:outputLabel>
 				<p:outputLabel class="display" value="#{IndexBean.relogio}" rendered="#{IndexBean.mostraBranco}"></p:outputLabel>
 				<p:outputLabel class="displayAmarelo" value="#{IndexBean.relogio}" rendered="#{IndexBean.mostraAmarelo}"></p:outputLabel>
 				<h:panelGrid columns="2" style="width: 100%;">	

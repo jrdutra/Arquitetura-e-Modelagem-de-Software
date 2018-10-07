@@ -23,6 +23,8 @@ public class IndexBean implements Serializable {
 	private Acertar acertar = Acertar.HORA;
 
 	private Relogio relogio = new Relogio(0,0);
+	
+	private String status = "Modo: " + modo + " | Acertar: " + acertar;
 
 	public void botaoAClick() {
 		if(modo == Modo.EXIBIR) {
@@ -37,6 +39,7 @@ public class IndexBean implements Serializable {
 				fundo = Fundo.BRANCO;
 			}
 		}
+		atualizarStatus();
 	}
 	
 	public void botaoBClick() {
@@ -46,6 +49,13 @@ public class IndexBean implements Serializable {
 			}else if(acertar == Acertar.MINUTO) {
 				relogio.adicionaMinuto();
 			}
+		}
+	}
+	
+	private void atualizarStatus() {
+		status = "Modo: " + modo;
+		if (modo == Modo.AJUSTAR) {
+			status = "Modo: " + modo + " | Acertar: " + acertar;
 		}
 	}
 	
@@ -81,4 +91,12 @@ public class IndexBean implements Serializable {
 		this.fundo = fundo;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 }
