@@ -1,5 +1,0 @@
-<beans>
-	<interceptors>
-		<class>br.edu.fsma.relogio.tx.GerenciadorDeTransacao</class>
-	</interceptors>
-</beans>
