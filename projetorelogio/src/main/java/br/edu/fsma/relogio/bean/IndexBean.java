@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
-
 import br.edu.fsma.relogio.modelo.negocio.Relogio;
 
 @ManagedBean (name = "IndexBean")
@@ -15,47 +14,44 @@ public class IndexBean implements Serializable {
 	
 	private enum Fundo {BRANCO, AMARELO};
 	private Fundo fundo = Fundo.AMARELO;
+	
+	private enum Modo {EXIBIR, AJUSTAR};
+	private Modo modo = Modo.AJUSTAR;
+	
+	private enum Acertar {HORA, MINUTO};
+	private Acertar acertar = Acertar.HORA;
 
-	private Relogio relogio;
-	
-	
-	private boolean exibir;
-	private boolean ajustar;
-	private boolean acertarHora;
-	private boolean acertarMinuto;
-	
-	
-	public IndexBean() {
-		this.relogio.setHora(0);
-		this.relogio.setMinuto(23);
+	private Relogio relogio = new Relogio(0,0);
+
+	public void botaoAClick() {
+		if(modo == Modo.EXIBIR) {
+			modo = Modo.AJUSTAR;
+			fundo = Fundo.AMARELO;
+		}else if(modo == Modo.AJUSTAR) {
+			modo = Modo.EXIBIR;
+			fundo = Fundo.BRANCO;
+		}
+		System.out.println(modo);
 	}
 	
-	
-	private void botaoAClick() {
-		System.out.println("Boto A CLicado");
-	}
-	
-	private void botaoBClick() {
+	public void botaoBClick() {
 		System.out.println("Boto B CLicado");
 	}
 	
-	private void setFundoBranco() {
+	public void setFundoBranco() {
 		this.fundo = Fundo.BRANCO;
 	}
 	
-	private void setFundoAmarelo() {
+	public void setFundoAmarelo() {
 		this.fundo = Fundo.AMARELO;
 	}
 
 	public boolean isMostraBranco() {
-		System.out.println("Fundo Branco: " + (fundo == Fundo.BRANCO));
 		return (fundo == Fundo.BRANCO);
 	}
 	
 	public boolean isMostraAmarelo() {
-		System.out.println("Fundo Amarelo: " + (fundo == Fundo.AMARELO));
 		return (fundo == Fundo.AMARELO);
-		
 	}
 	
 	public Relogio getRelogio() {
@@ -74,37 +70,4 @@ public class IndexBean implements Serializable {
 		this.fundo = fundo;
 	}
 
-	public boolean isExibir() {
-		return exibir;
-	}
-
-	public void setExibir(boolean exibir) {
-		this.exibir = exibir;
-	}
-
-	public boolean isAjustar() {
-		return ajustar;
-	}
-
-	public void setAjustar(boolean ajustar) {
-		this.ajustar = ajustar;
-	}
-
-	public boolean isAcertarHora() {
-		return acertarHora;
-	}
-
-	public void setAcertarHora(boolean acertarHora) {
-		this.acertarHora = acertarHora;
-	}
-
-	public boolean isAcertarMinuto() {
-		return acertarMinuto;
-	}
-
-	public void setAcertarMinuto(boolean acertarMinuto) {
-		this.acertarMinuto = acertarMinuto;
-	}
-	
-	
 }

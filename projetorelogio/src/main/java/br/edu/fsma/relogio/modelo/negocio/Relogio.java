@@ -5,6 +5,11 @@ public class Relogio {
 	private Integer hora;
 	private Integer minuto;
 	
+	public Relogio(Integer hora, Integer minuto) {
+		this.hora = hora;
+		this.minuto = minuto;
+	}
+	
 	public Integer getHora() {
 		return hora;
 	}
