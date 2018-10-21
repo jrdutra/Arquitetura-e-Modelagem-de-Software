@@ -3,12 +3,9 @@ package br.edu.fsma.banconucleo.modelo.dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-
 import br.edu.fsma.banconucleo.modelo.negocio.Conta;
 
 public class ContaDao implements Serializable {
@@ -16,14 +13,13 @@ public class ContaDao implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private DAO<Conta> dao;
 	
-	@PostConstruct
-	void init() {
-		this.dao = new DAO<Conta>(this.em, Conta.class);
-	}
-	
-	@Inject
 	private EntityManager em;
 	
+	public ContaDao(EntityManager em2) {
+		this.em = em2;
+		this.dao = new DAO<Conta>(this.em, Conta.class);
+	}
+
 	public boolean existe(Conta conta) {
 		@SuppressWarnings("unused")
 		Conta resultado = new Conta();
@@ -56,7 +52,7 @@ public class ContaDao implements Serializable {
 		}
 	}
 	
-	public ArrayList<Conta> buscaListaContaPorNome(String agencia, String numero) {
+	public ArrayList<Conta> buscaListaContaPorAngenciaNumero(String agencia, String numero) {
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" select c from Conta c ");
 		jpql.append(" where ");
