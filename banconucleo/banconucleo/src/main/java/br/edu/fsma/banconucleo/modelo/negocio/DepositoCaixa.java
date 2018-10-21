@@ -1,21 +1,21 @@
 package br.edu.fsma.banconucleo.modelo.negocio;
 
 import java.io.Serializable;
-
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "tb_usuariogerente")
-public class UsuarioGerente implements Serializable{
-		
+@Table(name = "tb_depositocaixa")
+public class DepositoCaixa implements Serializable, Transacao{
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -23,12 +23,19 @@ public class UsuarioGerente implements Serializable{
 	@Column(name = "id")
 	private Long id;
 	
-	@OneToOne
-	@JoinColumn(name = "id")
-	private PessoaFisica pessoaFisica;
-	
 	@Column(length=10)
-	private String senha;
+	private Double valor;
+	
+	private LocalDate data;
+	
+	@ManyToOne
+	@JoinColumn(name = "id")
+	private Conta conta;
+	
+	@Override
+	public Double processarTransacao(Double valor) {
+		return null;
+	}
 
 	@Override
 	public int hashCode() {
@@ -38,6 +45,8 @@ public class UsuarioGerente implements Serializable{
 		return result;
 	}
 
+	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -46,7 +55,7 @@ public class UsuarioGerente implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UsuarioGerente other = (UsuarioGerente) obj;
+		DepositoCaixa other = (DepositoCaixa) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -57,23 +66,39 @@ public class UsuarioGerente implements Serializable{
 
 	@Override
 	public String toString() {
-		return "UsuarioGerente [pessoaFisica=" + pessoaFisica + "]";
+		return "SaqueCaixa [valor=" + valor + ", data=" + data + "]";
 	}
 
-	public PessoaFisica getPessoaFisica() {
-		return pessoaFisica;
+	public Double getValor() {
+		return valor;
 	}
 
-	public void setPessoaFisica(PessoaFisica pessoaFisica) {
-		this.pessoaFisica = pessoaFisica;
+	public void setValor(Double valor) {
+		this.valor = valor;
 	}
 
-	public String getSenha() {
-		return senha;
+	public LocalDate getData() {
+		return data;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }
