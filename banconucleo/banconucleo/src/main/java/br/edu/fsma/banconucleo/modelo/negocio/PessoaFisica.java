@@ -17,7 +17,7 @@ public class PessoaFisica implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id_pessoafisica")
 	private Long id;
 	
 	@Column(length=15)

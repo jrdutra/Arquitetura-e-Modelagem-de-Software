@@ -18,7 +18,7 @@ public class Conta implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id_conta")
 	private Long id;
 	
 	@Column(length=10)
@@ -31,7 +31,7 @@ public class Conta implements Serializable{
 	private Double saldo;
 	
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "id_usuariogerente")
 	private UsuarioGerente usuarioGerente;
 
 	@Override

@@ -20,7 +20,7 @@ public class CompensacaoCheque implements Serializable, Transacao{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id_compensacaocheque")
 	private Long id;
 	
 	@Column(length=10)
@@ -29,7 +29,7 @@ public class CompensacaoCheque implements Serializable, Transacao{
 	private LocalDate data;
 	
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "id_conta")
 	private Conta conta;
 	
 	@Override

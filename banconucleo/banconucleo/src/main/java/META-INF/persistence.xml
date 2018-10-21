@@ -7,7 +7,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bdfiscalizacao" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/banco" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
@@ -33,14 +33,14 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/bdfiscalizacao" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/banco" />
 			<property name="javax.persistence.jdbc.user" value="postgres" />
 			<property name="javax.persistence.jdbc.password" value="%%%Dutra1" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
-			<property name="hibernate.default_schema" value="bdfiscalizacao" />
+			<property name="hibernate.default_schema" value="banco" />
 			<property name="hibernate.max_fetch_depth" value="3" />
 			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
 			<property name="hibernate.c3p0.min_size" value="5" />

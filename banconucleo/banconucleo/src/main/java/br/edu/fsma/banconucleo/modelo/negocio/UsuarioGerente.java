@@ -20,11 +20,11 @@ public class UsuarioGerente implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id_usuariogerente")
 	private Long id;
 	
 	@OneToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "id_pessoafisica")
 	private PessoaFisica pessoaFisica;
 	
 	@Column(length=10)

@@ -15,15 +15,15 @@ public class UsuarioPessoaFisica implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id_usuariopessoafisica")
 	private Long id;
 	
 	@OneToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "id_pessoafisica")
 	private PessoaFisica pessoaFisica;
 	
 	@OneToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "id_conta")
 	private Conta conta;
 	
 	@Column(length=10)

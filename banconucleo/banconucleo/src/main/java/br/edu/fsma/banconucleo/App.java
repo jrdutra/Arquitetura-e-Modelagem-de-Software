@@ -1,13 +1,19 @@
 package br.edu.fsma.banconucleo;
 
-/**
- * Hello world!
- *
- */
+import javax.persistence.EntityManager;
+
+import br.edu.fsma.banconucleo.conexao.JPAUtil;
+
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+    	
+    	EntityManager em = JPAUtil.getEntityManager();
+        
+        
+        
+        
+        
     }
 }

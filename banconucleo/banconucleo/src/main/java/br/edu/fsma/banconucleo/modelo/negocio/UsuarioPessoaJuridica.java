@@ -15,7 +15,7 @@ public class UsuarioPessoaJuridica implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id_usuariopessoajuridica")
 	private Long id;
 	
 	@OneToOne
@@ -23,7 +23,7 @@ public class UsuarioPessoaJuridica implements Serializable{
 	private PessoaJuridica pessoaJuridica;
 	
 	@OneToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "id_conta")
 	private Conta conta;
 	
 	@Column(length=10)

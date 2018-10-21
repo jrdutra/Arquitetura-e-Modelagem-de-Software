@@ -21,7 +21,7 @@ public class PessoaJuridica implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id_pessoajuridica")
 	private Long id;
 	
 	@Column(length=20)
@@ -31,7 +31,7 @@ public class PessoaJuridica implements Serializable{
 	private String razaosocial;
 	
 	@OneToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "id_pessoafisica")
 	private PessoaFisica proprietario;
 	
 	public Long getId() {
