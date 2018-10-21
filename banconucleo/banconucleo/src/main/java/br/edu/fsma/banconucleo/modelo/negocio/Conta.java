@@ -34,8 +34,6 @@ public class Conta implements Serializable{
 	@JoinColumn(name = "id")
 	private UsuarioGerente usuarioGerente;
 
-	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

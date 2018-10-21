@@ -3,19 +3,14 @@ package br.edu.fsma.banconucleo.modelo.negocio;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
-
-@Entity
-@Table(name = "tb_usuariogerente")
-public class UsuarioGerente implements Serializable{
-		
+public class UsuarioPessoaJuridica implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -25,10 +20,38 @@ public class UsuarioGerente implements Serializable{
 	
 	@OneToOne
 	@JoinColumn(name = "id")
-	private PessoaFisica pessoaFisica;
+	private PessoaJuridica pessoaJuridica;
+	
+	@OneToOne
+	@JoinColumn(name = "id")
+	private Conta conta;
 	
 	@Column(length=10)
 	private String senha;
+
+	public PessoaJuridica getPessoaJuridica() {
+		return pessoaJuridica;
+	}
+
+	public void setPessoaJuridica(PessoaJuridica pessoaJuridica) {
+		this.pessoaJuridica = pessoaJuridica;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
 	@Override
 	public int hashCode() {
@@ -46,7 +69,7 @@ public class UsuarioGerente implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UsuarioGerente other = (UsuarioGerente) obj;
+		UsuarioPessoaJuridica other = (UsuarioPessoaJuridica) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -57,24 +80,10 @@ public class UsuarioGerente implements Serializable{
 
 	@Override
 	public String toString() {
-		return "UsuarioGerente [pessoaFisica=" + pessoaFisica + "]";
+		return "UsuarioPessoaJuridica [pessoaJuridica=" + pessoaJuridica + "]";
 	}
+	
 
-	public PessoaFisica getPessoaFisica() {
-		return pessoaFisica;
-	}
-
-	public void setPessoaFisica(PessoaFisica pessoaFisica) {
-		this.pessoaFisica = pessoaFisica;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
 	
 	
 }

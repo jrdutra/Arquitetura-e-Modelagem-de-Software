@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -27,6 +29,10 @@ public class PessoaJuridica implements Serializable{
 	
 	@Column(length=80)
 	private String razaosocial;
+	
+	@OneToOne
+	@JoinColumn(name = "id")
+	private PessoaFisica proprietario;
 	
 	public Long getId() {
 		return id;
@@ -52,6 +58,16 @@ public class PessoaJuridica implements Serializable{
 		this.razaosocial = razaosocial;
 	}
 	
+	
+	
+	public PessoaFisica getProprietario() {
+		return proprietario;
+	}
+
+	public void setProprietario(PessoaFisica proprietario) {
+		this.proprietario = proprietario;
+	}
+
 	@Override
 	public String toString() {
 		return "\n" + cnpj + " " + razaosocial;
