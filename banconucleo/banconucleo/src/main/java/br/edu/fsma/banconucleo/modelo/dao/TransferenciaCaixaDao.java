@@ -42,4 +42,7 @@ public class TransferenciaCaixaDao implements Serializable {
 		return (ArrayList<TransferenciaCaixa>) this.dao.listaTodos();
 	}
 	
+	public EntityManager getEntityManager() {
+		return this.em;
+	}
 }

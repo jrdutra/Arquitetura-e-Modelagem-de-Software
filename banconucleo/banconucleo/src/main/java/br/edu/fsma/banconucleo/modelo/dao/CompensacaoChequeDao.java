@@ -42,4 +42,8 @@ public class CompensacaoChequeDao implements Serializable {
 		return (ArrayList<CompensacaoCheque>) this.dao.listaTodos();
 	}
 	
+	public EntityManager getEntityManager() {
+		return this.em;
+	}
+	
 }

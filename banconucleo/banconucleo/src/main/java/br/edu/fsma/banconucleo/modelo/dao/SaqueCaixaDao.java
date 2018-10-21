@@ -42,4 +42,8 @@ public class SaqueCaixaDao implements Serializable {
 		return (ArrayList<SaqueCaixa>) this.dao.listaTodos();
 	}
 	
+	public EntityManager getEntityManager() {
+		return this.em;
+	}
+	
 }

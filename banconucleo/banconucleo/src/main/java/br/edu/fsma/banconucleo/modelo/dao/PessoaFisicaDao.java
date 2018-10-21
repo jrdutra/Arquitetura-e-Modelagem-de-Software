@@ -3,24 +3,23 @@ package br.edu.fsma.banconucleo.modelo.dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+
 import br.edu.fsma.banconucleo.modelo.negocio.PessoaFisica;
 
-public class PessoaFisicaDAO implements Serializable{
+public class PessoaFisicaDao implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private DAO<PessoaFisica> dao;
 	
-		@PostConstruct
-		void init() {
-			this.dao = new DAO<PessoaFisica>(this.em, PessoaFisica.class);
-		}
+	private EntityManager em;
 	
-		@Inject
-		private EntityManager em;
+	public PessoaFisicaDao(EntityManager em2) {
+		this.em = em2;
+		this.dao = new DAO<PessoaFisica>(this.em, PessoaFisica.class);
+	}
 		
 		public boolean existe(PessoaFisica pessoa) {
 			@SuppressWarnings("unused")
@@ -99,5 +98,9 @@ public class PessoaFisicaDAO implements Serializable{
 
 		public ArrayList<PessoaFisica> listaTodosPaginada(int firstResult, int maxResults) {
 			return (ArrayList<PessoaFisica>) this.dao.listaTodosPaginada(firstResult, maxResults);
+		}
+		
+		public EntityManager getEntityManager() {
+			return this.em;
 		}
 }

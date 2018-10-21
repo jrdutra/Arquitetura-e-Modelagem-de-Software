@@ -92,4 +92,7 @@ public class ContaDao implements Serializable {
 		return (ArrayList<Conta>) this.dao.listaTodos();
 	}
 	
+	public EntityManager getEntityManager() {
+		return this.em;
+	}
 }

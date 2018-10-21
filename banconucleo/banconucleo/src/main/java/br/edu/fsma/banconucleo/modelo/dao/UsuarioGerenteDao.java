@@ -42,4 +42,7 @@ public class UsuarioGerenteDao implements Serializable {
 		return (ArrayList<UsuarioGerente>) this.dao.listaTodos();
 	}
 	
+	public EntityManager getEntityManager() {
+		return this.em;
+	}
 }

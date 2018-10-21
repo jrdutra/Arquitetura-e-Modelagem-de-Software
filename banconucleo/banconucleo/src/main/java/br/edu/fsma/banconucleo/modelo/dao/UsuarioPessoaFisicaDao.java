@@ -41,5 +41,7 @@ public class UsuarioPessoaFisicaDao implements Serializable {
 	public List<UsuarioPessoaFisica> listaTodos() {
 		return (ArrayList<UsuarioPessoaFisica>) this.dao.listaTodos();
 	}
-	
+	public EntityManager getEntityManager() {
+		return this.em;
+	}
 }

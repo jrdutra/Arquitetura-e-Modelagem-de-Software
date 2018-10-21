@@ -3,25 +3,24 @@ package br.edu.fsma.banconucleo.modelo.dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+
 import br.edu.fsma.banconucleo.modelo.negocio.PessoaJuridica;
 
-public class PessoaJuridicaDAO implements Serializable{
+public class PessoaJuridicaDao implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private DAO<PessoaJuridica> dao;
 	
-	@PostConstruct
-	void init() {
+	private EntityManager em;
+	
+	public PessoaJuridicaDao(EntityManager em2) {
+		this.em = em2;
 		this.dao = new DAO<PessoaJuridica>(this.em, PessoaJuridica.class);
 	}
-
-	@Inject
-	private EntityManager em;
 	
 	public boolean existe(PessoaJuridica empresa) {
 		@SuppressWarnings("unused")
@@ -114,4 +113,7 @@ public class PessoaJuridicaDAO implements Serializable{
 		return (ArrayList<PessoaJuridica>) this.dao.listaTodos();
 	}
 	
+	public EntityManager getEntityManager() {
+		return this.em;
+	}
 }

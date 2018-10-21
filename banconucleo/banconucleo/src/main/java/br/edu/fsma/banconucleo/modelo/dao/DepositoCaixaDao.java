@@ -42,4 +42,7 @@ public class DepositoCaixaDao implements Serializable {
 		return (ArrayList<DepositoCaixa>) this.dao.listaTodos();
 	}
 	
+	public EntityManager getEntityManager() {
+		return this.em;
+	}
 }

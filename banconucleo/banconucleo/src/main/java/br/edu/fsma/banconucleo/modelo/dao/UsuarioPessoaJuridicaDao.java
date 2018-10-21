@@ -42,4 +42,7 @@ public class UsuarioPessoaJuridicaDao implements Serializable {
 		return (ArrayList<UsuarioPessoaJuridica>) this.dao.listaTodos();
 	}
 	
+	public EntityManager getEntityManager() {
+		return this.em;
+	}
 }
