@@ -1,0 +1,5 @@
+<beans>
+	<interceptors>
+		<class>br.edu.fsma.bancogerente</class>
+	</interceptors>
+</beans>
