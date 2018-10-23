@@ -54,6 +54,8 @@ public class UsuarioGerente implements Serializable{
 		return true;
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return "UsuarioGerente [pessoaFisica=" + pessoaFisica + "]";

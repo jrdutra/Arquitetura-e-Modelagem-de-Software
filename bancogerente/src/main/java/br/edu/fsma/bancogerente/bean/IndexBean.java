@@ -29,17 +29,25 @@ public class IndexBean implements Serializable {
 	
 	private Long idUsuarioGerente;
 	
+	private String senha;
+	
+	
+
 	public IndexBean() {
 		this.em = JPAUtil.getEntityManager();
 		usuarioGerenteDao = new UsuarioGerenteDao(em);
 		try {
 			listaUsuarioGerente = usuarioGerenteDao.listaTodos();
-			System.out.println("Lista de Usuario Gerente:");
-			System.out.println(listaUsuarioGerente);
 		}catch(Exception ex)  {
 			System.out.println("\n\nErro Ler Lista de Gerentes:");
 			System.out.println(ex);
 		}
+	}
+	
+	public void autenticarClick() {
+		System.out.println("Fui clicado!");
+		System.out.println(this.usuarioGerente);
+		System.out.println(this.senha);
 	}
 
 	public List<UsuarioGerente> getListaUsuarioGerente() {
@@ -74,6 +82,13 @@ public class IndexBean implements Serializable {
 		this.idUsuarioGerente = idUsuarioGerente;
 	}
 	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 	
 	
 }
