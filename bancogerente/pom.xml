@@ -1,47 +1,39 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  
   <modelVersion>4.0.0</modelVersion>
-  
   <groupId>br.edu.fsma</groupId>
-  <artifactId>fiscalizacaoweb</artifactId>
+  <artifactId>bancogerente</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
   
-  <name>bancogerente</name>
+  <packaging>war</packaging>
+  <name>bancogerente Maven Webapp</name>
   <url>http://maven.apache.org</url>
   
-  <properties>
+    <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Compilar para Java 1.8 -->
 	<maven.compiler.source>1.8</maven.compiler.source>
 	<maven.compiler.target>1.8</maven.compiler.target>
   </properties>
   
-  <build>
-		<plugins>
-				<plugin>
-					<artifactId>
-						maven-compiler-plugin
-					</artifactId>
-					<version>
-						3.0
-					</version>
-					<configuration>
-						<source>
-							1.8
-						</source>
-						<target>
-							1.8
-						</target>
-					</configuration>
-				</plugin>
-		</plugins>
-</build>
-
-	<!-- Lista de dependências do projeto -->
   <dependencies>
-
-		<!-- JSF API -->
+  
+  
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+     <dependency>
+      <groupId>br.edu.fsma</groupId>
+	  <artifactId>banconucleo</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+   	 </dependency>
+    
+    <!-- JSF API -->
 		<!-- https://mvnrepository.com/artifact/com.sun.faces/jsf-api/2.2.14 -->
 		<dependency>
 			<groupId>com.sun.faces</groupId>
@@ -72,71 +64,11 @@
 			<artifactId>all-themes</artifactId>
 			<version>1.0.10</version>
 		</dependency>
-
-
-		<!-- Postgresql Connector -->
-		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.4.1208.jre7</version>
-		</dependency>
-		<!-- MySQL Connector -->
-		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.38</version>
-		</dependency>
-		<!-- hsqldb Connector -->
-		<!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>2.3.3</version>
-		</dependency>
-
-		<!-- Hibernate JPA 5.1.0 -->
-		<!-- http://hibernate.org/orm/downloads/ -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.1.0.Final</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-java8</artifactId>
-			<version>5.1.0.Final</version>
-		</dependency>
-
-		<!-- Pool de conexões -->
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-c3p0 -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-c3p0</artifactId>
-			<version>5.1.0.Final</version>
-		</dependency>
-
-		<!-- CDI -->
-		<!-- https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet -->
-		<dependency>
-			<groupId>org.jboss.weld.servlet</groupId>
-			<artifactId>weld-servlet</artifactId>
-			<version>2.3.3.Final</version>
-		</dependency>
-
-		<!-- JSTL -->
-		<dependency>
-			<groupId>org.jboss.spec.javax.servlet.jstl</groupId>
-			<artifactId>jboss-jstl-api_1.2_spec</artifactId>
-			<version>1.1.2.Final</version>
-		</dependency>
-
-	</dependencies>
-	
-
-	<!-- Especificação dos repositórios diferentes do repositório central do 
+    
+    
+  </dependencies>
+  
+  <!-- Especificação dos repositórios diferentes do repositório central do 
 		Maven -->
 	<repositories>
 		<!-- Primefaces Maven Repository -->
@@ -154,5 +86,27 @@
 			<url>https://maven.java.net/content/repositories/snapshots/</url>
 		</repository>
 	</repositories>
+  
+  <build>
+    <finalName>relogio</finalName>
+    <plugins>
+		<plugin>
+			<artifactId>
+				maven-compiler-plugin
+			</artifactId>
+			<version>
+				3.0
+			</version>
+			<configuration>
+				<source>
+					1.8
+				</source>
+				<target>
+					1.8
+				</target>
+			</configuration>
+		</plugin>
+	</plugins>
+  </build>
   
 </project>

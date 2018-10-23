@@ -1,5 +1,8 @@
 package br.edu.fsma.banconucleo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import br.edu.fsma.banconucleo.conexao.JPAUtil;
@@ -14,46 +17,31 @@ public class App
 {
     public static void main( String[] args )
     {
+    	List<UsuarioGerente> listaUsuarioGerente = new ArrayList<UsuarioGerente>();
     	
-    	EntityManager em = JPAUtil.getEntityManager();
+    	EntityManager em;
+    	
+    	UsuarioGerenteDao usuarioGerenteDao;
+    	
+    	UsuarioGerente usuarioGerente = new UsuarioGerente();
+    	
+    	Long idUsuarioGerente;
+    	
+    	em = JPAUtil.getEntityManager();
         
-        ContaDao contaDao = new ContaDao(em);
-        PessoaFisicaDao pessoaFisicaDao = new PessoaFisicaDao(em);
-        UsuarioGerenteDao usuarioGerenteDao = new UsuarioGerenteDao(em);
-        
-        Conta conta = new Conta();
-        PessoaFisica pessoaFisica = new PessoaFisica();
-        UsuarioGerente usuarioGerente = new UsuarioGerente();
-        
-        pessoaFisica.setCpf("116666837-10");
-        pessoaFisica.setNome("João Ricardo");
-        
-        usuarioGerente.setPessoaFisica(pessoaFisica);
-        usuarioGerente.setSenha("123456");
-        
-        conta.setAgencia("6186");
-        conta.setNumero("07022-0");
-        conta.setSaldo(100.00);
-        conta.setUsuarioGerente(usuarioGerente);
-        
-        System.out.println("Gravando no banco..");
+    	usuarioGerenteDao = new UsuarioGerenteDao(em);
 		try {
-			
 			em.getTransaction().begin();
-
-			pessoaFisicaDao.adiciona(pessoaFisica);
-			usuarioGerenteDao.adiciona(usuarioGerente);
-			contaDao.adiciona(conta);
-
+			listaUsuarioGerente = usuarioGerenteDao.listaTodos();
 			em.getTransaction().commit();
-		} 
-		catch(Exception ex)  {
-			contaDao.getEntityManager().getTransaction().rollback();
-			System.out.println("Deu Merda");
+			System.out.println(listaUsuarioGerente);
+		}catch(Exception ex)  {
+			System.out.println("\n\nErro Ler Lista de Gerentes:");
+			System.out.println(ex);
+			em.getTransaction().rollback();
 		}
-		
-		System.out.println("Fim da gravação");
         
+		
         
         
     }

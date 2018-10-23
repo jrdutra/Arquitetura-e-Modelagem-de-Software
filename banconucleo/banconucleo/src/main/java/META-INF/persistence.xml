@@ -5,6 +5,10 @@
 	version="2.0">
   	<persistence-unit name="mysql-local">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
+		<class>br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente</class>
+		<class>br.edu.fsma.banconucleo.modelo.negocio.PessoaFisica</class>
+		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/banco" />
@@ -31,6 +35,7 @@
 	
 	<persistence-unit name="postgres-local">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/banco" />

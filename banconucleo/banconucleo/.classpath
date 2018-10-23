@@ -21,6 +21,7 @@
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/jrdut/.m2/repository/org/jboss/weld/servlet/weld-servlet/2.3.3.Final/weld-servlet-2.3.3.Final.jar" sourcepath="C:/Users/jrdut/.m2/repository/org/jboss/weld/servlet/weld-servlet/2.3.3.Final/weld-servlet-2.3.3.Final-sources.jar">
