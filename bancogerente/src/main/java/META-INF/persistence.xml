@@ -7,6 +7,9 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
 		<class>br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente</class>
+		<class>br.edu.fsma.banconucleo.modelo.negocio.PessoaFisica</class>
+		<class>br.edu.fsma.bancogerente.modelo.negocio.UsuarioGerente</class>
+		<class>br.edu.fsma.bancogerente.modelo.negocio.PessoaFisica</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
