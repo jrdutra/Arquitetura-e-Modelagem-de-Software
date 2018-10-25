@@ -7,5 +7,4 @@
 		auth="Container"
 		type="javax.enterprise.inject.spi.BeanManager"
 		factory="org.jboss.weld.resources.ManagerObjectFactory"/>
-
 </Context>
