@@ -18,16 +18,19 @@
 	<h:body>
 		<h:form id="frmIdentificacao">
 			<p:panel id="pnIdentificacao" class="painel" header="Identificação">
+				<p:messages id="messages" showDetail="true" closable="true" autoUpdate="true">
+			       
+			    </p:messages>
 				<h:panelGrid columns="2" style="width: 100%;">
 					<p:outputLabel value="Gerente:" rendered="true"></p:outputLabel>
-					<p:selectOneMenu id="idGerente" value="#{IndexBean.usuarioGerente}" style="width: 90%;">
+					<p:selectOneMenu id="idGerente" value="#{IndexBean.idUsuarioGerente}" style="width: 90%;">
 					   <f:selectItem itemLabel="Selecione o Gerente" itemValue="" noSelectionOption="true" />
-					   <f:selectItems value="#{IndexBean.listaUsuarioGerente}" var="obj" itemLabel="#{obj}" itemValue="#{obj}"/>
+					   <f:selectItems value="#{IndexBean.listaUsuarioGerente}" var="obj" itemLabel="#{obj.pessoaFisica}" itemValue="#{obj.id}"/>
 					</p:selectOneMenu>
-					<p:outputLabel value="Senha:" rendered="true"></p:outputLabel>
-					<h:inputSecret id="idInputSenha" value="#{IndexBean.senha}" style="width: 100%;"/>
+					<p:outputLabel for="idInputSenha" value="Senha:" rendered="true"></p:outputLabel>
+					<p:password id="idInputSenha" value="#{IndexBean.senha}" label="Senha" required="true" style="width: 90%;"/>
 					<p:spacer />
-					<p:commandButton value="Autenticar" actionListener="#{IndexBean.autenticarClick()}" process="@form" update=":frmIdentificacao"/>
+					<p:commandButton id="idBtnAutenticar" value="Autenticar" action="#{IndexBean.autenticarClick()}" process="@form" update=":frmIdentificacao:pnIdentificacao"/>
 				</h:panelGrid>	
 			    
 			</p:panel>

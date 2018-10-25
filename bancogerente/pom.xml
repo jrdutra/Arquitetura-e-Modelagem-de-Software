@@ -68,6 +68,8 @@
     
   </dependencies>
   
+  
+  
   <!-- Especificação dos repositórios diferentes do repositório central do 
 		Maven -->
 	<repositories>

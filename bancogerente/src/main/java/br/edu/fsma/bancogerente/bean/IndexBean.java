@@ -1,10 +1,13 @@
 package br.edu.fsma.bancogerente.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.persistence.EntityManager;
 
@@ -45,11 +48,39 @@ public class IndexBean implements Serializable {
 	}
 	
 	public void autenticarClick() {
-		System.out.println("Fui clicado!");
-		System.out.println(this.usuarioGerente);
+		
+		this.usuarioGerente = pegarDeListaPorId(this.idUsuarioGerente);
+		System.out.println(usuarioGerente.getSenha());
 		System.out.println(this.senha);
+		try {
+			if((this.usuarioGerente.getSenha()).toString().equals((this.senha).toString())) {
+				System.out.println("Aqui");
+				FacesContext.getCurrentInstance().getExternalContext().redirect("view/painel/painel.xhtml");
+			}else {
+				erroDeSenha();
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 	}
 
+	public UsuarioGerente pegarDeListaPorId(Long id) {
+		UsuarioGerente user = null;
+		for( UsuarioGerente us : listaUsuarioGerente )
+		{
+		      if(id == us.getId()) {
+		    	  user = us;
+		      }
+		}
+		return user;
+	}
+	
+	public void erroDeSenha() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Senha incorreta."));
+    }
+	
 	public List<UsuarioGerente> getListaUsuarioGerente() {
 		return listaUsuarioGerente;
 	}
