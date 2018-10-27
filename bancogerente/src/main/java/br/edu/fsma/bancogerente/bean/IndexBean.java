@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -14,6 +15,7 @@ import javax.persistence.EntityManager;
 import br.edu.fsma.banconucleo.modelo.dao.UsuarioGerenteDao;
 import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
 import br.edu.fsma.banconucleo.conexao.JPAUtil;
+import br.edu.fsma.bancogerente.util.Secao;
 
 
 @ManagedBean(name = "IndexBean")
@@ -47,6 +49,11 @@ public class IndexBean implements Serializable {
 		}
 	}
 	
+	@PostConstruct
+	public void init() {
+		Secao.setUsuarioGerente(null);
+	}
+	
 	public void autenticarClick() {
 		
 		this.usuarioGerente = pegarDeListaPorId(this.idUsuarioGerente);
@@ -54,8 +61,9 @@ public class IndexBean implements Serializable {
 		System.out.println(this.senha);
 		try {
 			if((this.usuarioGerente.getSenha()).toString().equals((this.senha).toString())) {
-				System.out.println("Aqui");
-				FacesContext.getCurrentInstance().getExternalContext().redirect("view/painel/painel.xhtml");
+				System.out.println("Secao criada com " + usuarioGerente);
+				Secao.setUsuarioGerente(usuarioGerente);
+				FacesContext.getCurrentInstance().getExternalContext().redirect("/bancogerente/view/painel/painel.xhtml");
 			}else {
 				erroDeSenha();
 			}
