@@ -39,12 +39,49 @@ public class PainelBean implements Serializable  {
 		}
 		return "";
 	}
-
+	
+	
+	public void abrirContaClick() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/bancogerente/view/abrirconta/abrirconta.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void encerrarContaClick() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/bancogerente/view/encerrarconta/encerrarconta.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void adicionarTitularClick() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/bancogerente/view/adicionartitular/adicionartitular.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void sair() {
 		Secao.setUsuarioGerente(null);
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("/bancogerente/view/index/index.xhtml");
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void painelClick() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/bancogerente/view/painel/painel.xhtml");
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -10,13 +10,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.persistence.EntityManager;
 
-import br.edu.fsma.banconucleo.modelo.dao.UsuarioGerenteDao;
-import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
-import br.edu.fsma.banconucleo.conexao.JPAUtil;
 import br.edu.fsma.bancogerente.util.Secao;
 import br.edu.fsma.banconucleo.gerenciador.GerenciadorLogin;
+import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
 
 
 @ManagedBean(name = "IndexBean")
@@ -27,8 +24,6 @@ public class IndexBean implements Serializable {
 	
 	private List<UsuarioGerente> listaUsuarioGerente = new ArrayList<UsuarioGerente>();
 	private GerenciadorLogin gerenciadorLogin = new GerenciadorLogin();
-	private EntityManager em;
-	private UsuarioGerenteDao usuarioGerenteDao;
 	private UsuarioGerente usuarioGerente = new UsuarioGerente();
 	private Long idUsuarioGerente;
 	private String senha;
@@ -67,14 +62,6 @@ public class IndexBean implements Serializable {
 
 	public void setListaUsuarioGerente(List<UsuarioGerente> listaUsuarioGerente) {
 		this.listaUsuarioGerente = listaUsuarioGerente;
-	}
-
-	public UsuarioGerenteDao getUsuarioGerenteDao() {
-		return usuarioGerenteDao;
-	}
-
-	public void setUsuarioGerenteDao(UsuarioGerenteDao usuarioGerenteDao) {
-		this.usuarioGerenteDao = usuarioGerenteDao;
 	}
 
 	public UsuarioGerente getUsuarioGerente() {

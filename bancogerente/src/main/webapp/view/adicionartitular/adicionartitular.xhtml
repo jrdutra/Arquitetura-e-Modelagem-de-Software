@@ -20,7 +20,7 @@
 			}
 		</style>
 		<meta charset="UTF-8" />
-		<title>Painel</title>
+		<title>Adicionar Titular</title>
 		<link type="text/css" rel="stylesheet"	href="#{facesContext.externalContext.requestContextPath}/resources/css/estilo.css" />
 	</h:head>
 	<h:body>
@@ -29,19 +29,19 @@
 	       	    <p:outputLabel value="#{PainelBean.nomeUsuario()}" rendered="true"></p:outputLabel>
 	       	    <p:spacer />
 	       	    <p:commandButton id="idBtnSair" value="Sair" action="#{PainelBean.sair()}" process="@this" icon="ui-icon-close"/>
-	             
 	        </f:facet>
 	    </p:toolbar>
 	    <p:spacer />
-		<h:form id="frmIdentificacao">
-			<p:panel id="pnIdentificacao" class="painel" header="Painel">
+		<h:form id="frmConteudo">
+			<p:panel id="pnIConteudo" class="painel" header="Adicionar Titular">
 			    <h:form>
-			    <h:panelGrid columns="3" class="painelBotoes" style="width: 100%;">
-					<p:commandButton class="botaomenu" value="Abrir Conta" action="#{PainelBean.abrirContaClick()}" ajax="false"/>
-					<p:commandButton class="botaomenu" value="Encerrar Conta" action="#{PainelBean.encerrarContaClick()}" ajax="false" />
-					<p:commandButton class="botaomenu" value="Adicionar Titular" action="#{PainelBean.adicionarTitularClick()}" ajax="false" />
+			    <h:panelGrid columns="3" class="painel" style="width: 100%;">
+					
 				</h:panelGrid>
 				</h:form>
+				<h:panelGrid columns="1" class="painel" style="width: 100%; text-align:right;">
+				<p:commandButton class="botaoPainel" value="Painel" action="#{PainelBean.painelClick()}" icon="ui-icon-home" ajax="false"/>
+				</h:panelGrid>
 			</p:panel>
 		</h:form>
 	</h:body>
