@@ -24,7 +24,7 @@ public class Conta implements Serializable{
 	@Column(length=10)
 	private String numero;
 	
-	@Column(length=5)
+	@Column(length=8)
 	private String agencia;
 	
 	@Column(length=10)
@@ -59,9 +59,12 @@ public class Conta implements Serializable{
 		return true;
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "Conta [numero=" + numero + ", agencia=" + agencia + "]";
+		return "Conta [id=" + id + ", numero=" + numero + ", agencia=" + agencia + ", saldo=" + saldo
+				+ ", usuarioGerente=" + usuarioGerente + "]";
 	}
 
 	public Long getId() {
