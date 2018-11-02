@@ -16,6 +16,7 @@ import br.edu.fsma.banconucleo.modelo.dao.UsuarioGerenteDao;
 import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
 import br.edu.fsma.banconucleo.conexao.JPAUtil;
 import br.edu.fsma.bancogerente.util.Secao;
+import br.edu.fsma.banconucleo.gerenciador.GerenciadorLogin;
 
 
 @ManagedBean(name = "IndexBean")
@@ -25,28 +26,15 @@ public class IndexBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private List<UsuarioGerente> listaUsuarioGerente = new ArrayList<UsuarioGerente>();
-	
+	private GerenciadorLogin gerenciadorLogin = new GerenciadorLogin();
 	private EntityManager em;
-	
 	private UsuarioGerenteDao usuarioGerenteDao;
-	
 	private UsuarioGerente usuarioGerente = new UsuarioGerente();
-	
 	private Long idUsuarioGerente;
-	
 	private String senha;
 	
-	
-
 	public IndexBean() {
-		this.em = JPAUtil.getEntityManager();
-		usuarioGerenteDao = new UsuarioGerenteDao(em);
-		try {
-			listaUsuarioGerente = usuarioGerenteDao.listaTodos();
-		}catch(Exception ex)  {
-			System.out.println("\n\nErro Ler Lista de Gerentes:");
-			System.out.println(ex);
-		}
+		listaUsuarioGerente = gerenciadorLogin.getListaTodosGerentes();
 	}
 	
 	@PostConstruct
@@ -55,36 +43,20 @@ public class IndexBean implements Serializable {
 	}
 	
 	public void autenticarClick() {
-		
-		this.usuarioGerente = pegarDeListaPorId(this.idUsuarioGerente);
-		System.out.println(usuarioGerente.getSenha());
-		System.out.println(this.senha);
-		try {
-			if((this.usuarioGerente.getSenha()).toString().equals((this.senha).toString())) {
-				System.out.println("Secao criada com " + usuarioGerente);
-				Secao.setUsuarioGerente(usuarioGerente);
+		if(gerenciadorLogin.existeUsuarioGerente(this.idUsuarioGerente, this.senha)) {
+			this.usuarioGerente = gerenciadorLogin.pegarDeListaPorId(this.idUsuarioGerente);
+			Secao.setUsuarioGerente(usuarioGerente);
+			try {
 				FacesContext.getCurrentInstance().getExternalContext().redirect("/bancogerente/view/painel/painel.xhtml");
-			}else {
-				erroDeSenha();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+		}else {
+			erroDeSenha();
+		}
 	}
 
-	public UsuarioGerente pegarDeListaPorId(Long id) {
-		UsuarioGerente user = null;
-		for( UsuarioGerente us : listaUsuarioGerente )
-		{
-		      if(id == us.getId()) {
-		    	  user = us;
-		      }
-		}
-		return user;
-	}
-	
 	public void erroDeSenha() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Senha incorreta."));
     }
