@@ -6,10 +6,29 @@
   	<persistence-unit name="mysql-local">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
+		<class>br.edu.fsma.banconucleo.modelo.negocio.CompensacaoCheque</class>
+		<class>br.edu.fsma.banconucleo.modelo.negocio.Conta</class>
+		<class>br.edu.fsma.banconucleo.modelo.negocio.DepositoCaixa</class>
+		<class>br.edu.fsma.banconucleo.modelo.negocio.PessoaJuridica</class>
+		<class>br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaJuridica</class>
+		<class>br.edu.fsma.banconucleo.modelo.negocio.SaqueCaixa</class>
+		<class>br.edu.fsma.banconucleo.modelo.negocio.TransferenciaCaixa</class>
 		<class>br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente</class>
+		<class>br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaFisica</class>
 		<class>br.edu.fsma.banconucleo.modelo.negocio.PessoaFisica</class>
+		<class>br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente</class>
+		
+		<class>br.edu.fsma.bancogerente.modelo.negocio.CompensacaoCheque</class>
+		<class>br.edu.fsma.bancogerente.modelo.negocio.Conta</class>
+		<class>br.edu.fsma.bancogerente.modelo.negocio.DepositoCaixa</class>
+		<class>br.edu.fsma.bancogerente.modelo.negocio.PessoaJuridica</class>
+		<class>br.edu.fsma.bancogerente.modelo.negocio.UsuarioPessoaJuridica</class>
+		<class>br.edu.fsma.bancogerente.modelo.negocio.SaqueCaixa</class>
+		<class>br.edu.fsma.bancogerente.modelo.negocio.TransferenciaCaixa</class>
 		<class>br.edu.fsma.bancogerente.modelo.negocio.UsuarioGerente</class>
+		<class>br.edu.fsma.bancogerente.modelo.negocio.UsuarioPessoaFisica</class>
 		<class>br.edu.fsma.bancogerente.modelo.negocio.PessoaFisica</class>
+		<class>br.edu.fsma.bancogerente.modelo.negocio.UsuarioGerente</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

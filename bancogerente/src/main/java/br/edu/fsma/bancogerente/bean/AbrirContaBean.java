@@ -9,6 +9,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 import br.edu.fsma.bancogerente.util.Secao;
+import br.edu.fsma.banconucleo.gerenciador.GerenciadorConta;
+import br.edu.fsma.banconucleo.modelo.negocio.Conta;
 import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
 
 @ManagedBean(name = "AbrirContaBean")
@@ -16,9 +18,13 @@ import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
 public class AbrirContaBean implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	private UsuarioGerente usuarioGerente;
+	private Conta conta = new Conta();
+	private GerenciadorConta gerenciadorConta = new GerenciadorConta();
 	
 	public AbrirContaBean() {
 		this.usuarioGerente = Secao.getUsuarioGerente();
+		this.conta = gerenciadorConta.gerarNovaConta();
+		System.out.println(this.conta);
 	}
 	
 	@PostConstruct
@@ -40,6 +46,15 @@ public class AbrirContaBean implements Serializable  {
 	public void setUsuarioGerente(UsuarioGerente usuarioGerente) {
 		this.usuarioGerente = usuarioGerente;
 	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+	
 	
 
 }

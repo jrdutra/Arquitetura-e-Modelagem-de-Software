@@ -35,9 +35,12 @@
 		<h:form id="frmConteudo">
 			<p:panel id="pnIConteudo" class="painel" header="Abrir Conta">
 			    <h:form>
-			    <h:panelGrid columns="3" class="painel" style="width: 100%;">
-			    
-				</h:panelGrid>
+				    <h:panelGrid columns="2" class="painel" style="width: 100%;">
+				    	<p:outputLabel for="idAgencia" value="Agencia:" rendered="true"></p:outputLabel>
+				    	<p:outputLabel id="idAgencia" value="#{AbrirContaBean.conta.agencia}" rendered="true" style="font-weight: bold;"></p:outputLabel>
+				    	<p:outputLabel for="idConta" value="Número da Conta:" rendered="true"></p:outputLabel>
+				    	<p:outputLabel id="idConta" value="#{AbrirContaBean.conta.numero}" rendered="true" style="font-weight: bold;"></p:outputLabel>
+					</h:panelGrid>
 				</h:form>
 				<h:panelGrid columns="1" class="painel" style="width: 100%; text-align:right;">
 				<p:commandButton class="botaoPainel" value="Painel" action="#{PainelBean.painelClick()}" icon="ui-icon-home" ajax="false"/>

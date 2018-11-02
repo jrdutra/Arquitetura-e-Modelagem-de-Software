@@ -21,11 +21,11 @@ public class ContaDao implements Serializable {
 	}
 
 	public boolean existe(Conta conta) {
-		@SuppressWarnings("unused")
 		Conta resultado = new Conta();
 		TypedQuery<Conta> query = em.createQuery("SELECT c FROM Conta c "
 												+ "WHERE c.numero=:pNumero and "
 												+ "c.agencia=:pAgencia", Conta.class);
+	
 		query.setParameter("pNumero", conta.getNumero());
 		query.setParameter("pAgencia", conta.getAgencia());
 		try {
