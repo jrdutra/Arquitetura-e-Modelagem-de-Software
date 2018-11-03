@@ -1,4 +1,4 @@
-package br.edu.fsma.banconucleo.modelo.excluido;
+package br.edu.fsma.banconucleo.excluido.negocio;
 
 import java.io.Serializable;
 
@@ -59,8 +59,6 @@ public class UsuarioPessoaFisicaExcluido implements Serializable{
 		this.senha = senha;
 	}
 	
-	
-
 	public ContaExcluido getConta() {
 		return conta;
 	}

@@ -1,4 +1,4 @@
-package br.edu.fsma.banconucleo.modelo.excluido;
+package br.edu.fsma.banconucleo.excluido.negocio;
 
 import java.io.Serializable;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package br.edu.fsma.banconucleo.modelo.excluido;
+package br.edu.fsma.banconucleo.excluido.negocio;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -13,14 +13,14 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "tb_depositocaixa_excluido")
-public class DepositoCaixaExcluido implements Serializable{
+@Table(name = "tb_compensacaocheque")
+public class CompensacaoChequeExcluido implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_depositocaixa")
+	@Column(name = "id_compensacaocheque_excluido")
 	private Long id;
 	
 	@Column(length=10)
@@ -40,7 +40,7 @@ public class DepositoCaixaExcluido implements Serializable{
 		return result;
 	}
 
-	
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -50,7 +50,7 @@ public class DepositoCaixaExcluido implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DepositoCaixaExcluido other = (DepositoCaixaExcluido) obj;
+		CompensacaoChequeExcluido other = (CompensacaoChequeExcluido) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

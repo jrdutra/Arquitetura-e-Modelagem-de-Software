@@ -175,6 +175,7 @@ public class GerenciadorConta {
 	}
 
 	public boolean encerrarConta(UsuarioPessoaFisica u) {
+		this.em = JPAUtil.getEntityManager();
 		return true;
 	}
 

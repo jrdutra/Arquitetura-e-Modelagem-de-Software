@@ -1,4 +1,4 @@
-package br.edu.fsma.banconucleo.modelo.excluido;
+package br.edu.fsma.banconucleo.excluido.negocio;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -11,16 +11,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name = "tb_compensacaocheque")
-public class CompensacaoChequeExcluido implements Serializable{
+@Table(name = "tb_saquecaixa_excluido")
+public class SaqueCaixaExcluido implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_compensacaocheque_excluido")
+	@Column(name = "id_saquecaixa")
 	private Long id;
 	
 	@Column(length=10)
@@ -31,6 +30,7 @@ public class CompensacaoChequeExcluido implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "id_conta")
 	private ContaExcluido conta;
+	
 
 	@Override
 	public int hashCode() {
@@ -40,8 +40,6 @@ public class CompensacaoChequeExcluido implements Serializable{
 		return result;
 	}
 
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -50,7 +48,7 @@ public class CompensacaoChequeExcluido implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CompensacaoChequeExcluido other = (CompensacaoChequeExcluido) obj;
+		SaqueCaixaExcluido other = (SaqueCaixaExcluido) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
