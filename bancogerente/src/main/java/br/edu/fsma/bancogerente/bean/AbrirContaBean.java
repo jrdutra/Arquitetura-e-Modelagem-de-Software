@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
+import br.edu.fsma.bancogerente.util.Redirecionador;
 import br.edu.fsma.bancogerente.util.Secao;
 import br.edu.fsma.banconucleo.gerenciador.GerenciadorConta;
 import br.edu.fsma.banconucleo.modelo.negocio.Conta;
@@ -33,6 +34,7 @@ public class AbrirContaBean implements Serializable  {
 	
 	private Long idPessoaJuridica;
 	private List<PessoaJuridica> listaPessoaJuridica = new ArrayList<PessoaJuridica>();
+	private Redirecionador redirecionador;
 	
 	public AbrirContaBean() {
 		this.usuarioGerente = Secao.getUsuarioGerente();
@@ -44,12 +46,7 @@ public class AbrirContaBean implements Serializable  {
 	@PostConstruct
 	public void init() {
 		if(Secao.getUsuarioGerente()==null) {
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("/bancogerente/view/index/index.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			redirecionador.redireciona("/bancogerente/view/index/index.xhtml");
 		}
 	}
 	

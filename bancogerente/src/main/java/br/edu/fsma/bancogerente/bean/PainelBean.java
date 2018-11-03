@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
+import br.edu.fsma.bancogerente.util.Redirecionador;
 import br.edu.fsma.bancogerente.util.Secao;
 import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
 
@@ -16,6 +17,7 @@ import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
 public class PainelBean implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	private UsuarioGerente usuarioGerente;
+	private Redirecionador redirecionador;
 	
 	public PainelBean() {
 		this.usuarioGerente = Secao.getUsuarioGerente();
@@ -24,12 +26,7 @@ public class PainelBean implements Serializable  {
 	@PostConstruct
 	public void init() {
 		if(Secao.getUsuarioGerente()==null) {
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("/bancogerente/view/index/index.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			redirecionador.redireciona("/bancogerente/view/index/index.xhtml");
 		}
 	}
 	
