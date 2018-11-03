@@ -1,4 +1,4 @@
-package br.edu.fsma.bancogerente.bean;
+package br.edu.fsma.banconucleo.gerenciador;
 
 import java.util.List;
 

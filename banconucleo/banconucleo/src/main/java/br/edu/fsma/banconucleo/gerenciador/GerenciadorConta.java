@@ -174,5 +174,13 @@ public class GerenciadorConta {
 		return pessoaJuridicaDao.listaTodos();
 	}
 
+	public boolean encerrarConta(UsuarioPessoaFisica u) {
+		return true;
+	}
+
+	public boolean encerrarConta(UsuarioPessoaJuridica u) {
+		return true;
+	}
+
 
 }
