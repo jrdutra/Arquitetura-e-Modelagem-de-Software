@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -15,6 +14,7 @@ import br.edu.fsma.bancogerente.util.Secao;
 import br.edu.fsma.banconucleo.gerenciador.GerenciadorConta;
 import br.edu.fsma.banconucleo.modelo.negocio.Conta;
 import br.edu.fsma.banconucleo.modelo.negocio.PessoaFisica;
+import br.edu.fsma.banconucleo.modelo.negocio.PessoaJuridica;
 import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
 
 @ManagedBean(name = "AbrirContaBean")
@@ -31,10 +31,14 @@ public class AbrirContaBean implements Serializable  {
 	private Long idPessoaFisica;
 	private List<PessoaFisica> listaPessoaFisica = new ArrayList<PessoaFisica>();
 	
+	private Long idPessoaJuridica;
+	private List<PessoaJuridica> listaPessoaJuridica = new ArrayList<PessoaJuridica>();
+	
 	public AbrirContaBean() {
 		this.usuarioGerente = Secao.getUsuarioGerente();
 		this.conta = gerenciadorConta.gerarNovaConta();
 		this.listaPessoaFisica = gerenciadorConta.getListaPessoaFisica();
+		this.listaPessoaJuridica = gerenciadorConta.getListaPessoaJuridica();
 	}
 	
 	@PostConstruct
@@ -49,11 +53,18 @@ public class AbrirContaBean implements Serializable  {
 		}
 	}
 	
-	public void criarContaClick() {
+	public void criarContaFisicaClick() {
 		this.conta.setUsuarioGerente(this.usuarioGerente);
 		this.conta.setSaldo(this.saldo);
-		gerenciadorConta.guardarConta(this.conta, this.idPessoaFisica, this.senha);
-		contaCriadaComSucesso(conta);
+		gerenciadorConta.guardarContaFisica(this.conta, this.idPessoaFisica, this.senha);
+		esperaSegundos(1000);
+		redirecionaPainel();
+	}
+	
+	public void criarContaJuridicaClick() {
+		this.conta.setUsuarioGerente(this.usuarioGerente);
+		this.conta.setSaldo(this.saldo);
+		gerenciadorConta.guardarContaJuridica(this.conta, this.idPessoaJuridica, this.senha);
 		esperaSegundos(1000);
 		redirecionaPainel();
 	}
@@ -124,9 +135,22 @@ public class AbrirContaBean implements Serializable  {
 	public void setListaPessoaFisica(List<PessoaFisica> listaPessoaFisica) {
 		this.listaPessoaFisica = listaPessoaFisica;
 	}
+
+	public Long getIdPessoaJuridica() {
+		return idPessoaJuridica;
+	}
+
+	public void setIdPessoaJuridica(Long idPessoaJuridica) {
+		this.idPessoaJuridica = idPessoaJuridica;
+	}
+
+	public List<PessoaJuridica> getListaPessoaJuridica() {
+		return listaPessoaJuridica;
+	}
+
+	public void setListaPessoaJuridica(List<PessoaJuridica> listaPessoaJuridica) {
+		this.listaPessoaJuridica = listaPessoaJuridica;
+	}
 	
-	public void contaCriadaComSucesso(Conta conta) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Conta criada com sucesso!", "conta:"));
-    }
 	
 }

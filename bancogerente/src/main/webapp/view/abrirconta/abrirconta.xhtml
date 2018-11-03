@@ -32,32 +32,56 @@
 	        </f:facet>
 	    </p:toolbar>
 	    <p:spacer />
-		<h:form id="frmConteudo">
-			<p:panel id="pnIConteudo" class="painel" header="Abrir Conta">
-			    <p:messages id="messages" showDetail="true" closable="true" autoUpdate="true"/>    
-			
-			    <h:panelGrid columns="2" class="painel" style="width: 100%;">
-			    	<p:outputLabel for="idAgencia" value="Agencia:" rendered="true"></p:outputLabel>
-			    	<p:outputLabel id="idAgencia" value="#{AbrirContaBean.conta.agencia}" rendered="true" style="font-weight: bold;"></p:outputLabel>
-			    	<p:outputLabel for="idConta" value="Número da Conta:" rendered="true"></p:outputLabel>
-			    	<p:outputLabel id="idConta" value="#{AbrirContaBean.conta.numero}" rendered="true" style="font-weight: bold;"></p:outputLabel>
-			    	
-			    	<p:outputLabel for="idPessoaFisica" value="Titular:" rendered="true"></p:outputLabel>
-			    	<p:selectOneMenu id="idPessoaFisica" value="#{AbrirContaBean.idPessoaFisica}" style="width: 90%;">
-					   <f:selectItem itemLabel="Selecione o Titular" itemValue="" noSelectionOption="true" />
-					   <f:selectItems value="#{AbrirContaBean.listaPessoaFisica}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.id}"/>
-					</p:selectOneMenu>
-			    	
-			    	<p:outputLabel for="idSaldo" value="Saldo da Conta:" rendered="true"></p:outputLabel>
-			    	<p:inputNumber id="idSaldo" value="#{AbrirContaBean.saldo}" symbol="R$ " rendered="true"></p:inputNumber>
-			    	<p:outputLabel for="idSenha" value="Senha da Conta:" rendered="true"></p:outputLabel>
-			    	<p:inputText id="idSenha" value="#{AbrirContaBean.senha}" rendered="true"></p:inputText>
-				</h:panelGrid>
-				<p:commandButton class="botaoPainel" value="Criar Conta" action="#{AbrirContaBean.criarContaClick()}" icon="ui-icon-check" process="@form" ajax="true" update=":frmConteudo:pnIConteudo"/>
-				<h:panelGrid columns="1" class="painel" style="width: 100%; text-align:right;">
-					<p:commandButton class="botaoPainel" value="Painel" action="#{PainelBean.painelClick()}" icon="ui-icon-home" ajax="true"/>
-				</h:panelGrid>
-			</p:panel>
-		</h:form>
+		<p:panel id="pnIConteudo" class="painel" header="Abrir Conta">
+			<p:tabView>
+		    	<p:tab title="Conta de pessoa física">
+				    <h:form id="frmConteudoFisica">
+					    <h:panelGrid columns="2" class="painel" style="width: 100%;">
+					    	<p:outputLabel for="idAgenciaFisica" value="Agencia:" rendered="true"></p:outputLabel>
+					    	<p:outputLabel id="idAgenciaFisica" value="#{AbrirContaBean.conta.agencia}" rendered="true" style="font-weight: bold;"></p:outputLabel>
+					    	<p:outputLabel for="idContaFisica" value="Número da Conta:" rendered="true"></p:outputLabel>
+					    	<p:outputLabel id="idContaFisica" value="#{AbrirContaBean.conta.numero}" rendered="true" style="font-weight: bold;"></p:outputLabel>
+					    	
+					    	<p:outputLabel for="idPessoaFisica" value="Titular:" rendered="true"></p:outputLabel>
+					    	<p:selectOneMenu id="idPessoaFisica" value="#{AbrirContaBean.idPessoaFisica}" style="width: 90%;">
+							   <f:selectItem itemLabel="Selecione o Titular" itemValue="" noSelectionOption="true" />
+							   <f:selectItems value="#{AbrirContaBean.listaPessoaFisica}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.id}"/>
+							</p:selectOneMenu>
+					    	
+					    	<p:outputLabel for="idSaldoFisica" value="Saldo da Conta:" rendered="true"></p:outputLabel>
+					    	<p:inputNumber id="idSaldoFisica" value="#{AbrirContaBean.saldo}" symbol="R$ " rendered="true"></p:inputNumber>
+					    	<p:outputLabel for="idSenhaFisica" value="Senha da Conta:" rendered="true"></p:outputLabel>
+					    	<p:inputText id="idSenhaFisica" value="#{AbrirContaBean.senha}" rendered="true"></p:inputText>
+						</h:panelGrid>
+						<p:commandButton class="botaoPainel" value="Criar Conta" action="#{AbrirContaBean.criarContaFisicaClick()}" icon="ui-icon-check" process="@form" ajax="true" update="frmConteudoFisica"/>
+					</h:form>
+				</p:tab>
+				<p:tab title="Contas de pessoa jurídica">
+				    <h:form id="frmConteudoJuridica">
+					    <h:panelGrid columns="2" class="painel" style="width: 100%;">
+					    	<p:outputLabel for="idAgenciaJuridica" value="Agencia:" rendered="true"></p:outputLabel>
+					    	<p:outputLabel id="idAgenciaJuridica" value="#{AbrirContaBean.conta.agencia}" rendered="true" style="font-weight: bold;"></p:outputLabel>
+					    	<p:outputLabel for="idContaJuridica" value="Número da Conta:" rendered="true"></p:outputLabel>
+					    	<p:outputLabel id="idContaJuridica" value="#{AbrirContaBean.conta.numero}" rendered="true" style="font-weight: bold;"></p:outputLabel>
+					    	
+					    	<p:outputLabel for="idPessoaJuridica" value="Titular:" rendered="true"></p:outputLabel>
+					    	<p:selectOneMenu id="idPessoaJuridica" value="#{AbrirContaBean.idPessoaJuridica}" style="width: 90%;">
+							   <f:selectItem itemLabel="Selecione o Titular" itemValue="" noSelectionOption="true" />
+							   <f:selectItems value="#{AbrirContaBean.listaPessoaJuridica}" var="obj" itemLabel="#{obj.razaosocial}" itemValue="#{obj.id}"/>
+							</p:selectOneMenu>
+					    	
+					    	<p:outputLabel for="idSaldoJuridica" value="Saldo da Conta:" rendered="true"></p:outputLabel>
+					    	<p:inputNumber id="idSaldoJuridica" value="#{AbrirContaBean.saldo}" symbol="R$ " rendered="true"></p:inputNumber>
+					    	<p:outputLabel for="idSenhaJuridica" value="Senha da Conta:" rendered="true"></p:outputLabel>
+					    	<p:inputText id="idSenhaJuridica" value="#{AbrirContaBean.senha}" rendered="true"></p:inputText>
+						</h:panelGrid>
+						<p:commandButton class="botaoPainel" value="Criar Conta" action="#{AbrirContaBean.criarContaJuridicaClick()}" icon="ui-icon-check" process="@form" ajax="true" update="frmConteudoJuridica"/>						
+					</h:form>
+				</p:tab>
+			</p:tabView>
+			<h:panelGrid columns="1" class="painel" style="width: 100%; text-align:right;">
+				<p:commandButton class="botaoPainel" value="Painel" action="#{PainelBean.painelClick()}" icon="ui-icon-home" ajax="true"/>
+			</h:panelGrid>
+		</p:panel>
 	</h:body>
 </html>

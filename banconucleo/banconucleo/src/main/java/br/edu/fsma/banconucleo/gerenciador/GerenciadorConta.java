@@ -8,10 +8,14 @@ import javax.persistence.EntityManager;
 import br.edu.fsma.banconucleo.conexao.JPAUtil;
 import br.edu.fsma.banconucleo.modelo.dao.ContaDao;
 import br.edu.fsma.banconucleo.modelo.dao.PessoaFisicaDao;
+import br.edu.fsma.banconucleo.modelo.dao.PessoaJuridicaDao;
 import br.edu.fsma.banconucleo.modelo.dao.UsuarioPessoaFisicaDao;
+import br.edu.fsma.banconucleo.modelo.dao.UsuarioPessoaJuridicaDao;
 import br.edu.fsma.banconucleo.modelo.negocio.Conta;
 import br.edu.fsma.banconucleo.modelo.negocio.PessoaFisica;
+import br.edu.fsma.banconucleo.modelo.negocio.PessoaJuridica;
 import br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaFisica;
+import br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaJuridica;
 
 public class GerenciadorConta {
 	
@@ -20,10 +24,12 @@ public class GerenciadorConta {
 	private ContaDao contaDao;
 	private UsuarioPessoaFisicaDao usuarioPessoaFisicaDao;
 	private PessoaFisicaDao pessoaFisicaDao;
+	private PessoaJuridicaDao pessoaJuridicaDao;
+	private UsuarioPessoaJuridicaDao usuarioPessoaJuridicaDao;
 	
 	
 	
-	public void guardarConta(Conta conta, Long idPessoaFisica, String senha) {
+	public void guardarContaFisica(Conta conta, Long idPessoaFisica, String senha) {
 		this.em = JPAUtil.getEntityManager();
 		usuarioPessoaFisicaDao = new UsuarioPessoaFisicaDao(em);
 		pessoaFisicaDao = new PessoaFisicaDao(em);
@@ -60,6 +66,46 @@ public class GerenciadorConta {
 			System.out.println("\n\nErro ao gravar usuario no banco.");
 			em.getTransaction().rollback();
 		}
+	}
+	
+	public void guardarContaJuridica(Conta conta, Long idPessoaJuridica, String senha) {
+		this.em = JPAUtil.getEntityManager();
+		usuarioPessoaJuridicaDao = new UsuarioPessoaJuridicaDao(em);
+		pessoaJuridicaDao = new PessoaJuridicaDao(em);
+		contaDao = new ContaDao(em);
+		
+		
+		//adiciona conta
+		try {
+			em.getTransaction().begin();
+			contaDao.adiciona(conta);
+			em.getTransaction().commit();
+		}catch(Exception ex)  {
+			System.out.println("\n\nErro ao gravar conta no banco.");
+			em.getTransaction().rollback();
+		}
+		
+		PessoaJuridica pessoaJuridica = pessoaJuridicaDao.buscaPorId(idPessoaJuridica);
+		UsuarioPessoaJuridica usuarioPessoaJuridica = new UsuarioPessoaJuridica();
+		
+		conta = contaDao.buscaContaPorAngenciaNumero(conta.getAgencia(), conta.getNumero());
+		
+		usuarioPessoaJuridica.setConta(conta);
+		usuarioPessoaJuridica.setPessoaJuridica(pessoaJuridica);
+		usuarioPessoaJuridica.setSenha(senha);
+		
+		//adiciona usuario
+		try {
+			em.getTransaction().begin();
+			System.out.println(conta);
+			System.out.println(usuarioPessoaJuridica);
+			usuarioPessoaJuridicaDao.adiciona(usuarioPessoaJuridica);
+			em.getTransaction().commit();
+		}catch(Exception ex)  {
+			System.out.println("\n\nErro ao gravar usuario no banco.");
+			em.getTransaction().rollback();
+		}
+		
 	}
 	
 	private String gerarNumeroAgencia() {
@@ -121,4 +167,12 @@ public class GerenciadorConta {
 		pessoaFisicaDao = new PessoaFisicaDao(em);
 		return pessoaFisicaDao.listaTodos();
 	}
+
+	public List<PessoaJuridica> getListaPessoaJuridica() {
+		this.em = JPAUtil.getEntityManager();
+		pessoaJuridicaDao = new PessoaJuridicaDao(em);
+		return pessoaJuridicaDao.listaTodos();
+	}
+
+
 }
