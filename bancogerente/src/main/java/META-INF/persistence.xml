@@ -30,6 +30,24 @@
 		<class>br.edu.fsma.bancogerente.modelo.negocio.PessoaFisica</class>
 		<class>br.edu.fsma.bancogerente.modelo.negocio.UsuarioGerente</class>
 		
+		
+		<class>br.edu.fsma.banconucleo.modelo.excluido.CompensacaoChequeExcluido</class>
+		<class>br.edu.fsma.banconucleo.modelo.excluido.ContaExcluido</class>
+		<class>br.edu.fsma.banconucleo.modelo.excluido.DepositoCaixaExcluido</class>
+		<class>br.edu.fsma.banconucleo.modelo.excluido.UsuarioPessoaJuridicaExcluido</class>
+		<class>br.edu.fsma.banconucleo.modelo.excluido.SaqueCaixaExcluido</class>
+		<class>br.edu.fsma.banconucleo.modelo.excluido.TransferenciaCaixaExcluido</class>
+		<class>br.edu.fsma.banconucleo.modelo.excluido.UsuarioPessoaFisicaExcluido</class>
+		
+		
+		<class>br.edu.fsma.bancogerente.modelo.excluido.CompensacaoChequeExcluido</class>
+		<class>br.edu.fsma.bancogerente.modelo.excluido.ContaExcluido</class>
+		<class>br.edu.fsma.bancogerente.modelo.excluido.DepositoCaixaExcluido</class>
+		<class>br.edu.fsma.bancogerente.modelo.excluido.UsuarioPessoaJuridicaExcluido</class>
+		<class>br.edu.fsma.bancogerente.modelo.excluido.SaqueCaixaExcluido</class>
+		<class>br.edu.fsma.bancogerente.modelo.excluido.TransferenciaCaixaExcluido</class>
+		<class>br.edu.fsma.bancogerente.modelo.excluido.UsuarioPessoaFisicaExcluido</class>
+		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/banco" />
