@@ -6,42 +6,42 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.edu.fsma.banconucleo.modelo.dao.DAO;
-import br.edu.fsma.banconucleo.modelo.negocio.TransferenciaCaixa;
+import br.edu.fsma.banconucleo.excluido.negocio.TransferenciaCaixaExcluido;
 
 public class TransferenciaCaixaExcluidoDao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private DAO<TransferenciaCaixa> dao;
+	private DAO<TransferenciaCaixaExcluido> dao;
 	
 	private EntityManager em;
 	
 	public TransferenciaCaixaExcluidoDao(EntityManager em2) {
 		this.em = em2;
-		this.dao = new DAO<TransferenciaCaixa>(this.em, TransferenciaCaixa.class);
+		this.dao = new DAO<TransferenciaCaixaExcluido>(this.em, TransferenciaCaixaExcluido.class);
 	}
 	
-	public void adiciona(TransferenciaCaixa transferenciaCaixa) {
+	public void adiciona(TransferenciaCaixaExcluido transferenciaCaixa) {
 		this.dao.adiciona(transferenciaCaixa);
 	}
 
-	public void atualiza(TransferenciaCaixa transferenciaCaixa){
+	public void atualiza(TransferenciaCaixaExcluido transferenciaCaixa){
 		this.dao.atualiza(transferenciaCaixa);
 	}
 
-	public void remove(TransferenciaCaixa transferenciaCaixa) {
+	public void remove(TransferenciaCaixaExcluido transferenciaCaixa) {
 		this.dao.remove(transferenciaCaixa);
 	}
 
-	public TransferenciaCaixa buscaPorId(Long id) {
+	public TransferenciaCaixaExcluido buscaPorId(Long id) {
 		return this.dao.buscaPorId(id);
 	}
 
-	public ArrayList<TransferenciaCaixa> listaTodosPaginada(int firstResult, int maxResults) {
-		return (ArrayList<TransferenciaCaixa>) this.dao.listaTodosPaginada(firstResult, maxResults);
+	public ArrayList<TransferenciaCaixaExcluido> listaTodosPaginada(int firstResult, int maxResults) {
+		return (ArrayList<TransferenciaCaixaExcluido>) this.dao.listaTodosPaginada(firstResult, maxResults);
 	}
 
-	public List<TransferenciaCaixa> listaTodos() {
-		return (ArrayList<TransferenciaCaixa>) this.dao.listaTodos();
+	public List<TransferenciaCaixaExcluido> listaTodos() {
+		return (ArrayList<TransferenciaCaixaExcluido>) this.dao.listaTodos();
 	}
 	
 	public EntityManager getEntityManager() {

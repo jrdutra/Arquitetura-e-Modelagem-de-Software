@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "tb_compensacaocheque")
+@Table(name = "tb_compensacaocheque_excluido")
 public class CompensacaoChequeExcluido implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -29,8 +29,8 @@ public class CompensacaoChequeExcluido implements Serializable{
 	private LocalDate data;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_conta")
-	private ContaExcluido conta;
+	@JoinColumn(name = "id_conta_excluido")
+	private ContaExcluido contaExcluido;
 
 	@Override
 	public int hashCode() {
@@ -81,11 +81,11 @@ public class CompensacaoChequeExcluido implements Serializable{
 	}
 
 	public ContaExcluido getConta() {
-		return conta;
+		return contaExcluido;
 	}
 
 	public void setConta(ContaExcluido conta) {
-		this.conta = conta;
+		this.contaExcluido = conta;
 	}
 
 	public Long getId() {

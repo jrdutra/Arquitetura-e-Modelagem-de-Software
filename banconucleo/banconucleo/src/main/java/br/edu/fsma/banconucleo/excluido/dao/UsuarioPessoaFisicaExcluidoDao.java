@@ -6,42 +6,42 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.edu.fsma.banconucleo.modelo.dao.DAO;
-import br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaFisica;
+import br.edu.fsma.banconucleo.excluido.negocio.UsuarioPessoaFisicaExcluido;
 
 public class UsuarioPessoaFisicaExcluidoDao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private DAO<UsuarioPessoaFisica> dao;
+	private DAO<UsuarioPessoaFisicaExcluido> dao;
 	
 	private EntityManager em;
 	
 	public UsuarioPessoaFisicaExcluidoDao(EntityManager em2) {
 		this.em = em2;
-		this.dao = new DAO<UsuarioPessoaFisica>(this.em, UsuarioPessoaFisica.class);
+		this.dao = new DAO<UsuarioPessoaFisicaExcluido>(this.em, UsuarioPessoaFisicaExcluido.class);
 	}
 	
-	public void adiciona(UsuarioPessoaFisica usuarioPessoaFisica) {
+	public void adiciona(UsuarioPessoaFisicaExcluido usuarioPessoaFisica) {
 		this.dao.adiciona(usuarioPessoaFisica);
 	}
 
-	public void atualiza(UsuarioPessoaFisica usuarioPessoaFisica){
+	public void atualiza(UsuarioPessoaFisicaExcluido usuarioPessoaFisica){
 		this.dao.atualiza(usuarioPessoaFisica);
 	}
 
-	public void remove(UsuarioPessoaFisica usuarioPessoaFisica) {
+	public void remove(UsuarioPessoaFisicaExcluido usuarioPessoaFisica) {
 		this.dao.remove(usuarioPessoaFisica);
 	}
 
-	public UsuarioPessoaFisica buscaPorId(Long id) {
+	public UsuarioPessoaFisicaExcluido buscaPorId(Long id) {
 		return this.dao.buscaPorId(id);
 	}
 
-	public ArrayList<UsuarioPessoaFisica> listaTodosPaginada(int firstResult, int maxResults) {
-		return (ArrayList<UsuarioPessoaFisica>) this.dao.listaTodosPaginada(firstResult, maxResults);
+	public ArrayList<UsuarioPessoaFisicaExcluido> listaTodosPaginada(int firstResult, int maxResults) {
+		return (ArrayList<UsuarioPessoaFisicaExcluido>) this.dao.listaTodosPaginada(firstResult, maxResults);
 	}
 
-	public List<UsuarioPessoaFisica> listaTodos() {
-		return (ArrayList<UsuarioPessoaFisica>) this.dao.listaTodos();
+	public List<UsuarioPessoaFisicaExcluido> listaTodos() {
+		return (ArrayList<UsuarioPessoaFisicaExcluido>) this.dao.listaTodos();
 	}
 	public EntityManager getEntityManager() {
 		return this.em;

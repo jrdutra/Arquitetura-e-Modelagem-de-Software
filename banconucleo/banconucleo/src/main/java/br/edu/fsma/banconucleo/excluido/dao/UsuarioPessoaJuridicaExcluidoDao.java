@@ -6,42 +6,42 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.edu.fsma.banconucleo.modelo.dao.DAO;
-import br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaJuridica;
+import br.edu.fsma.banconucleo.excluido.negocio.UsuarioPessoaJuridicaExcluido;
 
 public class UsuarioPessoaJuridicaExcluidoDao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private DAO<UsuarioPessoaJuridica> dao;
+	private DAO<UsuarioPessoaJuridicaExcluido> dao;
 	
 	private EntityManager em;
 	
 	public UsuarioPessoaJuridicaExcluidoDao(EntityManager em2) {
 		this.em = em2;
-		this.dao = new DAO<UsuarioPessoaJuridica>(this.em, UsuarioPessoaJuridica.class);
+		this.dao = new DAO<UsuarioPessoaJuridicaExcluido>(this.em, UsuarioPessoaJuridicaExcluido.class);
 	}
 	
-	public void adiciona(UsuarioPessoaJuridica usuarioPessoaJuridica) {
+	public void adiciona(UsuarioPessoaJuridicaExcluido usuarioPessoaJuridica) {
 		this.dao.adiciona(usuarioPessoaJuridica);
 	}
 
-	public void atualiza(UsuarioPessoaJuridica usuarioPessoaJuridica){
+	public void atualiza(UsuarioPessoaJuridicaExcluido usuarioPessoaJuridica){
 		this.dao.atualiza(usuarioPessoaJuridica);
 	}
 
-	public void remove(UsuarioPessoaJuridica usuarioPessoaJuridica) {
+	public void remove(UsuarioPessoaJuridicaExcluido usuarioPessoaJuridica) {
 		this.dao.remove(usuarioPessoaJuridica);
 	}
 
-	public UsuarioPessoaJuridica buscaPorId(Long id) {
+	public UsuarioPessoaJuridicaExcluido buscaPorId(Long id) {
 		return this.dao.buscaPorId(id);
 	}
 
-	public ArrayList<UsuarioPessoaJuridica> listaTodosPaginada(int firstResult, int maxResults) {
-		return (ArrayList<UsuarioPessoaJuridica>) this.dao.listaTodosPaginada(firstResult, maxResults);
+	public ArrayList<UsuarioPessoaJuridicaExcluido> listaTodosPaginada(int firstResult, int maxResults) {
+		return (ArrayList<UsuarioPessoaJuridicaExcluido>) this.dao.listaTodosPaginada(firstResult, maxResults);
 	}
 
-	public List<UsuarioPessoaJuridica> listaTodos() {
-		return (ArrayList<UsuarioPessoaJuridica>) this.dao.listaTodos();
+	public List<UsuarioPessoaJuridicaExcluido> listaTodos() {
+		return (ArrayList<UsuarioPessoaJuridicaExcluido>) this.dao.listaTodos();
 	}
 	
 	public EntityManager getEntityManager() {

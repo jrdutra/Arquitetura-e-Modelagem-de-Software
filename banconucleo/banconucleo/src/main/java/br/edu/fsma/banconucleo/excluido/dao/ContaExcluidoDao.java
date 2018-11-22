@@ -8,25 +8,25 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.edu.fsma.banconucleo.modelo.dao.DAO;
-import br.edu.fsma.banconucleo.modelo.negocio.Conta;
+import br.edu.fsma.banconucleo.excluido.negocio.ContaExcluido;
 
 public class ContaExcluidoDao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private DAO<Conta> dao;
+	private DAO<ContaExcluido> dao;
 	
 	private EntityManager em;
 	
 	public ContaExcluidoDao(EntityManager em2) {
 		this.em = em2;
-		this.dao = new DAO<Conta>(this.em, Conta.class);
+		this.dao = new DAO<ContaExcluido>(this.em, ContaExcluido.class);
 	}
 
-	public boolean existe(Conta conta) {
-		Conta resultado = new Conta();
-		TypedQuery<Conta> query = em.createQuery("SELECT c FROM Conta c "
+	public boolean existe(ContaExcluido conta) {
+		ContaExcluido resultado = new ContaExcluido();
+		TypedQuery<ContaExcluido> query = em.createQuery("SELECT c FROM Conta c "
 												+ "WHERE c.numero=:pNumero and "
-												+ "c.agencia=:pAgencia", Conta.class);
+												+ "c.agencia=:pAgencia", ContaExcluido.class);
 	
 		query.setParameter("pNumero", conta.getNumero());
 		query.setParameter("pAgencia", conta.getAgencia());
@@ -38,13 +38,13 @@ public class ContaExcluidoDao implements Serializable {
 		}
 	}
 	
-	public Conta buscaContaPorAngenciaNumero(String agencia, String numero) {
+	public ContaExcluido buscaContaPorAngenciaNumero(String agencia, String numero) {
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" select c from Conta c ");
 		jpql.append(" where ");
 		jpql.append(" c.agencia = :pAgencia and ");
 		jpql.append(" c.numero = :pNumero");
-		TypedQuery<Conta> query = em.createQuery(jpql.toString() , Conta.class);
+		TypedQuery<ContaExcluido> query = em.createQuery(jpql.toString() , ContaExcluido.class);
 		query.setParameter("pNumero", numero);
 		query.setParameter("pAgencia", agencia);
 		try {
@@ -54,44 +54,44 @@ public class ContaExcluidoDao implements Serializable {
 		}
 	}
 	
-	public ArrayList<Conta> buscaListaContaPorAngenciaNumero(String agencia, String numero) {
+	public ArrayList<ContaExcluido> buscaListaContaPorAngenciaNumero(String agencia, String numero) {
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" select c from Conta c ");
 		jpql.append(" where ");
 		jpql.append(" c.agencia = :pAgencia and ");
 		jpql.append(" c.numero = :pNumero");
-		TypedQuery<Conta> query = em.createQuery(jpql.toString() , Conta.class);
+		TypedQuery<ContaExcluido> query = em.createQuery(jpql.toString() , ContaExcluido.class);
 		query.setParameter("pNumero", numero);
 		query.setParameter("pAgencia", agencia);
 		try {
-			return (ArrayList<Conta>) query.getResultList();
+			return (ArrayList<ContaExcluido>) query.getResultList();
 		} catch (NoResultException ex) {
 			return null;
 		}
 	}
 	
-	public void adiciona(Conta conta) {
+	public void adiciona(ContaExcluido conta) {
 		this.dao.adiciona(conta);
 	}
 
-	public void atualiza(Conta conta){
+	public void atualiza(ContaExcluido conta){
 		this.dao.atualiza(conta);
 	}
 
-	public void remove(Conta conta) {
+	public void remove(ContaExcluido conta) {
 		this.dao.remove(conta);
 	}
 
-	public Conta buscaPorId(Long id) {
+	public ContaExcluido buscaPorId(Long id) {
 		return this.dao.buscaPorId(id);
 	}
 
-	public ArrayList<Conta> listaTodosPaginada(int firstResult, int maxResults) {
-		return (ArrayList<Conta>) this.dao.listaTodosPaginada(firstResult, maxResults);
+	public ArrayList<ContaExcluido> listaTodosPaginada(int firstResult, int maxResults) {
+		return (ArrayList<ContaExcluido>) this.dao.listaTodosPaginada(firstResult, maxResults);
 	}
 
-	public List<Conta> listaTodos() {
-		return (ArrayList<Conta>) this.dao.listaTodos();
+	public List<ContaExcluido> listaTodos() {
+		return (ArrayList<ContaExcluido>) this.dao.listaTodos();
 	}
 	
 	public EntityManager getEntityManager() {

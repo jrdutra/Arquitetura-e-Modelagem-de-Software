@@ -1,19 +1,28 @@
 package br.edu.fsma.banconucleo.gerenciador;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import javax.persistence.EntityManager;
 
 import br.edu.fsma.banconucleo.conexao.JPAUtil;
+import br.edu.fsma.banconucleo.modelo.dao.CompensacaoChequeDao;
 import br.edu.fsma.banconucleo.modelo.dao.ContaDao;
+import br.edu.fsma.banconucleo.modelo.dao.DepositoCaixaDao;
 import br.edu.fsma.banconucleo.modelo.dao.PessoaFisicaDao;
 import br.edu.fsma.banconucleo.modelo.dao.PessoaJuridicaDao;
+import br.edu.fsma.banconucleo.modelo.dao.SaqueCaixaDao;
+import br.edu.fsma.banconucleo.modelo.dao.TransferenciaCaixaDao;
 import br.edu.fsma.banconucleo.modelo.dao.UsuarioPessoaFisicaDao;
 import br.edu.fsma.banconucleo.modelo.dao.UsuarioPessoaJuridicaDao;
+import br.edu.fsma.banconucleo.modelo.negocio.CompensacaoCheque;
 import br.edu.fsma.banconucleo.modelo.negocio.Conta;
+import br.edu.fsma.banconucleo.modelo.negocio.DepositoCaixa;
 import br.edu.fsma.banconucleo.modelo.negocio.PessoaFisica;
 import br.edu.fsma.banconucleo.modelo.negocio.PessoaJuridica;
+import br.edu.fsma.banconucleo.modelo.negocio.SaqueCaixa;
+import br.edu.fsma.banconucleo.modelo.negocio.TransferenciaCaixa;
 import br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaFisica;
 import br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaJuridica;
 
@@ -175,7 +184,35 @@ public class GerenciadorConta {
 	}
 
 	public boolean encerrarConta(UsuarioPessoaFisica u) {
+		//Tenho que primeiro encerrar todas as transacoes
+		//Abro entitymanager
 		this.em = JPAUtil.getEntityManager();
+		//crio listas das possiveis transacoes
+		List<CompensacaoCheque> listaCompensacaoCheque = new ArrayList<CompensacaoCheque>();
+		List<DepositoCaixa> listaDepositoCaixa = new ArrayList<DepositoCaixa>();
+		List<SaqueCaixa> listaSaqueCaixa = new ArrayList<SaqueCaixa>();
+		List<TransferenciaCaixa> listaTransferenciaCaixa = new ArrayList<TransferenciaCaixa>();
+		
+		//Crio seus respectivos Daos
+		CompensacaoChequeDao compensacaoChequeDao = new CompensacaoChequeDao(em);
+		DepositoCaixaDao depositoCaixaDao = new DepositoCaixaDao(em);
+		SaqueCaixaDao saqueCaixaDao = new SaqueCaixaDao(em);
+		TransferenciaCaixaDao transferenciaCaixaDao = new TransferenciaCaixaDao(em);
+		
+		//recupero as listas das respectivas transfernecias
+		listaCompensacaoCheque = compensacaoChequeDao.listaTodosPorConta(u.getConta());
+		
+		Falta Implementar ListaTodosPorConta para as Transacoes Abaixo;
+		
+		listaDepositoCaixa = depositoCaixaDao.listaTodos();
+		listaSaqueCaixa = saqueCaixaDao.listaTodos();
+		listaTransferenciaCaixa = transferenciaCaixaDao.listaTodos();
+		
+		
+		
+		System.out.println("Usuario: " + u);
+		System.out.println("Lista de COmpensacao de Cheque: " + listaCompensacaoCheque);
+		
 		return true;
 	}
 

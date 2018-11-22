@@ -6,42 +6,42 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.edu.fsma.banconucleo.modelo.dao.DAO;
-import br.edu.fsma.banconucleo.modelo.negocio.SaqueCaixa;
+import br.edu.fsma.banconucleo.excluido.negocio.SaqueCaixaExcluido;
 
 public class SaqueCaixaExcluidoDao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private DAO<SaqueCaixa> dao;
+	private DAO<SaqueCaixaExcluido> dao;
 	
 	private EntityManager em;
 	
 	public SaqueCaixaExcluidoDao(EntityManager em2) {
 		this.em = em2;
-		this.dao = new DAO<SaqueCaixa>(this.em, SaqueCaixa.class);
+		this.dao = new DAO<SaqueCaixaExcluido>(this.em, SaqueCaixaExcluido.class);
 	}
 	
-	public void adiciona(SaqueCaixa saqueCaixa) {
+	public void adiciona(SaqueCaixaExcluido saqueCaixa) {
 		this.dao.adiciona(saqueCaixa);
 	}
 
-	public void atualiza(SaqueCaixa saqueCaixa){
+	public void atualiza(SaqueCaixaExcluido saqueCaixa){
 		this.dao.atualiza(saqueCaixa);
 	}
 
-	public void remove(SaqueCaixa saqueCaixa) {
+	public void remove(SaqueCaixaExcluido saqueCaixa) {
 		this.dao.remove(saqueCaixa);
 	}
 
-	public SaqueCaixa buscaPorId(Long id) {
+	public SaqueCaixaExcluido buscaPorId(Long id) {
 		return this.dao.buscaPorId(id);
 	}
 
-	public ArrayList<SaqueCaixa> listaTodosPaginada(int firstResult, int maxResults) {
-		return (ArrayList<SaqueCaixa>) this.dao.listaTodosPaginada(firstResult, maxResults);
+	public ArrayList<SaqueCaixaExcluido> listaTodosPaginada(int firstResult, int maxResults) {
+		return (ArrayList<SaqueCaixaExcluido>) this.dao.listaTodosPaginada(firstResult, maxResults);
 	}
 
-	public List<SaqueCaixa> listaTodos() {
-		return (ArrayList<SaqueCaixa>) this.dao.listaTodos();
+	public List<SaqueCaixaExcluido> listaTodos() {
+		return (ArrayList<SaqueCaixaExcluido>) this.dao.listaTodos();
 	}
 	
 	public EntityManager getEntityManager() {

@@ -29,8 +29,8 @@ public class UsuarioPessoaJuridicaExcluido implements Serializable{
 	private PessoaJuridica pessoaJuridica;
 	
 	@OneToOne
-	@JoinColumn(name = "id_conta")
-	private ContaExcluido conta;
+	@JoinColumn(name = "id_conta_excluido")
+	private ContaExcluido contaExcluido;
 	
 	@Column(length=10)
 	private String senha;
@@ -44,11 +44,11 @@ public class UsuarioPessoaJuridicaExcluido implements Serializable{
 	}
 
 	public ContaExcluido getConta() {
-		return conta;
+		return contaExcluido;
 	}
 
 	public void setConta(ContaExcluido conta) {
-		this.conta = conta;
+		this.contaExcluido = conta;
 	}
 
 	public String getSenha() {

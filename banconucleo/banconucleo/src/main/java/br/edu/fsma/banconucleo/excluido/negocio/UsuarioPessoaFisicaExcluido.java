@@ -29,8 +29,8 @@ public class UsuarioPessoaFisicaExcluido implements Serializable{
 	private PessoaFisica pessoaFisica;
 	
 	@OneToOne
-	@JoinColumn(name = "id_conta")
-	private ContaExcluido conta;
+	@JoinColumn(name = "id_conta_excluido")
+	private ContaExcluido contaExcluido;
 	
 	@Column(length=10)
 	private String senha;
@@ -60,11 +60,11 @@ public class UsuarioPessoaFisicaExcluido implements Serializable{
 	}
 	
 	public ContaExcluido getConta() {
-		return conta;
+		return contaExcluido;
 	}
 
 	public void setConta(ContaExcluido conta) {
-		this.conta = conta;
+		this.contaExcluido = conta;
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class UsuarioPessoaFisicaExcluido implements Serializable{
 
 	@Override
 	public String toString() {
-		return "UsuarioPessoaFisica [id=" + id + ", pessoaFisica=" + pessoaFisica + ", conta=" + conta + ", senha="
+		return "UsuarioPessoaFisica [id=" + id + ", pessoaFisica=" + pessoaFisica + ", conta=" + contaExcluido + ", senha="
 				+ senha + "]";
 	}
 	

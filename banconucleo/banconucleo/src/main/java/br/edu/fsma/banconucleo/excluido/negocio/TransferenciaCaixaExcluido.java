@@ -28,8 +28,8 @@ public class TransferenciaCaixaExcluido implements Serializable{
 	private LocalDate data;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_conta")
-	private ContaExcluido conta;
+	@JoinColumn(name = "id_conta_excluido")
+	private ContaExcluido contaExcluido;
 
 	@Override
 	public int hashCode() {
@@ -80,11 +80,11 @@ public class TransferenciaCaixaExcluido implements Serializable{
 	}
 
 	public ContaExcluido getConta() {
-		return conta;
+		return contaExcluido;
 	}
 
 	public void setConta(ContaExcluido conta) {
-		this.conta = conta;
+		this.contaExcluido = conta;
 	}
 
 	public Long getId() {

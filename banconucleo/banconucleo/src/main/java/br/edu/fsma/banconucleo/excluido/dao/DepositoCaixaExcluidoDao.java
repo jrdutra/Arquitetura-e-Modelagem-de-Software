@@ -6,42 +6,42 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.edu.fsma.banconucleo.modelo.dao.DAO;
-import br.edu.fsma.banconucleo.modelo.negocio.DepositoCaixa;
+import br.edu.fsma.banconucleo.excluido.negocio.DepositoCaixaExcluido;
 
 public class DepositoCaixaExcluidoDao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private DAO<DepositoCaixa> dao;
+	private DAO<DepositoCaixaExcluido> dao;
 	
 	private EntityManager em;
 	
 	public DepositoCaixaExcluidoDao(EntityManager em2) {
 		this.em = em2;
-		this.dao = new DAO<DepositoCaixa>(this.em, DepositoCaixa.class);
+		this.dao = new DAO<DepositoCaixaExcluido>(this.em, DepositoCaixaExcluido.class);
 	}
 	
-	public void adiciona(DepositoCaixa depositoCaixa) {
+	public void adiciona(DepositoCaixaExcluido depositoCaixa) {
 		this.dao.adiciona(depositoCaixa);
 	}
 
-	public void atualiza(DepositoCaixa depositoCaixa){
+	public void atualiza(DepositoCaixaExcluido depositoCaixa){
 		this.dao.atualiza(depositoCaixa);
 	}
 
-	public void remove(DepositoCaixa depositoCaixa) {
+	public void remove(DepositoCaixaExcluido depositoCaixa) {
 		this.dao.remove(depositoCaixa);
 	}
 
-	public DepositoCaixa buscaPorId(Long id) {
+	public DepositoCaixaExcluido buscaPorId(Long id) {
 		return this.dao.buscaPorId(id);
 	}
 
-	public ArrayList<DepositoCaixa> listaTodosPaginada(int firstResult, int maxResults) {
-		return (ArrayList<DepositoCaixa>) this.dao.listaTodosPaginada(firstResult, maxResults);
+	public ArrayList<DepositoCaixaExcluido> listaTodosPaginada(int firstResult, int maxResults) {
+		return (ArrayList<DepositoCaixaExcluido>) this.dao.listaTodosPaginada(firstResult, maxResults);
 	}
 
-	public List<DepositoCaixa> listaTodos() {
-		return (ArrayList<DepositoCaixa>) this.dao.listaTodos();
+	public List<DepositoCaixaExcluido> listaTodos() {
+		return (ArrayList<DepositoCaixaExcluido>) this.dao.listaTodos();
 	}
 	
 	public EntityManager getEntityManager() {
