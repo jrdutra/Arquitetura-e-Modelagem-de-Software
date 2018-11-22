@@ -29,6 +29,7 @@ public class LoginBean implements Serializable {
 
 	@Inject
 	private HttpSession session;
+	
 	@Inject
 	private UsuarioDao usuarioDao;
 	private Usuario usuario;

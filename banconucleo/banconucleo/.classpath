@@ -8,9 +8,9 @@
 	</classpathentry>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
+			<attribute name="test" value="true"/>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
@@ -18,19 +18,39 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+	<classpathentry exported="true" kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/jrdut/.m2/repository/org/jboss/weld/servlet/weld-servlet/2.3.3.Final/weld-servlet-2.3.3.Final.jar" sourcepath="C:/Users/jrdut/.m2/repository/org/jboss/weld/servlet/weld-servlet/2.3.3.Final/weld-servlet-2.3.3.Final-sources.jar">
+	<classpathentry kind="lib" path="C:/Users/jrdut/.m2/repository/org/hibernate/hibernate-core/5.1.0.Final/hibernate-core-5.1.0.Final.jar" sourcepath="C:/Users/jrdut/.m2/repository/org/hibernate/hibernate-core/5.1.0.Final/hibernate-core-5.1.0.Final-sources.jar">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="org.eclipse.jst.component.archivename" value="weld-servlet-2.3.3.Final.jar"/>
-			<attribute name="maven.groupId" value="org.jboss.weld.servlet"/>
-			<attribute name="maven.artifactId" value="weld-servlet"/>
-			<attribute name="maven.version" value="2.3.3.Final"/>
+			<attribute name="org.eclipse.jst.component.archivename" value="hibernate-core-5.1.0.Final.jar"/>
+			<attribute name="maven.groupId" value="org.hibernate"/>
+			<attribute name="maven.artifactId" value="hibernate-core"/>
+			<attribute name="maven.version" value="5.1.0.Final"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/jrdut/.m2/repository/org/hibernate/javax/persistence/hibernate-jpa-2.1-api/1.0.0.Final/hibernate-jpa-2.1-api-1.0.0.Final.jar" sourcepath="C:/Users/jrdut/.m2/repository/org/hibernate/javax/persistence/hibernate-jpa-2.1-api/1.0.0.Final/hibernate-jpa-2.1-api-1.0.0.Final-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.archivename" value="hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
+			<attribute name="maven.groupId" value="org.hibernate.javax.persistence"/>
+			<attribute name="maven.artifactId" value="hibernate-jpa-2.1-api"/>
+			<attribute name="maven.version" value="1.0.0.Final"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/jrdut/.m2/repository/com/sun/faces/jsf-api/2.2.14/jsf-api-2.2.14.jar" sourcepath="C:/Users/jrdut/.m2/repository/com/sun/faces/jsf-api/2.2.14/jsf-api-2.2.14-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.archivename" value="jsf-api-2.2.14.jar"/>
+			<attribute name="maven.groupId" value="com.sun.faces"/>
+			<attribute name="maven.artifactId" value="jsf-api"/>
+			<attribute name="maven.version" value="2.2.14"/>
 			<attribute name="maven.scope" value="compile"/>
 		</attributes>
 	</classpathentry>

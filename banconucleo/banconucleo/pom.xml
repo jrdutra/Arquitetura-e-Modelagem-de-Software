@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>br.edu.fsma</groupId>
@@ -47,13 +48,30 @@
       <scope>test</scope>
     </dependency>
             
-    <!-- Postgresql Connector -->
-		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+    
+		
+		<!-- CDI -->
+		<!-- https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet -->
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.4.1208.jre7</version>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet</artifactId>
+			<version>2.3.3.Final</version>
 		</dependency>
+
+		<!-- JSTL -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.servlet.jstl</groupId>
+			<artifactId>jboss-jstl-api_1.2_spec</artifactId>
+			<version>1.1.2.Final</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>5.3.7.Final</version>
+		</dependency>
+		
+		
 		<!-- MySQL Connector -->
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
@@ -90,7 +108,16 @@
 			<artifactId>hibernate-c3p0</artifactId>
 			<version>5.1.0.Final</version>
 		</dependency>
-		
+
+		<!-- CDI -->
+		<!-- https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet -->
+		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet</artifactId>
+			<version>2.3.3.Final</version>
+		</dependency>
+
+		<!-- JSTL -->
 		<dependency>
 			<groupId>org.jboss.spec.javax.servlet.jstl</groupId>
 			<artifactId>jboss-jstl-api_1.2_spec</artifactId>
@@ -98,5 +125,24 @@
 		</dependency>
     
   </dependencies>
+  
+  <!-- Especificação dos repositórios diferentes do repositório central do 
+		Maven -->
+	<repositories>
+		<!-- Primefaces Maven Repository -->
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+
+		<!-- Repositório para JSF -->
+		<repository>
+			<id>jvnet-nexus-snapshots</id>
+			<name>jvnet-nexus-snapshots</name>
+			<url>https://maven.java.net/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
   
 </project>
