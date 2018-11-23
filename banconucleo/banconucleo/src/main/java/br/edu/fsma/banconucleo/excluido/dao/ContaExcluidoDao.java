@@ -24,7 +24,7 @@ public class ContaExcluidoDao implements Serializable {
 
 	public boolean existe(ContaExcluido conta) {
 		ContaExcluido resultado = new ContaExcluido();
-		TypedQuery<ContaExcluido> query = em.createQuery("SELECT c FROM Conta c "
+		TypedQuery<ContaExcluido> query = em.createQuery("SELECT c FROM ContaExcluidoDao c "
 												+ "WHERE c.numero=:pNumero and "
 												+ "c.agencia=:pAgencia", ContaExcluido.class);
 	
@@ -40,7 +40,7 @@ public class ContaExcluidoDao implements Serializable {
 	
 	public ContaExcluido buscaContaPorAngenciaNumero(String agencia, String numero) {
 		StringBuilder jpql = new StringBuilder();
-		jpql.append(" select c from Conta c ");
+		jpql.append(" select c from ContaExcluido c ");
 		jpql.append(" where ");
 		jpql.append(" c.agencia = :pAgencia and ");
 		jpql.append(" c.numero = :pNumero");
@@ -56,7 +56,7 @@ public class ContaExcluidoDao implements Serializable {
 	
 	public ArrayList<ContaExcluido> buscaListaContaPorAngenciaNumero(String agencia, String numero) {
 		StringBuilder jpql = new StringBuilder();
-		jpql.append(" select c from Conta c ");
+		jpql.append(" select c from ContaExcluidoDao c ");
 		jpql.append(" where ");
 		jpql.append(" c.agencia = :pAgencia and ");
 		jpql.append(" c.numero = :pNumero");

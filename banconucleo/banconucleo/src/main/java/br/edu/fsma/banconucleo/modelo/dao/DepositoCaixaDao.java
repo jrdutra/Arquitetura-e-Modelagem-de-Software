@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+
+import br.edu.fsma.banconucleo.modelo.negocio.CompensacaoCheque;
+import br.edu.fsma.banconucleo.modelo.negocio.Conta;
 import br.edu.fsma.banconucleo.modelo.negocio.DepositoCaixa;
 
 public class DepositoCaixaDao implements Serializable {
@@ -44,5 +49,19 @@ public class DepositoCaixaDao implements Serializable {
 	
 	public EntityManager getEntityManager() {
 		return this.em;
+	}
+
+	public List<DepositoCaixa> listaTodosPorConta(Conta conta) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select d from DepositoCaixa d ");
+		jpql.append(" where ");
+		jpql.append(" d.conta like :pConta");
+		TypedQuery<DepositoCaixa> query = em.createQuery(jpql.toString() , DepositoCaixa.class);
+		query.setParameter("pConta", conta);
+		try {
+			return (ArrayList<DepositoCaixa>) query.getResultList();
+		} catch (NoResultException ex) {
+			return null;
+		}
 	}
 }

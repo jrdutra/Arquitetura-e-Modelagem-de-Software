@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.edu.fsma.banconucleo.modelo.negocio.Conta;
 import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
 
 @Entity
@@ -35,6 +36,16 @@ public class ContaExcluido implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "id_usuariogerente")
 	private UsuarioGerente usuarioGerente;
+
+	public ContaExcluido(Conta conta) {
+		this.numero = conta.getNumero();
+		this.agencia = conta.getAgencia();
+		this.saldo = conta.getSaldo();
+	}
+
+	public ContaExcluido() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public int hashCode() {

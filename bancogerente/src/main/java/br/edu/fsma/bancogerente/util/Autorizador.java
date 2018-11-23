@@ -35,7 +35,7 @@ public class Autorizador implements PhaseListener {
 		NavigationHandler handler = context.getApplication().getNavigationHandler();
 		handler.handleNavigation(context, null, "/view/index/index.xhtml");
 		context.renderResponse();
-	} 
+	}
 
 	@Override
 	public void beforePhase(PhaseEvent evento) {

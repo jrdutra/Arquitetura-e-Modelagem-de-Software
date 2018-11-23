@@ -28,7 +28,7 @@ public class SaqueCaixaExcluido implements Serializable{
 	private LocalDate data;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_conta_excluido")
+	@JoinColumn(name = "id_conta")
 	private ContaExcluido contaExcluido;
 	
 

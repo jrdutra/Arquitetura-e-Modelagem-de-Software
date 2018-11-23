@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.edu.fsma.banconucleo.modelo.negocio.CompensacaoCheque;
+
 
 @Entity
 @Table(name = "tb_compensacaocheque_excluido")
@@ -20,7 +22,7 @@ public class CompensacaoChequeExcluido implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_compensacaocheque_excluido")
+	@Column(name = "id_compensacaocheque")
 	private Long id;
 	
 	@Column(length=10)
@@ -29,8 +31,17 @@ public class CompensacaoChequeExcluido implements Serializable{
 	private LocalDate data;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_conta_excluido")
+	@JoinColumn(name = "id_conta")
 	private ContaExcluido contaExcluido;
+
+	
+	public CompensacaoChequeExcluido(CompensacaoCheque compensacaoCheque, ContaExcluido contaExcluido2) {
+		this.valor = compensacaoCheque.getValor();
+		this.data = compensacaoCheque.getData();
+		this.contaExcluido = contaExcluido2;
+	}
+
+
 
 	@Override
 	public int hashCode() {

@@ -29,7 +29,7 @@ public class UsuarioPessoaFisicaExcluido implements Serializable{
 	private PessoaFisica pessoaFisica;
 	
 	@OneToOne
-	@JoinColumn(name = "id_conta_excluido")
+	@JoinColumn(name = "id_conta")
 	private ContaExcluido contaExcluido;
 	
 	@Column(length=10)

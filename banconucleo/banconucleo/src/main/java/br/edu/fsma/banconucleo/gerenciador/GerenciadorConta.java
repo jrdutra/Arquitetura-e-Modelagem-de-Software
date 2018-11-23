@@ -7,6 +7,10 @@ import java.util.Random;
 import javax.persistence.EntityManager;
 
 import br.edu.fsma.banconucleo.conexao.JPAUtil;
+import br.edu.fsma.banconucleo.excluido.dao.CompensacaoChequeExcluidoDao;
+import br.edu.fsma.banconucleo.excluido.dao.ContaExcluidoDao;
+import br.edu.fsma.banconucleo.excluido.negocio.CompensacaoChequeExcluido;
+import br.edu.fsma.banconucleo.excluido.negocio.ContaExcluido;
 import br.edu.fsma.banconucleo.modelo.dao.CompensacaoChequeDao;
 import br.edu.fsma.banconucleo.modelo.dao.ContaDao;
 import br.edu.fsma.banconucleo.modelo.dao.DepositoCaixaDao;
@@ -27,20 +31,17 @@ import br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaFisica;
 import br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaJuridica;
 
 public class GerenciadorConta {
-	
+
 	Random gerador = new Random();
-	private EntityManager em;
-	private ContaDao contaDao;
-	private UsuarioPessoaFisicaDao usuarioPessoaFisicaDao;
-	private PessoaFisicaDao pessoaFisicaDao;
-	private PessoaJuridicaDao pessoaJuridicaDao;
-	private UsuarioPessoaJuridicaDao usuarioPessoaJuridicaDao;
-	
-	
 	
 	public void guardarContaFisica(Conta conta, Long idPessoaFisica, String senha) {
-		this.em = JPAUtil.getEntityManager();
+		EntityManager em;
+		ContaDao contaDao;
+		em = JPAUtil.getEntityManager();
+		
+		UsuarioPessoaFisicaDao usuarioPessoaFisicaDao;
 		usuarioPessoaFisicaDao = new UsuarioPessoaFisicaDao(em);
+		PessoaFisicaDao pessoaFisicaDao;
 		pessoaFisicaDao = new PessoaFisicaDao(em);
 		contaDao = new ContaDao(em);
 		
@@ -78,8 +79,12 @@ public class GerenciadorConta {
 	}
 	
 	public void guardarContaJuridica(Conta conta, Long idPessoaJuridica, String senha) {
-		this.em = JPAUtil.getEntityManager();
+		ContaDao contaDao;
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		UsuarioPessoaJuridicaDao usuarioPessoaJuridicaDao;
 		usuarioPessoaJuridicaDao = new UsuarioPessoaJuridicaDao(em);
+		PessoaJuridicaDao pessoaJuridicaDao;
 		pessoaJuridicaDao = new PessoaJuridicaDao(em);
 		contaDao = new ContaDao(em);
 		
@@ -156,11 +161,12 @@ public class GerenciadorConta {
 	}
 
 	public Conta gerarNovaConta() {
+		ContaDao contaDao;
 		Conta novaConta = new Conta();
 		novaConta.setAgencia(gerarNumeroAgencia());
 		novaConta.setNumero(gerarNumeroConta());
-		
-		this.em = JPAUtil.getEntityManager();
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
 		contaDao = new ContaDao(em);
 
 		while(contaDao.existe(novaConta)) {
@@ -172,13 +178,17 @@ public class GerenciadorConta {
 	}
 	
 	public List<PessoaFisica> getListaPessoaFisica() {
-		this.em = JPAUtil.getEntityManager();
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		PessoaFisicaDao pessoaFisicaDao;
 		pessoaFisicaDao = new PessoaFisicaDao(em);
 		return pessoaFisicaDao.listaTodos();
 	}
 
 	public List<PessoaJuridica> getListaPessoaJuridica() {
-		this.em = JPAUtil.getEntityManager();
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		PessoaJuridicaDao pessoaJuridicaDao;
 		pessoaJuridicaDao = new PessoaJuridicaDao(em);
 		return pessoaJuridicaDao.listaTodos();
 	}
@@ -186,34 +196,92 @@ public class GerenciadorConta {
 	public boolean encerrarConta(UsuarioPessoaFisica u) {
 		//Tenho que primeiro encerrar todas as transacoes
 		//Abro entitymanager
-		this.em = JPAUtil.getEntityManager();
-		//crio listas das possiveis transacoes
-		List<CompensacaoCheque> listaCompensacaoCheque = new ArrayList<CompensacaoCheque>();
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		
+		ContaExcluido contaExcluido = this.retornaContaExcluida(u.getConta());
+		
+		contaExcluido = this.salvaContaExcluidoNoBanco(contaExcluido);
+		
+		this.gravaListaCompensacaoChequeExcluido(u.getConta(), contaExcluido);
+		
+		
+		//recupera lsita deposito
 		List<DepositoCaixa> listaDepositoCaixa = new ArrayList<DepositoCaixa>();
-		List<SaqueCaixa> listaSaqueCaixa = new ArrayList<SaqueCaixa>();
-		List<TransferenciaCaixa> listaTransferenciaCaixa = new ArrayList<TransferenciaCaixa>();
-		
-		//Crio seus respectivos Daos
-		CompensacaoChequeDao compensacaoChequeDao = new CompensacaoChequeDao(em);
 		DepositoCaixaDao depositoCaixaDao = new DepositoCaixaDao(em);
+		listaDepositoCaixa = depositoCaixaDao.listaTodosPorConta(u.getConta());
+		
+		//recupera lsita saque
+		List<SaqueCaixa> listaSaqueCaixa = new ArrayList<SaqueCaixa>();
 		SaqueCaixaDao saqueCaixaDao = new SaqueCaixaDao(em);
+		listaSaqueCaixa = saqueCaixaDao.listaTodosPorConta(u.getConta());
+		
+		//recupera lista transf
+		List<TransferenciaCaixa> listaTransferenciaCaixa = new ArrayList<TransferenciaCaixa>();
 		TransferenciaCaixaDao transferenciaCaixaDao = new TransferenciaCaixaDao(em);
-		
-		//recupero as listas das respectivas transfernecias
-		listaCompensacaoCheque = compensacaoChequeDao.listaTodosPorConta(u.getConta());
-		
-		Falta Implementar ListaTodosPorConta para as Transacoes Abaixo;
-		
-		listaDepositoCaixa = depositoCaixaDao.listaTodos();
-		listaSaqueCaixa = saqueCaixaDao.listaTodos();
-		listaTransferenciaCaixa = transferenciaCaixaDao.listaTodos();
-		
-		
-		
-		System.out.println("Usuario: " + u);
-		System.out.println("Lista de COmpensacao de Cheque: " + listaCompensacaoCheque);
+		listaTransferenciaCaixa = transferenciaCaixaDao.listaTodosPorConta(u.getConta());
 		
 		return true;
+	}
+
+	private ContaExcluido salvaContaExcluidoNoBanco(ContaExcluido contaExcluido) {
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		ContaExcluidoDao contaExcluidoDao = new ContaExcluidoDao(em);
+		try {
+			em.getTransaction().begin();
+			----ADICIONAR TESTE SE JA EXISTE
+			contaExcluidoDao.adiciona(contaExcluido);
+			em.getTransaction().commit();
+		}catch(Exception ex)  {
+			System.out.println("\n\nErro ao gravar ContaExcluido no banco =):");
+			System.out.println(ex);
+			em.getTransaction().rollback();
+		}
+		return contaExcluidoDao.buscaContaPorAngenciaNumero(contaExcluido.getAgencia(), contaExcluido.getNumero());
+	}
+
+	private void gravaListaCompensacaoChequeExcluido(Conta conta, ContaExcluido contaExcluido) {
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		
+		//recupera listacheque
+		List<CompensacaoCheque> listaCompensacaoCheque = new ArrayList<CompensacaoCheque>();
+		CompensacaoChequeDao compensacaoChequeDao = new CompensacaoChequeDao(em);
+		listaCompensacaoCheque = compensacaoChequeDao.listaTodosPorConta(conta);
+		
+		CompensacaoChequeExcluidoDao compensacaoChequeExcluidoDao = new CompensacaoChequeExcluidoDao(em);
+		try {
+			//Salva CompensacaoChequeExcluido
+			em.getTransaction().begin();
+			for(int i = 0; i < listaCompensacaoCheque.size(); i++) {
+				CompensacaoChequeExcluido compensacaoChequeExcluido = new CompensacaoChequeExcluido(listaCompensacaoCheque.get(i), contaExcluido);
+				compensacaoChequeExcluidoDao.adiciona(compensacaoChequeExcluido);
+			}
+			compensacaoChequeDao.excluiLista(listaCompensacaoCheque);
+			em.getTransaction().commit();
+		}catch(Exception ex)  {
+			System.out.println("\n\nErro ao gravar CompensacaoDeChequeExclui no banco =):");
+			System.out.println(ex);
+			em.getTransaction().rollback();
+		}
+		
+		
+		
+	}
+
+	private ContaExcluido retornaContaExcluida(Conta conta) {
+		//recupera conta do banco-Por conta do id
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		ContaDao contaDao = new ContaDao(em);
+		conta = contaDao.buscaContaPorAngenciaNumero(conta.getAgencia(), conta.getNumero());
+		
+		//cria conta excluida
+		ContaExcluido contaExcluido = new ContaExcluido(conta);
+		System.out.println("Conta excluido:"+contaExcluido);
+		return contaExcluido;
+		
 	}
 
 	public boolean encerrarConta(UsuarioPessoaJuridica u) {

@@ -3,13 +3,13 @@ package br.edu.fsma.banconucleo.modelo.dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.edu.fsma.banconucleo.modelo.negocio.CompensacaoCheque;
 import br.edu.fsma.banconucleo.modelo.negocio.Conta;
-import br.edu.fsma.banconucleo.modelo.negocio.PessoaFisica;
 
 public class CompensacaoChequeDao implements Serializable {
 
@@ -63,6 +63,12 @@ public class CompensacaoChequeDao implements Serializable {
 	
 	public EntityManager getEntityManager() {
 		return this.em;
+	}
+
+	public void excluiLista(List<CompensacaoCheque> listaCompensacaoCheque) {
+		for(int i = 0; i < listaCompensacaoCheque.size(); i++) {
+			this.dao.remove(listaCompensacaoCheque.get(i));
+		}
 	}
 	
 }

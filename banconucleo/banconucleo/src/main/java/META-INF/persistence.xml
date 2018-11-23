@@ -17,17 +17,13 @@
 		<class>br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaFisica</class>
 		<class>br.edu.fsma.banconucleo.modelo.negocio.PessoaFisica</class>
 		<class>br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente</class>
-		
-		
-		<class>br.edu.fsma.banconucleo.modelo.excluido.CompensacaoChequeExcluido</class>
-		<class>br.edu.fsma.banconucleo.modelo.excluido.ContaExcluido</class>
-		<class>br.edu.fsma.banconucleo.modelo.excluido.DepositoCaixaExcluido</class>
-		<class>br.edu.fsma.banconucleo.modelo.excluido.UsuarioPessoaJuridicaExcluido</class>
-		<class>br.edu.fsma.banconucleo.modelo.excluido.SaqueCaixaExcluido</class>
-		<class>br.edu.fsma.banconucleo.modelo.excluido.TransferenciaCaixaExcluido</class>
-		<class>br.edu.fsma.banconucleo.modelo.excluido.UsuarioPessoaFisicaExcluido</class>
-		
-		
+		<class>br.edu.fsma.banconucleo.excluido.negocio.CompensacaoChequeExcluido</class>
+		<class>br.edu.fsma.banconucleo.excluido.negocio.ContaExcluido</class>
+		<class>br.edu.fsma.banconucleo.excluido.negocio.DepositoCaixaExcluido</class>
+		<class>br.edu.fsma.banconucleo.excluido.negocio.UsuarioPessoaJuridicaExcluido</class>
+		<class>br.edu.fsma.banconucleo.excluido.negocio.SaqueCaixaExcluido</class>
+		<class>br.edu.fsma.banconucleo.excluido.negocio.TransferenciaCaixaExcluido</class>
+		<class>br.edu.fsma.banconucleo.excluido.negocio.UsuarioPessoaFisicaExcluido</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
