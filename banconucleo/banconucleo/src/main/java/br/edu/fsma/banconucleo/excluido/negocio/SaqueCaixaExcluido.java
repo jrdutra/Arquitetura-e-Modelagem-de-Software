@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.edu.fsma.banconucleo.modelo.negocio.SaqueCaixa;
+
 @Entity
 @Table(name = "tb_saquecaixa_excluido")
 public class SaqueCaixaExcluido implements Serializable{
@@ -31,6 +33,12 @@ public class SaqueCaixaExcluido implements Serializable{
 	@JoinColumn(name = "id_conta")
 	private ContaExcluido contaExcluido;
 	
+
+	public SaqueCaixaExcluido(SaqueCaixa saqueCaixa, ContaExcluido contaExcluido2) {
+		this.valor = saqueCaixa.getValor();
+		this.data = saqueCaixa.getData();
+		this.contaExcluido = contaExcluido2;
+	}
 
 	@Override
 	public int hashCode() {

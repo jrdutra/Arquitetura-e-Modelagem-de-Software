@@ -62,4 +62,10 @@ public class TransferenciaCaixaDao implements Serializable {
 			return null;
 		}
 	}
+
+	public void excluiLista(List<TransferenciaCaixa> listaTransferenciaCaixa) {
+		for(int i = 0; i < listaTransferenciaCaixa.size(); i++) {
+			this.dao.remove(listaTransferenciaCaixa.get(i));
+		}	
+	}
 }

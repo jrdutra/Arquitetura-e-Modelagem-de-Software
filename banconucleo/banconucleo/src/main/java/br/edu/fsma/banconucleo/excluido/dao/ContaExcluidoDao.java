@@ -24,7 +24,7 @@ public class ContaExcluidoDao implements Serializable {
 
 	public boolean existe(ContaExcluido conta) {
 		ContaExcluido resultado = new ContaExcluido();
-		TypedQuery<ContaExcluido> query = em.createQuery("SELECT c FROM ContaExcluidoDao c "
+		TypedQuery<ContaExcluido> query = em.createQuery("SELECT c FROM ContaExcluido c "
 												+ "WHERE c.numero=:pNumero and "
 												+ "c.agencia=:pAgencia", ContaExcluido.class);
 	

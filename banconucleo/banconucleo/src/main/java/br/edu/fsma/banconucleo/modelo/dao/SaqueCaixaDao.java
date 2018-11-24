@@ -3,11 +3,11 @@ package br.edu.fsma.banconucleo.modelo.dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
-import br.edu.fsma.banconucleo.modelo.negocio.CompensacaoCheque;
 import br.edu.fsma.banconucleo.modelo.negocio.Conta;
 import br.edu.fsma.banconucleo.modelo.negocio.SaqueCaixa;
 
@@ -63,6 +63,13 @@ public class SaqueCaixaDao implements Serializable {
 		} catch (NoResultException ex) {
 			return null;
 		}
+	}
+
+	public void excluiLista(List<SaqueCaixa> listaSaqueCaixa) {
+		for(int i = 0; i < listaSaqueCaixa.size(); i++) {
+			this.dao.remove(listaSaqueCaixa.get(i));
+		}	
+		
 	}
 	
 }

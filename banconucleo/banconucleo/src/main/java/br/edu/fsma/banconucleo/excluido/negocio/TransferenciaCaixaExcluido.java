@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.edu.fsma.banconucleo.modelo.negocio.TransferenciaCaixa;
+
 @Entity
 @Table(name = "tb_transferenciacaixa_excluido")
 public class TransferenciaCaixaExcluido implements Serializable{
@@ -30,6 +32,14 @@ public class TransferenciaCaixaExcluido implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "id_conta")
 	private ContaExcluido contaExcluido;
+
+	public TransferenciaCaixaExcluido(TransferenciaCaixa transferenciaCaixa, ContaExcluido contaExcluido2) {
+		this.valor = transferenciaCaixa.getValor();
+		this.data = transferenciaCaixa.getData();
+		this.contaExcluido = contaExcluido2;
+	}
+
+
 
 	@Override
 	public int hashCode() {

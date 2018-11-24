@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.edu.fsma.banconucleo.modelo.negocio.PessoaJuridica;
+import br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaJuridica;
 
 @Entity
 @Table(name = "tb_usuariopessoajuridica_excluido")
@@ -34,6 +35,12 @@ public class UsuarioPessoaJuridicaExcluido implements Serializable{
 	
 	@Column(length=10)
 	private String senha;
+
+	public UsuarioPessoaJuridicaExcluido(UsuarioPessoaJuridica u, ContaExcluido contaExcluido2) {
+		this.pessoaJuridica = u.getPessoaJuridica();
+		this.contaExcluido = contaExcluido2;
+		this.senha = u.getSenha();
+	}
 
 	public PessoaJuridica getPessoaJuridica() {
 		return pessoaJuridica;
