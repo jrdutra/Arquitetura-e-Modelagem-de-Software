@@ -46,6 +46,7 @@ public class EncerrarContaBean implements Serializable  {
 	public void encerrarClick(UsuarioPessoaFisica u) {
 		if(gerenciadorConta.encerrarConta(u)) {
 			mensagem.mensagemSucessoEncerrarConta(u);
+			listaUsuarioPessoaFisica.remove(u);
 		}else {
 			mensagem.mensagemErroEncerrarConta(u);
 		}
@@ -54,6 +55,7 @@ public class EncerrarContaBean implements Serializable  {
 	public void encerrarClick(UsuarioPessoaJuridica u) {
 		if(gerenciadorConta.encerrarConta(u)) {
 			mensagem.mensagemSucessoEncerrarConta(u);
+			listaUsuarioPessoaJuridica.remove(u);
 		}else {
 			mensagem.mensagemErroEncerrarConta(u);
 		}
