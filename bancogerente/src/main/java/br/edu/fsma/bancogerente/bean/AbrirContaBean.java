@@ -54,27 +54,21 @@ public class AbrirContaBean implements Serializable  {
 		this.conta.setUsuarioGerente(this.usuarioGerente);
 		this.conta.setSaldo(this.saldo);
 		gerenciadorConta.guardarContaFisica(this.conta, this.idPessoaFisica, this.senha);
-		esperaSegundos(1000);
-		redirecionaPainel();
+		Redirecionador redirecionador = new Redirecionador();
+		redirecionador.esperaSegundos(1000);
+		redirecionador.redirecionaPainel();
 	}
 	
 	public void criarContaJuridicaClick() {
 		this.conta.setUsuarioGerente(this.usuarioGerente);
 		this.conta.setSaldo(this.saldo);
 		gerenciadorConta.guardarContaJuridica(this.conta, this.idPessoaJuridica, this.senha);
-		esperaSegundos(1000);
-		redirecionaPainel();
+		Redirecionador redirecionador = new Redirecionador();
+		redirecionador.esperaSegundos(1000);
+		redirecionador.redirecionaPainel();
 	}
 	
-	private void redirecionaPainel() {
-		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("/bancogerente/view/painel/painel.xhtml");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+	
 
 	private void esperaSegundos(int i) {
 		try {

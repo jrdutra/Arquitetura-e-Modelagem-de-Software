@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import br.edu.fsma.banconucleo.modelo.negocio.Conta;
+import br.edu.fsma.banconucleo.modelo.negocio.PessoaFisica;
 
 public class ContaDao implements Serializable {
 
@@ -81,7 +82,14 @@ public class ContaDao implements Serializable {
 	}
 
 	public Conta buscaPorId(Long id) {
-		return this.dao.buscaPorId(id);
+		String jpql = "select c from Conta c where c.id like :pId";
+		TypedQuery<Conta> query = em.createQuery(jpql.toString(), Conta.class);
+		query.setParameter("pId", id);
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException ex) {
+			return null;
+		}
 	}
 
 	public ArrayList<Conta> listaTodosPaginada(int firstResult, int maxResults) {
@@ -94,5 +102,19 @@ public class ContaDao implements Serializable {
 	
 	public EntityManager getEntityManager() {
 		return this.em;
+	}
+
+	public Conta getConta(Long idConta) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select c from Conta c ");
+		jpql.append(" where ");
+		jpql.append(" c.id = :pId");
+		TypedQuery<Conta> query = em.createQuery(jpql.toString() , Conta.class);
+		query.setParameter("pNumero", idConta);
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException ex) {
+			return null;
+		}
 	}
 }

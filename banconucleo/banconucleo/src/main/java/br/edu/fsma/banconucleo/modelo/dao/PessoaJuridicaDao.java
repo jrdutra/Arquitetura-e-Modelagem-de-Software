@@ -116,4 +116,15 @@ public class PessoaJuridicaDao implements Serializable{
 	public EntityManager getEntityManager() {
 		return this.em;
 	}
+
+	public PessoaJuridica getPessoaJuridica(Long idPessoaJuridica) {
+		String jpql = "select p from PessoaJuridica p where p.id like :pId";
+		TypedQuery<PessoaJuridica> query = em.createQuery(jpql.toString(), PessoaJuridica.class);
+		query.setParameter("pId", idPessoaJuridica);
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException ex) {
+			return null;
+		}
+	}
 }

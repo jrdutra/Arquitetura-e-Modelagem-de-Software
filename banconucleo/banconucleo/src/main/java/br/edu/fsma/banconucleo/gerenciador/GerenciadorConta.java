@@ -71,8 +71,6 @@ public class GerenciadorConta {
 		//adiciona usuario
 		try {
 			em.getTransaction().begin();
-			System.out.println(conta);
-			System.out.println(usuarioPessoaFisica);
 			usuarioPessoaFisicaDao.adiciona(usuarioPessoaFisica);
 			em.getTransaction().commit();
 		}catch(Exception ex)  {
@@ -108,8 +106,6 @@ public class GerenciadorConta {
 		//adiciona usuario
 		try {
 			em.getTransaction().begin();
-			System.out.println(conta);
-			System.out.println(usuarioPessoaJuridica);
 			usuarioPessoaJuridicaDao.adiciona(usuarioPessoaJuridica);
 			em.getTransaction().commit();
 		}catch(Exception ex)  {
@@ -119,6 +115,62 @@ public class GerenciadorConta {
 		
 	}
 	
+	public void criarUsuarioPessoaFisica(Long idConta, Long idPessoaFisica, String senha) {
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		
+		UsuarioPessoaFisicaDao usuarioDao = new UsuarioPessoaFisicaDao(em);
+		PessoaFisicaDao pessoaFisicaDao = new PessoaFisicaDao(em);
+		
+		UsuarioPessoaFisica usuarioPessoaFisica = new UsuarioPessoaFisica();
+		PessoaFisica pessoaFisica = pessoaFisicaDao.getPessoaFisica(idPessoaFisica);
+		
+		Conta conta = new Conta();
+		ContaDao contaDao = new ContaDao(em);
+		conta = contaDao.buscaPorId(idConta);
+		
+		
+		usuarioPessoaFisica.setConta(conta);
+		usuarioPessoaFisica.setPessoaFisica(pessoaFisica);
+		usuarioPessoaFisica.setSenha(senha);
+		
+		try {
+			em.getTransaction().begin();
+			usuarioDao.adiciona(usuarioPessoaFisica);
+			em.getTransaction().commit();
+		}catch(Exception ex)  {
+			em.getTransaction().rollback();
+		}
+		
+		
+		
+	}
+	
+	public void criarUsuarioPessoaJuridica(Long idConta, Long idPessoaJuridica, String senha) {
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		UsuarioPessoaJuridicaDao usuarioDao = new UsuarioPessoaJuridicaDao(em);
+		PessoaJuridicaDao pessoaJuridicaDao = new PessoaJuridicaDao(em);
+	
+		UsuarioPessoaJuridica usuarioPessoaJuridica = new UsuarioPessoaJuridica();
+		PessoaJuridica pessoaJuridica = pessoaJuridicaDao.getPessoaJuridica(idPessoaJuridica);
+		
+		Conta conta = new Conta();
+		ContaDao contaDao = new ContaDao(em);
+		conta = contaDao.buscaPorId(idConta);
+		
+		usuarioPessoaJuridica.setConta(conta);
+		usuarioPessoaJuridica.setPessoaJuridica(pessoaJuridica);
+		usuarioPessoaJuridica.setSenha(senha);
+		
+		try {
+			em.getTransaction().begin();
+			usuarioDao.adiciona(usuarioPessoaJuridica);
+			em.getTransaction().commit();
+		}catch(Exception ex)  {
+			em.getTransaction().rollback();
+		}
+	}
 
 
 	public Conta gerarNovaConta() {
@@ -196,10 +248,38 @@ public class GerenciadorConta {
 		UsuarioPessoaFisicaDao usuarioPessoaFisicaDao = new UsuarioPessoaFisicaDao(em);
 		UsuarioPessoaFisicaExcluido usuarioPessoaFisicaExcluido = new UsuarioPessoaFisicaExcluido(u, contaExcluido);
 		
+		List<UsuarioPessoaFisica> listaUsuarioPessoaFisica = new ArrayList<UsuarioPessoaFisica>();
+		
+		Conta conta = u.getConta();
+		
+		listaUsuarioPessoaFisica = usuarioPessoaFisicaDao.listaTodosPorConta(conta);
+		
+		
 		em.getTransaction().begin();
 		
 		usuarioPessoaFisicaExcluidoDao.adiciona(usuarioPessoaFisicaExcluido);
-		usuarioPessoaFisicaDao.remove(u);
+		usuarioPessoaFisicaDao.removeLista(listaUsuarioPessoaFisica);
+		
+		em.getTransaction().commit();
+	}
+	
+	private void gravaUsuarioExcluido(UsuarioPessoaJuridica u, ContaExcluido contaExcluido) {
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		UsuarioPessoaJuridicaExcluidoDao usuarioPessoaJuridicaExcluidoDao = new UsuarioPessoaJuridicaExcluidoDao(em);
+		UsuarioPessoaJuridicaDao usuarioPessoaJuridicaDao = new UsuarioPessoaJuridicaDao(em);
+		UsuarioPessoaJuridicaExcluido usuarioPessoaJuridicaExcluido = new UsuarioPessoaJuridicaExcluido(u, contaExcluido);
+		
+		List<UsuarioPessoaJuridica> listaUsuarioPessoaJuridica = new ArrayList<UsuarioPessoaJuridica>();
+		
+		Conta conta = u.getConta();
+		
+		listaUsuarioPessoaJuridica = usuarioPessoaJuridicaDao.listaTodosPorConta(conta);
+		
+		em.getTransaction().begin();
+		
+		usuarioPessoaJuridicaExcluidoDao.adiciona(usuarioPessoaJuridicaExcluido);
+		usuarioPessoaJuridicaDao.removeLista(listaUsuarioPessoaJuridica);;
 		
 		em.getTransaction().commit();
 	}
@@ -213,20 +293,7 @@ public class GerenciadorConta {
 		em.getTransaction().commit();
 	}
 	
-	private void gravaUsuarioExcluido(UsuarioPessoaJuridica u, ContaExcluido contaExcluido) {
-		EntityManager em;
-		em = JPAUtil.getEntityManager();
-		UsuarioPessoaJuridicaExcluidoDao usuarioPessoaJuridicaExcluidoDao = new UsuarioPessoaJuridicaExcluidoDao(em);
-		UsuarioPessoaJuridicaDao usuarioPessoaJuridicaDao = new UsuarioPessoaJuridicaDao(em);
-		UsuarioPessoaJuridicaExcluido usuarioPessoaJuridicaExcluido = new UsuarioPessoaJuridicaExcluido(u, contaExcluido);
-		
-		em.getTransaction().begin();
-		
-		usuarioPessoaJuridicaExcluidoDao.adiciona(usuarioPessoaJuridicaExcluido);
-		usuarioPessoaJuridicaDao.remove(u);
-		
-		em.getTransaction().commit();
-	}
+	
 
 	private void gravalistaTransferenciaCaixa(Conta conta, ContaExcluido contaExcluido) {
 		EntityManager em;
@@ -404,4 +471,20 @@ public class GerenciadorConta {
 		 conta = conta + "-" + digito.toString();
 		 return conta;
 	}
+
+	public List<Conta> getListaConta() {
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		ContaDao contaDao = new ContaDao(em);
+		return contaDao.listaTodos();
+	}
+
+	public Conta getConta(Long idConta) {
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		ContaDao contaDao = new ContaDao(em);
+		return contaDao.getConta(idConta);
+	}
+	
+	
 }

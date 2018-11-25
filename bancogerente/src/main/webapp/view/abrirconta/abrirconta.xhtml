@@ -79,9 +79,11 @@
 					</h:form>
 				</p:tab>
 			</p:tabView>
-			<h:panelGrid columns="1" class="painel" style="width: 100%; text-align:right;">
-				<p:commandButton class="botaoPainel" value="Painel" action="#{PainelBean.painelClick()}" icon="ui-icon-home" ajax="true"/>
-			</h:panelGrid>
+			<h:form>
+					<h:panelGrid columns="1" class="painel" style="width: 100%; text-align:right;">
+					<p:commandButton class="botaoPainel" value="Painel" action="#{PainelBean.painelClick()}" icon="ui-icon-home" ajax="true"/>
+					</h:panelGrid>
+			</h:form>
 		</p:panel>
 	</h:body>
 </html>

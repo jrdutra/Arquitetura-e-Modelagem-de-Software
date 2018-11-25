@@ -7,7 +7,7 @@
 	<h:head>
 		<style>		
 			.painel{
-				width: 50%;
+				width: 100%;
 				margin: 0 auto;
 			}
 			.botaomenu{
@@ -18,6 +18,7 @@
 			.painelBotoes{
 				margin: auto;
 			}
+			
 		</style>
 		<meta charset="UTF-8" />
 		<title>Adicionar Titular</title>
@@ -32,17 +33,65 @@
 	        </f:facet>
 	    </p:toolbar>
 	    <p:spacer />
-		<h:form id="frmConteudo">
+			
 			<p:panel id="pnIConteudo" class="painel" header="Adicionar Titular">
-			    <h:form>
-			    <h:panelGrid columns="3" class="painel" style="width: 100%;">
-					
-				</h:panelGrid>
+			   
+			    <p:tabView>
+			    
+		    		<p:tab title="Pessoa Física">
+			    		<h:form id="frmConteudoFisica">
+				    		<h:panelGrid columns="2" class="painel" style="width: 100%;">
+				    		
+				    			<p:outputLabel for="idContaPF" value="Agencia:" rendered="true"></p:outputLabel>
+				    			<p:selectOneMenu id="idContaPF" value="#{AdicionarTitularBean.idConta}" style="width: 90%;">
+								   <f:selectItem itemLabel="Selecione a Conta" itemValue="" noSelectionOption="true" />
+								   <f:selectItems value="#{AdicionarTitularBean.listaConta}" var="obj" itemLabel="#{obj.getNumero()}" itemValue="#{obj.getId()}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel for="idPF" value="Pessoa Fisica:" rendered="true"></p:outputLabel>
+				    			<p:selectOneMenu id="idPF" value="#{AdicionarTitularBean.idPessoaFisica}" style="width: 90%;">
+								   <f:selectItem itemLabel="Selecione a Pessoa Física" itemValue="" noSelectionOption="true" />
+								   <f:selectItems value="#{AdicionarTitularBean.listaPessoaFisica}" var="obj" itemLabel="#{obj.getNome()}" itemValue="#{obj.getId()}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel for="idSenhaFisica" value="Senha da Conta:" rendered="true"></p:outputLabel>
+						    	<p:inputText id="idSenhaFisica" value="#{AdicionarTitularBean.senha}" rendered="true"></p:inputText>
+								
+							</h:panelGrid>
+							<p:commandButton class="botaoPainel" value="Adicionar Conjunta" action="#{AdicionarTitularBean.adicionarContaFisicaClick()}" icon="ui-icon-check" process="@form" ajax="true" update="frmConteudoFisica"/>
+						</h:form>
+			    	</p:tab>
+			    	
+			    	<p:tab title="Pessoa Jurídica">
+			    		<h:form id="frmConteudoJuridica">
+				    		<h:panelGrid columns="2" class="painel" style="width: 100%;">
+				    		
+					    		<p:outputLabel for="idContaPJ" value="Agencia:" rendered="true"></p:outputLabel>
+				    			<p:selectOneMenu id="idContaPJ" value="#{AdicionarTitularBean.idConta}" style="width: 90%;">
+								   <f:selectItem itemLabel="Selecione a Conta" itemValue="" noSelectionOption="true" />
+								   <f:selectItems value="#{AdicionarTitularBean.listaConta}" var="obj" itemLabel="#{obj.getNumero()}" itemValue="#{obj.getId()}"/>
+								</p:selectOneMenu>
+								
+								<p:outputLabel for="idPJ" value="Pessoa Jurídica:" rendered="true"></p:outputLabel>
+				    			<p:selectOneMenu id="idPJ" value="#{AdicionarTitularBean.idPessoaJuridica}" style="width: 90%;">
+								   <f:selectItem itemLabel="Selecione a Pessoa Jurídica" itemValue="" noSelectionOption="true" />
+								   <f:selectItems value="#{AdicionarTitularBean.listaPessoaJuridica}" var="obj" itemLabel="#{obj.getRazaosocial()}" itemValue="#{obj.getId()}"/>
+								</p:selectOneMenu>
+						    	
+						    	<p:outputLabel for="idSenhaJuridica" value="Senha da Conta:" rendered="true"></p:outputLabel>
+						    	<p:inputText id="idSenhaJuridica" value="#{AdicionarTitularBean.senha}" rendered="true"></p:inputText>
+								
+							</h:panelGrid>	
+							<p:commandButton class="botaoPainel" value="Adicionar Conjunta" action="#{AdicionarTitularBean.adicionarContaJuridicaClick()}" icon="ui-icon-check" process="@form" ajax="true" update="frmConteudoJuridica"/>
+			    		</h:form>
+			    	</p:tab>
+				</p:tabView>
+				
+				<h:form>
+					<h:panelGrid columns="1" class="painel" style="width: 100%; text-align:right;">
+					<p:commandButton class="botaoPainel" value="Painel" action="#{PainelBean.painelClick()}" icon="ui-icon-home" ajax="true"/>
+					</h:panelGrid>
 				</h:form>
-				<h:panelGrid columns="1" class="painel" style="width: 100%; text-align:right;">
-				<p:commandButton class="botaoPainel" value="Painel" action="#{PainelBean.painelClick()}" icon="ui-icon-home" ajax="false"/>
-				</h:panelGrid>
 			</p:panel>
-		</h:form>
 	</h:body>
 </html>

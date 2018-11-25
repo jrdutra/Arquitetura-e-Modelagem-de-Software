@@ -65,6 +65,15 @@ public class PainelBean implements Serializable  {
 		}
 	}
 	
+	public void verExtratoClick() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/bancogerente/view/verextrato/verextrato.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void sair() {
 		Secao.setUsuarioGerente(null);
 		try {
