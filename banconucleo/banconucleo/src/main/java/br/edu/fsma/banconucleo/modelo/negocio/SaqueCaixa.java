@@ -63,7 +63,7 @@ public class SaqueCaixa implements Serializable, Transacao{
 
 	@Override
 	public String toString() {
-		return "SaqueCaixa [valor=" + valor + ", data=" + data + "]";
+		return "Saque Caixa [valor=" + valor + ", data=" + data + "]";
 	}
 
 	public Double getValor() {

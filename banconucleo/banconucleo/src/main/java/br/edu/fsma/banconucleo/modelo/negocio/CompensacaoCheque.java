@@ -66,7 +66,7 @@ public class CompensacaoCheque implements Serializable, Transacao{
 
 	@Override
 	public String toString() {
-		return "SaqueCaixa [valor=" + valor + ", data=" + data + "]";
+		return "Compensacao Cheque [valor=" + valor + ", data=" + data + "]";
 	}
 
 	public Double getValor() {

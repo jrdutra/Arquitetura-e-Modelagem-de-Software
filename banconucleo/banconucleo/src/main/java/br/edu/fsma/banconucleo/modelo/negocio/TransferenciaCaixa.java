@@ -65,7 +65,7 @@ public class TransferenciaCaixa implements Serializable, Transacao{
 
 	@Override
 	public String toString() {
-		return "SaqueCaixa [valor=" + valor + ", data=" + data + "]";
+		return "Transferencia Caixa [valor=" + valor + ", data=" + data + "]";
 	}
 
 	public Double getValor() {
