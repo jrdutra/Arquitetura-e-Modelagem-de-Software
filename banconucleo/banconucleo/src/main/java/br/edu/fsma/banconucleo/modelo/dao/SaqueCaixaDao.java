@@ -1,6 +1,7 @@
 package br.edu.fsma.banconucleo.modelo.dao;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import br.edu.fsma.banconucleo.modelo.negocio.CompensacaoCheque;
 import br.edu.fsma.banconucleo.modelo.negocio.Conta;
 import br.edu.fsma.banconucleo.modelo.negocio.SaqueCaixa;
 
@@ -65,6 +67,23 @@ public class SaqueCaixaDao implements Serializable {
 		}
 	}
 
+	public List<SaqueCaixa> listaTodosPorContaPeriodo(Conta conta, LocalDate dataInferior, LocalDate dataSuperior) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select c from SaqueCaixa c ");
+		jpql.append(" where ");
+		jpql.append(" c.conta like :pConta and ");
+		jpql.append(" c.data BETWEEN :pDataInferior AND :pDataSuperior");
+		TypedQuery<SaqueCaixa> query = em.createQuery(jpql.toString() , SaqueCaixa.class);
+		query.setParameter("pConta", conta);
+		query.setParameter("pDataInferior", dataInferior);
+		query.setParameter("pDataSuperior", dataSuperior);
+		try {
+			return (ArrayList<SaqueCaixa>) query.getResultList();
+		} catch (NoResultException ex) {
+			return null;
+		}
+	}
+	
 	public void excluiLista(List<SaqueCaixa> listaSaqueCaixa) {
 		for(int i = 0; i < listaSaqueCaixa.size(); i++) {
 			this.dao.remove(listaSaqueCaixa.get(i));

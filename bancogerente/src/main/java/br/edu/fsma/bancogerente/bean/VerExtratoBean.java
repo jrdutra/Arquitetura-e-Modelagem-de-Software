@@ -57,7 +57,7 @@ public class VerExtratoBean implements Serializable  {
 	public void verExtratoClick() {
 		this.viewExtrato = true;
 		System.out.println(viewExtrato);
-		listaItemExtrato = gerenciadorTransacao.getListaItemExtrato(this.idConta);
+		listaItemExtrato = gerenciadorTransacao.getListaItemExtratoPorPeriodo(this.idConta, dataInferior, dataSuperior);
 		Collections.sort(listaItemExtrato);
 		
 	}
@@ -117,7 +117,5 @@ public class VerExtratoBean implements Serializable  {
 	public void setListaItemExtrato(List<ItemExtrato> listaItemExtrato) {
 		this.listaItemExtrato = listaItemExtrato;
 	}
-	
-	
 	
 }

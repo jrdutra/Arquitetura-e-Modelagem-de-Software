@@ -42,18 +42,12 @@
 						   <f:selectItem itemLabel="Selecione a Conta" itemValue="" noSelectionOption="true" />
 						   <f:selectItems value="#{VerExtratoBean.listaConta}" var="obj" itemLabel="#{obj.getNumero()}" itemValue="#{obj.getId()}"/>
 						</p:selectOneMenu>
-						
 						<p:outputLabel for="inputDataInferior">De:</p:outputLabel>
 						<p:calendar id="inputDataInferior" value="#{VerExtratoBean.dataInferior}" />
-						
 						<p:outputLabel for="inputDataSuperior">Até:</p:outputLabel>
 						<p:calendar id="inputDataSuperior" value="#{VerExtratoBean.dataSuperior}" />
 						<p:spacer />
-						
 						<p:commandButton class="botaoPainel" value="Ver Extrato" action="#{VerExtratoBean.verExtratoClick()}" icon="ui-icon-check" process="@form" ajax="true" update=":frmConteudo :frmConteudo:pnIExtrato"/>
-					
-						
-					
 					</h:panelGrid>
 				</h:form>
 				<h:panelGrid columns="1" class="painel" style="width: 100%; text-align:right;">

@@ -1,6 +1,7 @@
 package br.edu.fsma.banconucleo.modelo.dao;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +59,23 @@ public class DepositoCaixaDao implements Serializable {
 		jpql.append(" d.conta like :pConta");
 		TypedQuery<DepositoCaixa> query = em.createQuery(jpql.toString() , DepositoCaixa.class);
 		query.setParameter("pConta", conta);
+		try {
+			return (ArrayList<DepositoCaixa>) query.getResultList();
+		} catch (NoResultException ex) {
+			return null;
+		}
+	}
+	
+	public List<DepositoCaixa> listaTodosPorContaPeriodo(Conta conta, LocalDate dataInferior, LocalDate dataSuperior) {
+		StringBuilder jpql = new StringBuilder();
+		jpql.append(" select c from DepositoCaixa c ");
+		jpql.append(" where ");
+		jpql.append(" c.conta like :pConta and ");
+		jpql.append(" c.data BETWEEN :pDataInferior AND :pDataSuperior");
+		TypedQuery<DepositoCaixa> query = em.createQuery(jpql.toString() , DepositoCaixa.class);
+		query.setParameter("pConta", conta);
+		query.setParameter("pDataInferior", dataInferior);
+		query.setParameter("pDataSuperior", dataSuperior);
 		try {
 			return (ArrayList<DepositoCaixa>) query.getResultList();
 		} catch (NoResultException ex) {
