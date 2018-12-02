@@ -36,7 +36,6 @@ public class DepositoCaixaBean implements Serializable  {
 		}
 	}
 	
-	
 	public void depositarClick() {
 		if(gerenciadorTransacao.depositar(usuarioSecao.getConta(), valorDeposito)) {
 			mensagem.mensagemValorDepositadoComSucesso(valorDeposito);
