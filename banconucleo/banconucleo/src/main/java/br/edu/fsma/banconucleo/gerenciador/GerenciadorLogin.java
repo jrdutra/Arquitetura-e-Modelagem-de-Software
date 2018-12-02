@@ -5,7 +5,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import br.edu.fsma.banconucleo.conexao.JPAUtil;
 import br.edu.fsma.banconucleo.modelo.dao.UsuarioGerenteDao;
+import br.edu.fsma.banconucleo.modelo.dao.UsuarioPessoaFisicaDao;
+import br.edu.fsma.banconucleo.modelo.dao.UsuarioPessoaJuridicaDao;
 import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
+import br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaFisica;
+import br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaJuridica;
 
 public class GerenciadorLogin {
 
@@ -14,6 +18,10 @@ public class GerenciadorLogin {
 	private EntityManager em;
 	
 	private UsuarioGerenteDao usuarioGerenteDao;
+	
+	private UsuarioPessoaFisicaDao usuarioPessoaFisicaDao;
+	
+	private UsuarioPessoaJuridicaDao usuarioPessoaJuridicaDao;
 	
 	private UsuarioGerente usuarioGerente = new UsuarioGerente();
 	
@@ -50,5 +58,29 @@ public class GerenciadorLogin {
 		      }
 		}
 		return user;
+	}
+
+	public List<UsuarioPessoaFisica> getListaTodosUsuarioPessoaFisica() {
+		this.em = JPAUtil.getEntityManager();
+		usuarioPessoaFisicaDao = new UsuarioPessoaFisicaDao(em);
+		try {
+			return usuarioPessoaFisicaDao.listaTodos();
+		}catch(Exception ex)  {
+			System.out.println("\n\nErro Ler Lista de UPF:");
+			System.out.println(ex);
+		}
+		return null;
+	}
+
+	public List<UsuarioPessoaJuridica> getListaTodosUsuarioPessoaJuridica() {
+		this.em = JPAUtil.getEntityManager();
+		usuarioPessoaJuridicaDao = new UsuarioPessoaJuridicaDao(em);
+		try {
+			return usuarioPessoaJuridicaDao.listaTodos();
+		}catch(Exception ex)  {
+			System.out.println("\n\nErro Ler Lista de UPF:");
+			System.out.println(ex);
+		}
+		return null;
 	}
 }

@@ -10,7 +10,7 @@
   <name>bancogerente Maven Webapp</name>
   <url>http://maven.apache.org</url>
   
-    <properties>
+  <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Compilar para Java 1.8 -->
 	<maven.compiler.source>1.8</maven.compiler.source>
