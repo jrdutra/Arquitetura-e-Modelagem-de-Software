@@ -48,6 +48,7 @@ public class EncerrarContaBean implements Serializable  {
 			mensagem.mensagemSucessoEncerrarConta(u);
 			listaUsuarioPessoaFisica.remove(u);
 		}else {
+			
 			mensagem.mensagemErroEncerrarConta(u);
 		}
 	}

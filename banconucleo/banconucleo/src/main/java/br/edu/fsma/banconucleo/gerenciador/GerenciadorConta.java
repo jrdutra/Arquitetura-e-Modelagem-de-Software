@@ -208,20 +208,27 @@ public class GerenciadorConta {
 
 	public boolean encerrarConta(UsuarioPessoaFisica u) {
 		
-		try {
-			ContaExcluido contaExcluido = this.retornaContaExcluida(u.getConta());
-			contaExcluido = this.salvaContaExcluidoNoBanco(contaExcluido);
-			this.gravaListaCompensacaoChequeExcluido(u.getConta(), contaExcluido);
-			this.gravaListaDepositoCaixaExcluido(u.getConta(), contaExcluido);
-			this.gravaListaSaqueCaixa(u.getConta(), contaExcluido);
-			this.gravalistaTransferenciaCaixa(u.getConta(), contaExcluido);
-			this.gravaUsuarioExcluido(u, contaExcluido);
-			this.excluiConta(u.getConta());
-			return true;
-		}catch(Exception ex) {
-			System.out.println("Erro ao gravar listas de transacoes excluidas");
+		if(u.getConta().getSaldo() == 0.0) {
+			try {
+				ContaExcluido contaExcluido = this.retornaContaExcluida(u.getConta());
+				contaExcluido = this.salvaContaExcluidoNoBanco(contaExcluido);
+				this.gravaListaCompensacaoChequeExcluido(u.getConta(), contaExcluido);
+				this.gravaListaDepositoCaixaExcluido(u.getConta(), contaExcluido);
+				this.gravaListaSaqueCaixa(u.getConta(), contaExcluido);
+				this.gravalistaTransferenciaCaixa(u.getConta(), contaExcluido);
+				this.gravaUsuarioExcluido(u, contaExcluido);
+				this.excluiConta(u.getConta());
+				return true;
+			}catch(Exception ex) {
+				System.out.println("Erro ao gravar listas de transacoes excluidas");
+				return false;
+			}
+		}else {
 			return false;
 		}
+		
+		
+		
 	}
 	
 	public boolean encerrarConta(UsuarioPessoaJuridica u) {
