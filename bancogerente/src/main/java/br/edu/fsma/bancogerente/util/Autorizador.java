@@ -36,7 +36,7 @@ public class Autorizador implements PhaseListener {
 		handler.handleNavigation(context, null, "/view/index/index.xhtml");
 		context.renderResponse();
 	}
-
+	
 	@Override
 	public void beforePhase(PhaseEvent evento) {
 	}
@@ -45,5 +45,4 @@ public class Autorizador implements PhaseListener {
 	public PhaseId getPhaseId() {
 		return PhaseId.RESTORE_VIEW;
 	}
-
 }

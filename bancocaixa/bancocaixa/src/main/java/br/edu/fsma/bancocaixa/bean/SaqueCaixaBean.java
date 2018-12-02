@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 
+import br.edu.fsma.bancocaixa.util.Mensagem;
 import br.edu.fsma.bancocaixa.util.Redirecionador;
 import br.edu.fsma.bancocaixa.util.Secao;
 import br.edu.fsma.bancocaixa.util.UsuarioSecao;
@@ -21,8 +22,8 @@ public class SaqueCaixaBean implements Serializable  {
 	private UsuarioSecao usuarioSecao;
 	private Redirecionador redirecionador;
 	private GerenciadorTransacao gerenciadorTransacao = new GerenciadorTransacao();
-	private Long idConta;
-	private List<ItemExtrato> listaItemExtrato;
+	private Double valorSaque;
+	private Mensagem mensagem = new Mensagem();
 		
 	public SaqueCaixaBean() {
 		this.usuarioSecao = Secao.getUsuarioSecao();
@@ -35,6 +36,15 @@ public class SaqueCaixaBean implements Serializable  {
 		}
 	}
 	
+	public void sacarClick() {
+		if(gerenciadorTransacao.sacar(usuarioSecao.getConta(), valorSaque)) {
+			mensagem.mensagemValorSacadoComSucesso(valorSaque);
+			this.usuarioSecao.getConta().setSaldo(this.usuarioSecao.getConta().getSaldo()-valorSaque);
+		}else {
+			mensagem.mensagemValorNaoSacado(valorSaque);
+		}
+	}
+
 	public UsuarioSecao getUsuarioSecao() {
 		return usuarioSecao;
 	}
@@ -43,19 +53,37 @@ public class SaqueCaixaBean implements Serializable  {
 		this.usuarioSecao = usuarioSecao;
 	}
 
-	public Long getIdConta() {
-		return idConta;
+	public Redirecionador getRedirecionador() {
+		return redirecionador;
 	}
 
-	public void setIdConta(Long idConta) {
-		this.idConta = idConta;
+	public void setRedirecionador(Redirecionador redirecionador) {
+		this.redirecionador = redirecionador;
 	}
 
-	public List<ItemExtrato> getListaItemExtrato() {
-		return listaItemExtrato;
+	public GerenciadorTransacao getGerenciadorTransacao() {
+		return gerenciadorTransacao;
 	}
 
-	public void setListaItemExtrato(List<ItemExtrato> listaItemExtrato) {
-		this.listaItemExtrato = listaItemExtrato;
+	public void setGerenciadorTransacao(GerenciadorTransacao gerenciadorTransacao) {
+		this.gerenciadorTransacao = gerenciadorTransacao;
 	}
+
+	public Double getValorSaque() {
+		return valorSaque;
+	}
+
+	public void setValorSaque(Double valorSaque) {
+		this.valorSaque = valorSaque;
+	}
+
+	public Mensagem getMensagem() {
+		return mensagem;
+	}
+
+	public void setMensagem(Mensagem mensagem) {
+		this.mensagem = mensagem;
+	}
+	
+	
 }

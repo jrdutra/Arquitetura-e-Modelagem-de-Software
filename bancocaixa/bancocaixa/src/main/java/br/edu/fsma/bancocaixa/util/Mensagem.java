@@ -13,32 +13,20 @@ public class Mensagem {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 	
-	public void mensagemSucessoEncerrarConta(UsuarioPessoaFisica u) {
-		this.addMessage("Sucesso", "A conta " 
-				+ u.getConta().getNumero() + " da agência " 
-				+ u.getConta().getAgencia() + " pertencente a "
-				+ u.getPessoaFisica().getNome() + " foi encerrada com sucesso.");
+	public void mensagemValorDepositadoComSucesso(Double valorDeposito) {
+		this.addMessage("Sucesso!", "O valor de R$ " + valorDeposito + " foi depositado em sua conta!");
 	}
-	
-	
-	public void mensagemErroEncerrarConta(UsuarioPessoaFisica u) {
-		this.addMessage("Erro", "A conta " 
-				+ u.getConta().getNumero() + " da agência " 
-				+ u.getConta().getAgencia() + " pertencente a "
-				+ u.getPessoaFisica().getNome() + " não foi encerrada.");
+
+	public void mensagemValorNaoDepositado(Double valorDeposito) {
+		this.addMessage("Houve um proble!", "O valor de R$ " + valorDeposito + " n�o foi depositado em sua conta!");
 	}
-	
-	public void mensagemSucessoEncerrarConta(UsuarioPessoaJuridica u) {
-		this.addMessage("Sucesso", "A conta " 
-				+ u.getConta().getNumero() + " da agência " 
-				+ u.getConta().getAgencia() + " pertencente a "
-				+ u.getPessoaJuridica().getRazaosocial() + " foi encerrada com sucesso.");
+
+	public void mensagemValorSacadoComSucesso(Double valorSaque) {
+		this.addMessage("Sucesso!", "O valor de R$ " + valorSaque + " foi sacado em sua conta!");
+		
 	}
-	
-	public void mensagemErroEncerrarConta(UsuarioPessoaJuridica u) {
-		this.addMessage("Erro", "A conta " 
-				+ u.getConta().getNumero() + " da agência " 
-				+ u.getConta().getAgencia() + " pertencente a "
-				+ u.getPessoaJuridica().getRazaosocial() + " não foi encerrada.");
+
+	public void mensagemValorNaoSacado(Double valorSaque) {
+		this.addMessage("Houve um proble!", "O valor de R$ " + valorSaque + " n�o foi sacado em sua conta!");
 	}
 }

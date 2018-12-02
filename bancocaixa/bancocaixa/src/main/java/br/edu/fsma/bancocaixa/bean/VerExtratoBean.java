@@ -49,7 +49,7 @@ public class VerExtratoBean implements Serializable  {
 		this.idConta = usuarioSecao.getConta().getId();
 		listaItemExtrato = gerenciadorTransacao.getListaItemExtratoPorPeriodo(this.idConta, dataInferior, dataSuperior);
 		Collections.sort(listaItemExtrato);
-		
+		System.out.println(listaItemExtrato);
 	}
 
 	public UsuarioSecao getUsuarioSecao() {

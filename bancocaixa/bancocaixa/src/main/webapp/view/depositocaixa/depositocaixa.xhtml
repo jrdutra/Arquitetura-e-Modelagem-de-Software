@@ -37,17 +37,19 @@
 	    </p:toolbar>
 	    <p:spacer />
 		<h:form id="frmConteudo">
-			<p:panel id="pnIConteudo" class="painel" header="Ver Extrato">
-			    
+			<p:growl id="message" showDetail="true" />
+			<p:panel id="pnIConteudo" class="painel" header="Deposito em Conta">
+			<p:outputLabel value="Saldo: " rendered="true"></p:outputLabel>
+			<p:outputLabel value="R$ #{DepositoCaixaBean.usuarioSecao.conta.getSaldo()}" rendered="true"></p:outputLabel>
 			    <h:form>
 				    <h:panelGrid columns="2" class="painel" style="width: 100%;">
 						
-						<p:outputLabel for="inputDataInferior">De:</p:outputLabel>
-						<p:calendar id="inputDataInferior" value="#{VerExtratoBean.dataInferior}" />
-						<p:outputLabel for="inputDataSuperior">Até:</p:outputLabel>
-						<p:calendar id="inputDataSuperior" value="#{VerExtratoBean.dataSuperior}" />
-						<p:spacer />
-						<p:commandButton class="botaoPainel" value="Ver Extrato" action="#{VerExtratoBean.verExtratoClick()}" icon="ui-icon-check" process="@form" ajax="true" update=":frmConteudo:pnIExtrato"/>
+						<p:outputLabel for="idValor">Valor:</p:outputLabel>
+						<p:inputNumber id="idValor" value="#{DepositoCaixaBean.valorDeposito}" symbol="R$ " rendered="true"></p:inputNumber>
+						
+						
+						<p:spacer /><p:spacer /><p:spacer />
+						<p:commandButton class="botaoPainel" value="Depositar" action="#{DepositoCaixaBean.depositarClick()}" icon="ui-icon-check" process="@form" ajax="true" update=":frmConteudo"/>
 					</h:panelGrid>
 				</h:form>
 				

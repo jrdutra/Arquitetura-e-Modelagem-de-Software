@@ -20,7 +20,6 @@ public class Mensagem {
 				+ u.getPessoaFisica().getNome() + " foi encerrada com sucesso.");
 	}
 	
-	
 	public void mensagemErroEncerrarConta(UsuarioPessoaFisica u) {
 		this.addMessage("Erro", "A conta " 
 				+ u.getConta().getNumero() + " da agência " 

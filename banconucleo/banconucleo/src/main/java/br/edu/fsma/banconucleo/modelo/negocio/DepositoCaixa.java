@@ -4,12 +4,17 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import br.edu.fsma.banconucleo.conexao.JPAUtil;
+import br.edu.fsma.banconucleo.modelo.dao.ContaDao;
+import br.edu.fsma.banconucleo.modelo.dao.DepositoCaixaDao;
 
 
 @Entity
@@ -34,7 +39,30 @@ public class DepositoCaixa implements Serializable, Transacao{
 	
 	@Override
 	public Double processarTransacao(Double valor) {
-		return null;
+		this.valor = valor;
+		this.setData(LocalDate.now());
+		
+		EntityManager em;
+		em = JPAUtil.getEntityManager();
+		ContaDao contaDao = new ContaDao(em);
+		DepositoCaixaDao depositoCaixaDao = new DepositoCaixaDao(em);
+		
+		this.conta = contaDao.buscaPorId(this.conta.getId());
+		this.conta.setSaldo(this.conta.getSaldo()+valor);
+		
+		try {
+			em.getTransaction().begin();
+			contaDao.atualiza(conta);
+			depositoCaixaDao.adiciona(this);
+			em.getTransaction().commit();
+		}catch(Exception ex)  {
+			System.out.println("\n\nErro ao gravar alteracao de saldo conta no banco(Deposito).");
+			em.getTransaction().rollback();
+			return null;
+		}
+		
+		
+		return this.valor;
 	}
 
 	@Override

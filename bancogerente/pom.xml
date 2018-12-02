@@ -100,7 +100,7 @@
 	</repositories>
   
   <build>
-    <finalName>relogio</finalName>
+    <finalName>bancogerente</finalName>
     <plugins>
 		<plugin>
 			<artifactId>

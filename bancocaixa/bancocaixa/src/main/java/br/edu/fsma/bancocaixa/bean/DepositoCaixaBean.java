@@ -11,6 +11,7 @@ import javax.faces.view.ViewScoped;
 import br.edu.fsma.bancocaixa.util.Redirecionador;
 import br.edu.fsma.bancocaixa.util.Secao;
 import br.edu.fsma.bancocaixa.util.UsuarioSecao;
+import br.edu.fsma.bancocaixa.util.Mensagem;
 import br.edu.fsma.banconucleo.gerenciador.GerenciadorTransacao;
 import br.edu.fsma.banconucleo.gerenciador.ItemExtrato;
 
@@ -21,9 +22,8 @@ public class DepositoCaixaBean implements Serializable  {
 	private UsuarioSecao usuarioSecao;
 	private Redirecionador redirecionador;
 	private GerenciadorTransacao gerenciadorTransacao = new GerenciadorTransacao();
-	private Long idConta;
-	private List<ItemExtrato> listaItemExtrato;
-	
+	private Double valorDeposito;
+	private Mensagem mensagem = new Mensagem();
 	
 	public DepositoCaixaBean() {
 		this.usuarioSecao = Secao.getUsuarioSecao();
@@ -36,6 +36,17 @@ public class DepositoCaixaBean implements Serializable  {
 		}
 	}
 	
+	
+	public void depositarClick() {
+		if(gerenciadorTransacao.depositar(usuarioSecao.getConta(), valorDeposito)) {
+			mensagem.mensagemValorDepositadoComSucesso(valorDeposito);
+			this.usuarioSecao.getConta().setSaldo(this.usuarioSecao.getConta().getSaldo()+valorDeposito);
+		}else {
+			mensagem.mensagemValorNaoDepositado(valorDeposito);
+		}
+	}
+	
+	
 	public UsuarioSecao getUsuarioSecao() {
 		return usuarioSecao;
 	}
@@ -44,20 +55,12 @@ public class DepositoCaixaBean implements Serializable  {
 		this.usuarioSecao = usuarioSecao;
 	}
 
-	public Long getIdConta() {
-		return idConta;
+	public Double getValorDeposito() {
+		return valorDeposito;
 	}
 
-	public void setIdConta(Long idConta) {
-		this.idConta = idConta;
-	}
-
-	public List<ItemExtrato> getListaItemExtrato() {
-		return listaItemExtrato;
-	}
-
-	public void setListaItemExtrato(List<ItemExtrato> listaItemExtrato) {
-		this.listaItemExtrato = listaItemExtrato;
+	public void setValorDeposito(Double valorDeposito) {
+		this.valorDeposito = valorDeposito;
 	}
 
 

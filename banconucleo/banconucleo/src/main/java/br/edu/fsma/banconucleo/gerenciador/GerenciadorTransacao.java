@@ -1,5 +1,6 @@
 package br.edu.fsma.banconucleo.gerenciador;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -75,7 +76,7 @@ public class GerenciadorTransacao {
 		for(int i = 0; i < listaTransferenciaCaixa.size(); i++) {
 			listaItemExtrato.add(new ItemExtrato(listaTransferenciaCaixa.get(i).getValor(),
 					                             listaTransferenciaCaixa.get(i).getData(),
-					                             "Compensação de Cheque",
+					                             "Transferencia Caixa",
 					                             listaTransferenciaCaixa.get(i).getConta()));
 		}
 		
@@ -94,7 +95,7 @@ public class GerenciadorTransacao {
 		for(int i = 0; i < listaSaqueCaixa.size(); i++) {
 			listaItemExtrato.add(new ItemExtrato(listaSaqueCaixa.get(i).getValor(),
 					                             listaSaqueCaixa.get(i).getData(),
-					                             "Compensação de Cheque",
+					                             "Saque Caixa",
 					                             listaSaqueCaixa.get(i).getConta()));
 		}
 		
@@ -114,7 +115,7 @@ public class GerenciadorTransacao {
 		for(int i = 0; i < listaDepositoCaixa.size(); i++) {
 			listaItemExtrato.add(new ItemExtrato(listaDepositoCaixa.get(i).getValor(),
 					                             listaDepositoCaixa.get(i).getData(),
-					                             "Compensação de Cheque",
+					                             "Deposito Caixa",
 					                             listaDepositoCaixa.get(i).getConta()));
 		}
 		
@@ -209,6 +210,30 @@ public class GerenciadorTransacao {
 		}
 		
 		return listaItemExtrato;
+	}
+
+	public boolean depositar(Conta conta, Double valorDeposito) {
+		
+		DepositoCaixa depositoCaixa = new DepositoCaixa();
+		depositoCaixa.setConta(conta);
+		
+		if(depositoCaixa.processarTransacao(valorDeposito) == null) {
+			return false;
+		}else {
+			return true;
+		}
+		
+	}
+
+	public boolean sacar(Conta conta, Double valorSaque) {
+		SaqueCaixa saqueCaixa = new SaqueCaixa();
+		saqueCaixa.setConta(conta);
+		
+		if(saqueCaixa.processarTransacao(valorSaque) == null) {
+			return false;
+		}else {
+			return true;
+		}
 	}
 
 	
