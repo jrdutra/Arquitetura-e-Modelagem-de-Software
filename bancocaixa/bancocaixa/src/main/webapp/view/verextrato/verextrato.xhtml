@@ -6,6 +6,10 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 	<h:head>
 		<style>		
+			body{
+				
+				background-image: linear-gradient(to left, #808080 , #606060);
+			}
 			.painel{
 				width: 50%;
 				margin: 0 auto;
@@ -34,14 +38,11 @@
 	    <p:spacer />
 		<h:form id="frmConteudo">
 			<p:panel id="pnIConteudo" class="painel" header="Ver Extrato">
+			    <p:outputLabel value="Saldo: " rendered="true"></p:outputLabel>
+			    <p:outputLabel value="R$ #{VerExtratoBean.usuarioSecao.conta.getSaldo()}" rendered="true"></p:outputLabel>
 			    <h:form>
 				    <h:panelGrid columns="2" class="painel" style="width: 100%;">
 						
-						<p:outputLabel for="idConta" value="Conta:" rendered="true"></p:outputLabel>
-						<p:selectOneMenu id="idConta" value="#{VerExtratoBean.idConta}" style="width: 90%;">
-						   <f:selectItem itemLabel="Selecione a Conta" itemValue="" noSelectionOption="true" />
-						   <f:selectItems value="#{VerExtratoBean.listaConta}" var="obj" itemLabel="#{obj.getNumero()}" itemValue="#{obj.getId()}"/>
-						</p:selectOneMenu>
 						<p:outputLabel for="inputDataInferior">De:</p:outputLabel>
 						<p:calendar id="inputDataInferior" value="#{VerExtratoBean.dataInferior}" />
 						<p:outputLabel for="inputDataSuperior">Até:</p:outputLabel>
@@ -56,7 +57,8 @@
 			</p:panel>
 			<p:spacer />
 			<p:panel id="pnIExtrato" class="painel" header="Extrato" visible="#{VerExtratoBean.viewExtrato}">
-			    
+			    <p:outputLabel value="Saldo: " rendered="true"></p:outputLabel>
+			    <p:outputLabel value="R$ #{VerExtratoBean.usuarioSecao.conta.getSaldo()}" rendered="true"></p:outputLabel>
 				<p:dataTable id="tabelaExtrato" var="itemExtrato" 
 											 value="#{VerExtratoBean.listaItemExtrato}"
 											 paginator="true" rows="15" lazy="true"
