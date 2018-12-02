@@ -46,6 +46,24 @@ public class PainelBean implements Serializable  {
 		}
 	}
 	
+	public void depositoCaixaClick() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/bancocaixa/view/depositocaixa/depositocaixa.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void saqueCaixaClick() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/bancocaixa/view/saquecaixa/saquecaixa.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void sair() {
 		Secao.setUsuarioSecao(null);
 		try {

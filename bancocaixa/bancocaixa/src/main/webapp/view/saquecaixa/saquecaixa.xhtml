@@ -5,11 +5,11 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 	<h:head>
-		<style>	
+		<style>		
 			body{
 				
 				background-image: linear-gradient(to left, #808080 , #606060);
-			}	
+			}
 			.painel{
 				width: 50%;
 				margin: 0 auto;
@@ -24,31 +24,36 @@
 			}
 		</style>
 		<meta charset="UTF-8" />
-		<title>Painel</title>
+		<title>Ver Extrato</title>
 		<link type="text/css" rel="stylesheet"	href="#{facesContext.externalContext.requestContextPath}/resources/css/estilo.css" />
 	</h:head>
 	<h:body>
 		<p:toolbar>
 	        <f:facet name="right">
-	        
 	       	    <p:outputLabel value="#{PainelBean.nomeUsuario()}" rendered="true"></p:outputLabel>
 	       	    <p:spacer />
 	       	    <p:commandButton id="idBtnSair" value="Sair" action="#{PainelBean.sair()}" process="@this" icon="ui-icon-close"/>
-	             
 	        </f:facet>
 	    </p:toolbar>
 	    <p:spacer />
-		<h:form id="frmIdentificacao">
-			<p:panel id="pnIdentificacao" class="painel" header="Painel">
+		<h:form id="frmConteudo">
+			<p:panel id="pnIConteudo" class="painel" header="Ver Extrato">
+			    
 			    <h:form>
-			    <h:panelGrid columns="2" class="painelBotoes" style="width: 100%;">
-					
-					<p:commandButton class="botaomenu" value="Ver extrato" action="#{PainelBean.verExtratoClick()}" ajax="false" />
-					<p:commandButton class="botaomenu" value="Deposito" action="#{PainelBean.depositoCaixaClick()}" ajax="false" />
-					<p:commandButton class="botaomenu" value="Saque" action="#{PainelBean.saqueCaixaClick()}" ajax="false" />
-				
-				</h:panelGrid>
+				    <h:panelGrid columns="2" class="painel" style="width: 100%;">
+						
+						<p:outputLabel for="inputDataInferior">De:</p:outputLabel>
+						<p:calendar id="inputDataInferior" value="#{VerExtratoBean.dataInferior}" />
+						<p:outputLabel for="inputDataSuperior">Até:</p:outputLabel>
+						<p:calendar id="inputDataSuperior" value="#{VerExtratoBean.dataSuperior}" />
+						<p:spacer />
+						<p:commandButton class="botaoPainel" value="Ver Extrato" action="#{VerExtratoBean.verExtratoClick()}" icon="ui-icon-check" process="@form" ajax="true" update=":frmConteudo:pnIExtrato"/>
+					</h:panelGrid>
 				</h:form>
+				
+				<h:panelGrid columns="1" class="painel" style="width: 100%; text-align:right;">
+				<p:commandButton class="botaoPainel" value="Painel" action="#{PainelBean.painelClick()}" icon="ui-icon-home" ajax="false"/>
+				</h:panelGrid>
 			</p:panel>
 		</h:form>
 	</h:body>
