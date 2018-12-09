@@ -59,18 +59,18 @@
 			<p:panel id="pnIExtrato" class="painel" header="Extrato" visible="#{VerExtratoBean.viewExtrato}">
 			    <p:outputLabel value="Saldo: " rendered="true"></p:outputLabel>
 			    <p:outputLabel value="R$ #{VerExtratoBean.usuarioSecao.conta.getSaldo()}" rendered="true"></p:outputLabel>
-				<p:dataTable id="tabelaExtrato" var="itemExtrato" 
-											 value="#{VerExtratoBean.listaItemExtrato}"
+				<p:dataTable id="tabelaExtrato" var="transacao" 
+											 value="#{VerExtratoBean.listaTransacao}"
 											 paginator="true" rows="15" lazy="true"
 											 >
 					<p:column headerText="Data"  >
-						<h:outputText value="#{itemExtrato.data}" />
+						<h:outputText value="#{transacao.data}" />
 					</p:column>
 					<p:column headerText="Descrição">
-						<h:outputText value="#{itemExtrato.descricao}" />
+						<h:outputText value="#{transacao.getClass().getSimpleName()}" />
 					</p:column>
 					<p:column headerText="Valor">
-						<h:outputText value="R$ #{itemExtrato.valor}" />
+						<h:outputText value="R$ #{transacao.valor}" />
 					</p:column>
 				</p:dataTable>
 			</p:panel>

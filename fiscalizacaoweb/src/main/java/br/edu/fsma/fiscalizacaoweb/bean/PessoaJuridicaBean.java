@@ -83,7 +83,6 @@ public class PessoaJuridicaBean implements Serializable {
 		System.out.println(currentPessoaJuridica);
 		setPesquisar();
 	}
-	
 	public void cancelarClick() {
 		setPesquisar();
 	}

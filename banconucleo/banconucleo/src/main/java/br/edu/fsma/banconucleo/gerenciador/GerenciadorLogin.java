@@ -15,7 +15,7 @@ public class GerenciadorLogin {
 
 	private List<UsuarioGerente> listaUsuarioGerente = new ArrayList<UsuarioGerente>();
 	
-	private EntityManager em;
+	private EntityManager em = JPAUtil.getEntityManager();
 	
 	private UsuarioGerenteDao usuarioGerenteDao;
 	
@@ -30,15 +30,8 @@ public class GerenciadorLogin {
 	}
 	
 	public List<UsuarioGerente> getListaTodosGerentes(){
-		this.em = JPAUtil.getEntityManager();
 		usuarioGerenteDao = new UsuarioGerenteDao(em);
-		try {
-			return usuarioGerenteDao.listaTodos();
-		}catch(Exception ex)  {
-			System.out.println("\n\nErro Ler Lista de Gerentes:");
-			System.out.println(ex);
-		}
-		return null;
+		return usuarioGerenteDao.listaTodos();
 	}
 	
 	public boolean existeUsuarioGerente(Long idUsuario, String s) {
@@ -61,26 +54,12 @@ public class GerenciadorLogin {
 	}
 
 	public List<UsuarioPessoaFisica> getListaTodosUsuarioPessoaFisica() {
-		this.em = JPAUtil.getEntityManager();
 		usuarioPessoaFisicaDao = new UsuarioPessoaFisicaDao(em);
-		try {
-			return usuarioPessoaFisicaDao.listaTodos();
-		}catch(Exception ex)  {
-			System.out.println("\n\nErro Ler Lista de UPF:");
-			System.out.println(ex);
-		}
-		return null;
+		return usuarioPessoaFisicaDao.listaTodos();
 	}
 
 	public List<UsuarioPessoaJuridica> getListaTodosUsuarioPessoaJuridica() {
-		this.em = JPAUtil.getEntityManager();
 		usuarioPessoaJuridicaDao = new UsuarioPessoaJuridicaDao(em);
-		try {
-			return usuarioPessoaJuridicaDao.listaTodos();
-		}catch(Exception ex)  {
-			System.out.println("\n\nErro Ler Lista de UPF:");
-			System.out.println(ex);
-		}
-		return null;
+		return usuarioPessoaJuridicaDao.listaTodos();
 	}
 }

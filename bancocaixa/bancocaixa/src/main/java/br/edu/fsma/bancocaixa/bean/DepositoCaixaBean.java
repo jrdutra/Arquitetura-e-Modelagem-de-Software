@@ -13,7 +13,6 @@ import br.edu.fsma.bancocaixa.util.Secao;
 import br.edu.fsma.bancocaixa.util.UsuarioSecao;
 import br.edu.fsma.bancocaixa.util.Mensagem;
 import br.edu.fsma.banconucleo.gerenciador.GerenciadorTransacao;
-import br.edu.fsma.banconucleo.gerenciador.ItemExtrato;
 
 @ManagedBean(name = "DepositoCaixaBean")
 @ViewScoped

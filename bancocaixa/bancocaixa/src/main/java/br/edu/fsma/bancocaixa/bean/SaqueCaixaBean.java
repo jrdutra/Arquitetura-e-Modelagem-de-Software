@@ -1,8 +1,6 @@
 package br.edu.fsma.bancocaixa.bean;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -13,7 +11,6 @@ import br.edu.fsma.bancocaixa.util.Redirecionador;
 import br.edu.fsma.bancocaixa.util.Secao;
 import br.edu.fsma.bancocaixa.util.UsuarioSecao;
 import br.edu.fsma.banconucleo.gerenciador.GerenciadorTransacao;
-import br.edu.fsma.banconucleo.gerenciador.ItemExtrato;
 
 @ManagedBean(name = "SaqueCaixaBean")
 @ViewScoped

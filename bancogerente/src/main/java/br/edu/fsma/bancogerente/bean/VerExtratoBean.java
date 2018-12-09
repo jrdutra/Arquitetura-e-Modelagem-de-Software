@@ -5,21 +5,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 
-import com.google.common.collect.ImmutableMap;
-
 import br.edu.fsma.bancogerente.util.Redirecionador;
 import br.edu.fsma.bancogerente.util.Secao;
-import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
 import br.edu.fsma.banconucleo.gerenciador.GerenciadorConta;
 import br.edu.fsma.banconucleo.gerenciador.GerenciadorTransacao;
-import br.edu.fsma.banconucleo.gerenciador.ItemExtrato;
 import br.edu.fsma.banconucleo.modelo.negocio.Conta;
+import br.edu.fsma.banconucleo.modelo.negocio.Transacao;
+import br.edu.fsma.banconucleo.modelo.negocio.UsuarioGerente;
 
 @ManagedBean(name = "VerExtratoBean")
 @ViewScoped
@@ -29,17 +26,12 @@ public class VerExtratoBean implements Serializable  {
 	private Redirecionador redirecionador;
 	private GerenciadorConta gerenciadorConta = new GerenciadorConta();
 	private GerenciadorTransacao gerenciadorTransacao = new GerenciadorTransacao();
-	
 	private Boolean viewExtrato = false;
 	private Long idConta;
 	private List<Conta> listaConta = new ArrayList<Conta>();
-	private List<ItemExtrato> listaItemExtrato;
-	
-	
-	
+	private List<Transacao> listaTransacao;
 	private Date dataInferior;
 	private Date dataSuperior;
-	
 	
 	public VerExtratoBean() {
 		this.usuarioGerente = Secao.getUsuarioGerente();
@@ -51,15 +43,13 @@ public class VerExtratoBean implements Serializable  {
 			redirecionador.redireciona("/bancogerente/view/index/index.xhtml");
 		}
 		listaConta = gerenciadorConta.getListaConta();
-		
 	}
 	
 	public void verExtratoClick() {
 		this.viewExtrato = true;
 		System.out.println(viewExtrato);
-		listaItemExtrato = gerenciadorTransacao.getListaItemExtratoPorPeriodo(this.idConta, dataInferior, dataSuperior);
-		Collections.sort(listaItemExtrato);
-		
+		listaTransacao = gerenciadorTransacao.getListaTransacaoPorPeriodo(this.idConta, dataInferior, dataSuperior);
+		Collections.sort(listaTransacao);
 	}
 	
 	public UsuarioGerente getUsuarioGerente() {
@@ -110,12 +100,13 @@ public class VerExtratoBean implements Serializable  {
 		this.viewExtrato = viewExtrato;
 	}
 
-	public List<ItemExtrato> getListaItemExtrato() {
-		return listaItemExtrato;
+	public List<Transacao> getListaTransacao() {
+		return listaTransacao;
 	}
 
-	public void setListaItemExtrato(List<ItemExtrato> listaItemExtrato) {
-		this.listaItemExtrato = listaItemExtrato;
+	public void setListaTransacao(List<Transacao> listaTransacao) {
+		this.listaTransacao = listaTransacao;
 	}
+
 	
 }

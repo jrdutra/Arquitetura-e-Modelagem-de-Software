@@ -14,8 +14,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_compensacaocheque")
-public class CompensacaoCheque implements Serializable, Transacao{
 
+public class CompensacaoCheque extends Transacao implements Serializable, Comparable<Transacao>{
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -32,7 +33,7 @@ public class CompensacaoCheque implements Serializable, Transacao{
 	@JoinColumn(name = "id_conta")
 	private Conta conta;
 	
-	@Override
+	
 	public Double processarTransacao(Double valor) {
 		return null;
 	}
@@ -45,7 +46,16 @@ public class CompensacaoCheque implements Serializable, Transacao{
 		return result;
 	}
 
-
+	@Override //-> para ordenar
+    public int compareTo(Transacao item) {
+		 if (this.data.isAfter(item.getData())) {
+	          return -1;
+	     }
+	     if (this.data.isBefore(item.getData())) {
+	          return 1;
+	     }
+	     return 0;
+    }
 
 	@Override
 	public boolean equals(Object obj) {
@@ -66,7 +76,7 @@ public class CompensacaoCheque implements Serializable, Transacao{
 
 	@Override
 	public String toString() {
-		return "Compensacao Cheque [valor=" + valor + ", data=" + data + "]";
+		return "\nCompensacao Cheque [valor=" + valor + ", data=" + data + "]";
 	}
 
 	public Double getValor() {

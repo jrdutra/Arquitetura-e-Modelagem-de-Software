@@ -13,16 +13,14 @@ import br.edu.fsma.banconucleo.modelo.negocio.UsuarioPessoaJuridica;
 public class GerenciadorUsuarioPessoa {
 	private UsuarioPessoaFisicaDao usuarioPessoaFisicaDao;
 	private UsuarioPessoaJuridicaDao usuarioPessoaJuridicaDao;
-	private EntityManager em;
+	private EntityManager em = JPAUtil.getEntityManager();
 	
 	public List<UsuarioPessoaFisica> getListaPessoaFisica() {
-		this.em = JPAUtil.getEntityManager();
 		usuarioPessoaFisicaDao = new UsuarioPessoaFisicaDao(em);
 		return usuarioPessoaFisicaDao.listaTodos();
 	}
 
 	public List<UsuarioPessoaJuridica> getListaPessoaJuridica() {
-		this.em = JPAUtil.getEntityManager();
 		usuarioPessoaJuridicaDao = new UsuarioPessoaJuridicaDao(em);
 		return usuarioPessoaJuridicaDao.listaTodos();
 	}

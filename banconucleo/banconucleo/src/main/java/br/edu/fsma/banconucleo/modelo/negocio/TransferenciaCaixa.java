@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_transferenciacaixa")
-public class TransferenciaCaixa implements Serializable, Transacao{
+public class TransferenciaCaixa extends Transacao implements Serializable, Comparable<Transacao>{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -31,7 +31,7 @@ public class TransferenciaCaixa implements Serializable, Transacao{
 	@JoinColumn(name = "id_conta")
 	private Conta conta;
 	
-	@Override
+
 	public Double processarTransacao(Double valor) {
 		return null;
 	}
@@ -44,7 +44,16 @@ public class TransferenciaCaixa implements Serializable, Transacao{
 		return result;
 	}
 
-	
+	@Override //-> para ordenar
+    public int compareTo(Transacao item) {
+		 if (this.data.isAfter(item.getData())) {
+	          return -1;
+	     }
+	     if (this.data.isBefore(item.getData())) {
+	          return 1;
+	     }
+	     return 0;
+    }
 
 	@Override
 	public boolean equals(Object obj) {

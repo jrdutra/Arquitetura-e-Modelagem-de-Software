@@ -1,0 +1,5 @@
+<beans>
+	<interceptors>
+		<class>br.edu.fsma.banconucleoweb.tx.GerenciadorDeTransacao</class>
+	</interceptors>
+</beans>

@@ -1,9 +1,7 @@
-package br.edu.fsma.banconucleo.gerenciador;
+package br.edu.fsma.banconucleoweb.gerenciador;
 
 import java.time.LocalDate;
-
-
-import br.edu.fsma.banconucleo.modelo.negocio.Conta;
+import br.edu.fsma.banconucleoweb.modelo.negocio.Conta;
 
 public class ItemExtrato implements Comparable<ItemExtrato> {
 
@@ -19,16 +17,7 @@ public class ItemExtrato implements Comparable<ItemExtrato> {
 		this.conta = conta;
 	}
 	
-	@Override //-> para ordenar
-    public int compareTo(ItemExtrato item) {
-		 if (this.data.isAfter(item.getData())) {
-	          return -1;
-	     }
-	     if (this.data.isBefore(item.getData())) {
-	          return 1;
-	     }
-	     return 0;
-    }
+	
 	
 	public Double getValor() {
 		return valor;
@@ -59,6 +48,17 @@ public class ItemExtrato implements Comparable<ItemExtrato> {
 	public String toString() {
 		return "ItemExtrato \n [valor=" + valor + ", data=" + data + ", descricao=" + descricao + ", conta=" + conta + "]";
 	}
+
+	
+    public int compareTo(ItemExtrato item) {
+		 if (this.data.isAfter(item.getData())) {
+	          return -1;
+	     }
+	     if (this.data.isBefore(item.getData())) {
+	          return 1;
+	     }
+	     return 0;
+    }
 	
 	
 }

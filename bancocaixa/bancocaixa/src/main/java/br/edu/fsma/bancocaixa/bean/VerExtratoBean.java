@@ -13,7 +13,7 @@ import br.edu.fsma.bancocaixa.util.Redirecionador;
 import br.edu.fsma.bancocaixa.util.Secao;
 import br.edu.fsma.bancocaixa.util.UsuarioSecao;
 import br.edu.fsma.banconucleo.gerenciador.GerenciadorTransacao;
-import br.edu.fsma.banconucleo.gerenciador.ItemExtrato;
+import br.edu.fsma.banconucleo.modelo.negocio.Transacao;
 
 @ManagedBean(name = "VerExtratoBean")
 @ViewScoped
@@ -24,7 +24,7 @@ public class VerExtratoBean implements Serializable  {
 	private GerenciadorTransacao gerenciadorTransacao = new GerenciadorTransacao();
 	private Boolean viewExtrato = false;
 	private Long idConta;
-	private List<ItemExtrato> listaItemExtrato;
+	private List<Transacao> listaTransacao;
 	
 	
 	
@@ -47,9 +47,9 @@ public class VerExtratoBean implements Serializable  {
 		this.viewExtrato = true;
 		System.out.println(viewExtrato);
 		this.idConta = usuarioSecao.getConta().getId();
-		listaItemExtrato = gerenciadorTransacao.getListaItemExtratoPorPeriodo(this.idConta, dataInferior, dataSuperior);
-		Collections.sort(listaItemExtrato);
-		System.out.println(listaItemExtrato);
+		listaTransacao = gerenciadorTransacao.getListaTransacaoPorPeriodo(this.idConta, dataInferior, dataSuperior);
+		Collections.sort(listaTransacao);
+		System.out.println(listaTransacao);
 	}
 
 	public UsuarioSecao getUsuarioSecao() {
@@ -76,14 +76,6 @@ public class VerExtratoBean implements Serializable  {
 		this.idConta = idConta;
 	}
 
-	public List<ItemExtrato> getListaItemExtrato() {
-		return listaItemExtrato;
-	}
-
-	public void setListaItemExtrato(List<ItemExtrato> listaItemExtrato) {
-		this.listaItemExtrato = listaItemExtrato;
-	}
-
 	public Date getDataInferior() {
 		return dataInferior;
 	}
@@ -98,6 +90,14 @@ public class VerExtratoBean implements Serializable  {
 
 	public void setDataSuperior(Date dataSuperior) {
 		this.dataSuperior = dataSuperior;
+	}
+
+	public List<Transacao> getListaTransacao() {
+		return listaTransacao;
+	}
+
+	public void setListaTransacao(List<Transacao> listaTransacao) {
+		this.listaTransacao = listaTransacao;
 	}
 	
 	

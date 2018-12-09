@@ -64,7 +64,6 @@ public class UfBean implements Serializable {
 		}
 		setPesquisar();
 	}
-	
 	public void pesquisarClick() {
 		listaUf = ufDao.buscaListaUfPorNomeSigla(currentUf);
 		setPesquisar();
